@@ -30,23 +30,23 @@ var _statesGameOver = require('states/GameOver');
 var _statesGameOver2 = _interopRequireDefault(_statesGameOver);
 
 var Game = (function (_Phaser$Game) {
-	_inherits(Game, _Phaser$Game);
+		_inherits(Game, _Phaser$Game);
 
-	function Game() {
-		_classCallCheck(this, Game);
+		function Game() {
+				_classCallCheck(this, Game);
 
-		_get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO);
+				_get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO);
 
-		this.state.add('Boot', _statesBoot2['default'], false);
-		this.state.add('Preload', _statesPreload2['default'], false);
-		this.state.add('GameTitle', _statesGameTitle2['default'], false);
-		this.state.add('Main', _statesMain2['default'], false);
-		this.state.add('GameOver', _statesGameOver2['default'], false);
+				this.state.add('Boot', _statesBoot2['default'], false);
+				this.state.add('Preload', _statesPreload2['default'], false);
+				this.state.add('GameTitle', _statesGameTitle2['default'], false);
+				this.state.add('Main', _statesMain2['default'], false);
+				this.state.add('GameOver', _statesGameOver2['default'], false);
 
-		this.state.start('Boot');
-	}
+				this.state.start('Boot');
+		}
 
-	return Game;
+		return Game;
 })(Phaser.Game);
 
 new Game();
@@ -193,7 +193,7 @@ module.exports = exports["default"];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-	value: true
+		value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -211,48 +211,48 @@ var _objectsExampleObject = require('objects/ExampleObject');
 var _objectsExampleObject2 = _interopRequireDefault(_objectsExampleObject);
 
 var Main = (function (_Phaser$State) {
-	_inherits(Main, _Phaser$State);
+		_inherits(Main, _Phaser$State);
 
-	function Main() {
-		_classCallCheck(this, Main);
+		function Main() {
+				_classCallCheck(this, Main);
 
-		_get(Object.getPrototypeOf(Main.prototype), 'constructor', this).apply(this, arguments);
-	}
-
-	_createClass(Main, [{
-		key: 'create',
-		value: function create() {
-
-			//Enable Arcade Physics
-			// this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
-			//Set the games background colour
-			// this.game.stage.backgroundColor = '#cecece';
-
-			//Example of including an object
-			//let exampleObject = new ExampleObject(this.game);
-			//  This creates a simple sprite that is using our loaded image and
-			//  displays it on-screen and assign it to a variable
-			var image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'kikar');
-			image.anchor.set(0.5);
-			image.width = this.game.width;
-			image.height = this.game.height;
-
-			image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'cat');
-			image.anchor.set(0.5);
-			image.width = 100;
-			image.height = 100;
-			image.inputEnabled = true;
-			image.events.onInputDown.add(function () {
-				image.kill();
-			});
+				_get(Object.getPrototypeOf(Main.prototype), 'constructor', this).apply(this, arguments);
 		}
-	}, {
-		key: 'update',
-		value: function update() {}
-	}]);
 
-	return Main;
+		_createClass(Main, [{
+				key: 'create',
+				value: function create() {
+
+						//Enable Arcade Physics
+						// this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+						//Set the games background colour
+						// this.game.stage.backgroundColor = '#cecece';
+
+						//Example of including an object
+						//let exampleObject = new ExampleObject(this.game);
+						//  This creates a simple sprite that is using our loaded image and
+						//  displays it on-screen and assign it to a variable
+						var image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'kikar');
+						image.anchor.set(0.5);
+						image.width = this.game.width;
+						image.height = this.game.height;
+
+						image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'cat');
+						image.anchor.set(0.5);
+						image.width = 100;
+						image.height = 100;
+						image.inputEnabled = true;
+						image.events.onInputDown.add(function () {
+								image.kill();
+						});
+				}
+		}, {
+				key: 'update',
+				value: function update() {}
+		}]);
+
+		return Main;
 })(Phaser.State);
 
 exports['default'] = Main;
@@ -287,8 +287,8 @@ var Preload = (function (_Phaser$State) {
 		value: function preload() {
 			/* Preload required assets */
 			//this.game.load.image('myImage', 'assets/my-image.png');
-			this.game.load.image('kikar', 'build/assets/images/kikar.jpg');
-			this.game.load.image('cat', 'build/assets/images/cat.jpeg');
+			this.game.load.image('kikar', '/static/assets/images/kikar.jpg');
+			this.game.load.image('cat', '/static/assets/images/cat.jpeg');
 			//this.game.load.audio('myAudio', 'assets/my-audio.wav');
 			//this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
 		}

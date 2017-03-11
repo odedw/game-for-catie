@@ -17,7 +17,7 @@ var browserSync = require('browser-sync');
  */
 var PHASER_PATH = './node_modules/phaser/build/';
 var BUILD_PATH = './build';
-var SCRIPTS_PATH = BUILD_PATH + '/scripts';
+var SCRIPTS_PATH = BUILD_PATH;
 var SOURCE_PATH = './src';
 var STATIC_PATH = './static';
 var ENTRY_FILE = SOURCE_PATH + '/index.js';
@@ -129,7 +129,7 @@ function serve() {
     
     var options = {
         server: {
-            baseDir: BUILD_PATH
+            baseDir: './'
         },
         open: false // Change it to true if you wish to allow Browsersync to open a browser window.
     };
@@ -149,7 +149,7 @@ function serve() {
 
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
-gulp.task('copyPhaser', ['copyStatic'], copyPhaser);
+gulp.task('copyPhaser', ['cleanBuild'], copyPhaser);
 gulp.task('build', ['copyPhaser'], build);
 gulp.task('fastBuild', build);
 gulp.task('serve', ['build'], serve);
