@@ -1,3 +1,4 @@
+import './extensions';
 import Boot from './states/Boot';
 import Preload from './states/Preload';
 import GameTitle from './states/GameTitle';
