@@ -459,10 +459,10 @@ var Preload = (function (_Phaser$State) {
       var _this = this;
 
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
-        return _this.game.load.image(item.name, '/static/assets/images/scenes/' + item.name + '.png');
+        return _this.game.load.image(item.name, 'static/assets/images/scenes/' + item.name + '.png');
       });
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
-        return _this.game.load.image(item.name, '/static/assets/images/animals/' + item.name + '.png');
+        return _this.game.load.image(item.name, 'static/assets/images/animals/' + item.name + '.png');
       });
 
       // this.game.load.audio('myAudio', 'assets/my-audio.wav');
