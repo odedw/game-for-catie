@@ -1,18 +1,15 @@
+import sceneRepository from '../repositories/SceneRepository';
+
 class Preload extends Phaser.State {
+  preload() {
+    sceneRepository.scenes.forEach(scene => this.game.load.image(scene.name, `/static/assets/images/scenes/${scene.name}.png`));
+    // this.game.load.audio('myAudio', 'assets/my-audio.wav');
+    // this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
+  }
 
-	preload() {
-		/* Preload required assets */
-		//this.game.load.image('myImage', 'assets/my-image.png');
-		this.game.load.image('kikar', '/static/assets/images/kikar.jpg');
-		this.game.load.image('cat', '/static/assets/images/cat.jpeg');
-		//this.game.load.audio('myAudio', 'assets/my-audio.wav');
-		//this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
-	}
-
-	create() {
-		//NOTE: Change to GameTitle if required
-		this.game.state.start("Main");
-	}
+  create() {
+    this.game.state.start('Main');
+  }
 
 }
 

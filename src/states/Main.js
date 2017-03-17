@@ -1,39 +1,39 @@
-import ExampleObject from 'objects/ExampleObject';
+import animalRepo from '../repositories/animalRepository';
+import sceneRepo from '../repositories/sceneRepository';
 
 class Main extends Phaser.State {
+  constructor(game, numberOfAnimals = 4) {
+    super(game);
 
-	create() {
+    this.numberOfAnimals = numberOfAnimals;
+  }
+  create() {
+    console.log('--------------');
+    
+    const game = this.game;
+    let scene = sceneRepo.random();
+    let animals = animalRepo.random(this.numberOfAnimals);
 
-		//Enable Arcade Physics
-		// this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    // set background
+    const background = game.add.image(game.world.centerX, game.world.centerY, scene.name);
+    background.anchor.set(0.5);
+    background.width = game.width;
+    background.height = game.height;
+    background.events.onInputDown.add((evt) => {
+      console.log(evt);
+    });
+    // image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'cat');
+    // image.anchor.set(0.5);
+    // image.width = 100;
+    // image.height = 100;
+    // image.inputEnabled = true;
+    // image.events.onInputDown.add(() => {
+    //   image.kill();
+    // });
+  }
 
-		//Set the games background colour
-		// this.game.stage.backgroundColor = '#cecece';
-
-		//Example of including an object
-		//let exampleObject = new ExampleObject(this.game);
-		//  This creates a simple sprite that is using our loaded image and
-    //  displays it on-screen and assign it to a variable
-    let image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'kikar');
-    image.anchor.set(0.5);
-		image.width = this.game.width;
-		image.height = this.game.height;
-
-		
-		image = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'cat');
-    image.anchor.set(0.5);
-		image.width = 100;
-		image.height = 100;
-    image.inputEnabled = true;
-    image.events.onInputDown.add(() => {
-			image.kill();
-		});
-	}
-
-	update() {
-		
-	}
-
+  static update() {
+  }
 }
 
 export default Main;
