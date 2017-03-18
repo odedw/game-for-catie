@@ -1,6 +1,6 @@
 {
-  "name": "Your Game",
-  "short_name": "Your Game",
+  "name": "Game for Catie",
+  "short_name": "Game for Catie",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "landscape",
