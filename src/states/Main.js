@@ -42,7 +42,15 @@ class Main extends Phaser.State {
   animalFound(image) {
     this.animalsFound++;
     this.game.add.audio(this.song.segments[this.animalsFound]).play();
-    image.kill();
+    const tween = this.game.add.tween(image)
+    .to({ angle: 20 }, this.song.beat, Phaser.Easing.Cubic.Out, false, this.song.intro * this.song.beat)
+    .to({ angle: -20 }, this.song.beat, Phaser.Easing.Cubic.Out)
+    .to({ angle: 20 }, this.song.beat, Phaser.Easing.Cubic.Out)
+    .to({ angle: -20 }, this.song.beat, Phaser.Easing.Cubic.Out)
+    .to({ x: this.game.width / 2, y: -image.height }, 100, Phaser.Easing.Linear.None);
+    tween.start();
+
+    // image.kill();
   }
 
   static update() {
