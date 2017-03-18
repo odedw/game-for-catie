@@ -11,6 +11,10 @@ Array.prototype.random = function () {
   return n === 1 ? res[0] : res;
 };
 
+Array.prototype.flatMap = function (lambda) {
+  return Array.prototype.concat.apply([], this.map(lambda));
+};
+
 },{}],2:[function(require,module,exports){
 'use strict';
 
@@ -66,7 +70,7 @@ var Game = (function (_Phaser$Game) {
 
 new Game();
 
-},{"./extensions":1,"./states/Boot":8,"./states/GameOver":9,"./states/GameTitle":10,"./states/Main":11,"./states/Preload":12}],3:[function(require,module,exports){
+},{"./extensions":1,"./states/Boot":10,"./states/GameOver":11,"./states/GameTitle":12,"./states/Main":13,"./states/Preload":14}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -112,6 +116,30 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Song = function Song(name, bpm) {
+  _classCallCheck(this, Song);
+
+  this.name = name;
+  this.segments = [];
+  this.segments.push(name + "-full");
+  for (var i = 1; i <= 4; i++) {
+    this.segments.push(name + "-" + i);
+  }
+  this.bpm = bpm;
+};
+
+exports["default"] = Song;
+module.exports = exports["default"];
+
+},{}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -136,7 +164,7 @@ var Repository = (function () {
 exports["default"] = Repository;
 module.exports = exports["default"];
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -174,7 +202,7 @@ var AnimalRepository = (function (_Repository) {
 exports['default'] = new AnimalRepository();
 module.exports = exports['default'];
 
-},{"../objects/Animal":3,"./Repository":5}],7:[function(require,module,exports){
+},{"../objects/Animal":3,"./Repository":6}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -212,7 +240,45 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../objects/Scene":4,"./Repository":5}],8:[function(require,module,exports){
+},{"../objects/Scene":4,"./Repository":6}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _objectsSong = require('../objects/Song');
+
+var _objectsSong2 = _interopRequireDefault(_objectsSong);
+
+var _Repository2 = require('./Repository');
+
+var _Repository3 = _interopRequireDefault(_Repository2);
+
+var SceneRepository = (function (_Repository) {
+  _inherits(SceneRepository, _Repository);
+
+  function SceneRepository() {
+    _classCallCheck(this, SceneRepository);
+
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsSong2['default']('clock', 110)]);
+  }
+
+  return SceneRepository;
+})(_Repository3['default']);
+
+exports['default'] = new SceneRepository();
+module.exports = exports['default'];
+
+},{"../objects/Song":5,"./Repository":6}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -253,7 +319,7 @@ var Boot = (function (_Phaser$State) {
 exports["default"] = Boot;
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -293,7 +359,7 @@ var GameOver = (function (_Phaser$State) {
 exports["default"] = GameOver;
 module.exports = exports["default"];
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -333,7 +399,7 @@ var GameTitle = (function (_Phaser$State) {
 exports["default"] = GameTitle;
 module.exports = exports["default"];
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -359,6 +425,10 @@ var _repositoriesSceneRepository = require('../repositories/sceneRepository');
 
 var _repositoriesSceneRepository2 = _interopRequireDefault(_repositoriesSceneRepository);
 
+var _repositoriesSongRepository = require('../repositories/songRepository');
+
+var _repositoriesSongRepository2 = _interopRequireDefault(_repositoriesSongRepository);
+
 var Main = (function (_Phaser$State) {
   _inherits(Main, _Phaser$State);
 
@@ -369,18 +439,20 @@ var Main = (function (_Phaser$State) {
 
     _get(Object.getPrototypeOf(Main.prototype), 'constructor', this).call(this, game);
     this.numberOfAnimals = numberOfAnimals;
+    this.animalsFound = 0;
   }
 
   _createClass(Main, [{
     key: 'create',
     value: function create() {
       var game = this.game;
-      var scene = _repositoriesSceneRepository2['default'].random();
-      var animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
-      var locations = scene.locations.random(this.numberOfAnimals);
+      this.scene = _repositoriesSceneRepository2['default'].random();
+      this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
+      var locations = this.scene.locations.random(this.numberOfAnimals);
+      this.song = _repositoriesSongRepository2['default'].random();
 
       // set background
-      var background = game.add.image(game.world.centerX, game.world.centerY, scene.name);
+      var background = game.add.image(game.world.centerX, game.world.centerY, this.scene.name);
       background.anchor.set(0.5);
       background.width = game.width;
       background.height = game.height;
@@ -390,23 +462,23 @@ var Main = (function (_Phaser$State) {
       // });
 
       // place animals
-
-      var _loop = function (i) {
-        var animal = animals[i];
-        var location = locations[i];
-        var image = game.add.image(game.width * (location.x / 100), game.height * (location.y / 100), animal.name);
+      for (var i = 0; i < this.animals.length; i++) {
+        var animal = this.animals[i];
+        var _location = locations[i];
+        var image = game.add.image(game.width * (_location.x / 100), game.height * (_location.y / 100), animal.name);
         image.anchor.set(0.5);
         image.width = animal.w;
         image.height = animal.h;
         image.inputEnabled = true;
-        image.events.onInputDown.add(function () {
-          image.kill();
-        });
-      };
-
-      for (var i = 0; i < animals.length; i++) {
-        _loop(i);
+        image.events.onInputDown.add(this.animalFound, this);
       }
+    }
+  }, {
+    key: 'animalFound',
+    value: function animalFound(image) {
+      this.animalsFound++;
+      this.game.add.audio(this.song.segments[this.animalsFound]).play();
+      image.kill();
     }
   }], [{
     key: 'update',
@@ -419,7 +491,7 @@ var Main = (function (_Phaser$State) {
 exports['default'] = Main;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":6,"../repositories/sceneRepository":7}],12:[function(require,module,exports){
+},{"../repositories/animalRepository":7,"../repositories/sceneRepository":8,"../repositories/songRepository":9}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -444,6 +516,10 @@ var _repositoriesAnimalRepository = require('../repositories/animalRepository');
 
 var _repositoriesAnimalRepository2 = _interopRequireDefault(_repositoriesAnimalRepository);
 
+var _repositoriesSongRepository = require('../repositories/songRepository');
+
+var _repositoriesSongRepository2 = _interopRequireDefault(_repositoriesSongRepository);
+
 var Preload = (function (_Phaser$State) {
   _inherits(Preload, _Phaser$State);
 
@@ -456,17 +532,19 @@ var Preload = (function (_Phaser$State) {
   _createClass(Preload, [{
     key: 'preload',
     value: function preload() {
-      var _this = this;
-
+      var game = this.game;
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
-        return _this.game.load.image(item.name, 'static/assets/images/scenes/' + item.name + '.png');
+        return game.load.image(item.name, 'static/assets/images/scenes/' + item.name + '.png');
       });
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
-        return _this.game.load.image(item.name, 'static/assets/images/animals/' + item.name + '.png');
+        return game.load.image(item.name, 'static/assets/images/animals/' + item.name + '.png');
       });
-
-      // this.game.load.audio('myAudio', 'assets/my-audio.wav');
-      // this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
+      _repositoriesSongRepository2['default'].items.forEach(function (item) {
+        return item.segments.forEach(function (segment) {
+          game.load.audio(segment, 'static/assets/sounds/songs/' + item.name + '/' + segment + '.ogg');
+          console.log(segment);
+        });
+      });
     }
   }, {
     key: 'create',
@@ -481,5 +559,5 @@ var Preload = (function (_Phaser$State) {
 exports['default'] = Preload;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":6,"../repositories/sceneRepository":7}]},{},[2])
+},{"../repositories/animalRepository":7,"../repositories/sceneRepository":8,"../repositories/songRepository":9}]},{},[2])
 //# sourceMappingURL=game.js.map

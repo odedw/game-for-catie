@@ -1,13 +1,17 @@
 import sceneRepository from '../repositories/sceneRepository';
 import animalRepository from '../repositories/animalRepository';
+import songRepository from '../repositories/songRepository';
 
 class Preload extends Phaser.State {
   preload() {
-    sceneRepository.items.forEach(item => this.game.load.image(item.name, `static/assets/images/scenes/${item.name}.png`));
-    animalRepository.items.forEach(item => this.game.load.image(item.name, `static/assets/images/animals/${item.name}.png`));
-    
-    // this.game.load.audio('myAudio', 'assets/my-audio.wav');
-    // this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
+    const game = this.game;
+    sceneRepository.items.forEach(item => game.load.image(item.name, `static/assets/images/scenes/${item.name}.png`));
+    animalRepository.items.forEach(item => game.load.image(item.name, `static/assets/images/animals/${item.name}.png`));
+    songRepository.items.forEach(item =>
+      item.segments.forEach((segment) => {
+        game.load.audio(segment, `static/assets/sounds/songs/${item.name}/${segment}.ogg`);
+        console.log(segment);
+      }));
   }
 
   create() {
