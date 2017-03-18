@@ -8,10 +8,9 @@ class Preload extends Phaser.State {
     sceneRepository.items.forEach(item => game.load.image(item.name, `static/assets/images/scenes/${item.name}.png`));
     animalRepository.items.forEach(item => game.load.image(item.name, `static/assets/images/animals/${item.name}.png`));
     songRepository.items.forEach(item =>
-      item.segments.forEach((segment) => {
-        game.load.audio(segment, `static/assets/sounds/songs/${item.name}/${segment}.ogg`);
-        console.log(segment);
-      }));
+      item.segments.forEach(segment => ['mp3', 'ogg']
+        .forEach(format => game.load.audio(segment, `static/assets/sounds/songs/${item.name}/${segment}.${format}`),
+      )));
   }
 
   create() {

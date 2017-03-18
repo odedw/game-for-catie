@@ -541,8 +541,9 @@ var Preload = (function (_Phaser$State) {
       });
       _repositoriesSongRepository2['default'].items.forEach(function (item) {
         return item.segments.forEach(function (segment) {
-          game.load.audio(segment, 'static/assets/sounds/songs/' + item.name + '/' + segment + '.ogg');
-          console.log(segment);
+          return ['mp3', 'ogg'].forEach(function (format) {
+            return game.load.audio(segment, 'static/assets/sounds/songs/' + item.name + '/' + segment + '.' + format);
+          });
         });
       });
     }
