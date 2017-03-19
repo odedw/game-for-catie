@@ -1,5 +1,5 @@
 class Song {
-  constructor(name, bpm) {
+  constructor(name, bpm, intro, dance) {
     this.name = name;
     this.segments = [];
     this.segments.push(`${name}-full`);
@@ -9,7 +9,8 @@ class Song {
     this.bpm = bpm;
     this.beat = 60000 / bpm;
     console.log(this.beat);
-    this.intro = 0.15;
+    this.intro = intro;
+    this.dance = dance;
   }
 }
 

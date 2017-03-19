@@ -4,6 +4,14 @@ Array.prototype.random = function (n = 1) {
   return n === 1 ? res[0] : res;
 };
 
-Array.prototype.flatMap = function (lambda) { 
+Array.prototype.flatMap = function (lambda) {
   return Array.prototype.concat.apply([], this.map(lambda));
+};
+
+Array.prototype.sum = function () {
+  return this.reduce((a, b) => a + b, 0);
+};
+
+Array.prototype.max = function () {
+  return this.reduce((a, b) => (a > b ? a : b), Number.MIN_SAFE_INTEGER);
 };

@@ -2,12 +2,14 @@
 import animalRepo from '../repositories/animalRepository';
 import sceneRepo from '../repositories/sceneRepository';
 import songRepo from '../repositories/songRepository';
+import danceInterperter from '../dances/danceInterperter';
 
 class Main extends Phaser.State {
   constructor(game, numberOfAnimals = 4) {
     super(game);
     this.numberOfAnimals = numberOfAnimals;
     this.animalsFound = 0;
+    this.rowMargin = 50;
   }
   create() {
     const game = this.game;
@@ -15,6 +17,7 @@ class Main extends Phaser.State {
     this.animals = animalRepo.random(this.numberOfAnimals);
     const locations = this.scene.locations.random(this.numberOfAnimals);
     this.song = songRepo.random();
+    console.log(danceInterperter);
 
     // set background
     const background = game.add.image(game.world.centerX, game.world.centerY, this.scene.name);
@@ -27,6 +30,7 @@ class Main extends Phaser.State {
     // });
 
     // place animals
+    this.animalImages = [];
     for (let i = 0; i < this.animals.length; i++) {
       const animal = this.animals[i];
       const location = locations[i];
@@ -36,21 +40,40 @@ class Main extends Phaser.State {
       image.height = animal.h;
       image.inputEnabled = true;
       image.events.onInputDown.add(this.animalFound, this);
+      this.animalImages.push(image);
     }
   }
 
   animalFound(image) {
+    // this.allFound(); return;
+    if (this.currentTween) return;
+
     this.animalsFound++;
     this.game.add.audio(this.song.segments[this.animalsFound]).play();
-    const tween = this.game.add.tween(image)
-    .to({ angle: 20 }, this.song.beat, Phaser.Easing.Cubic.Out, false, this.song.intro * this.song.beat)
-    .to({ angle: -20 }, this.song.beat, Phaser.Easing.Cubic.Out)
-    .to({ angle: 20 }, this.song.beat, Phaser.Easing.Cubic.Out)
-    .to({ angle: -20 }, this.song.beat, Phaser.Easing.Cubic.Out)
-    .to({ x: this.game.width / 2, y: -image.height }, 100, Phaser.Easing.Linear.None);
-    tween.start();
-
+    this.currentTween = danceInterperter.createAnimalFoundDance(image, this.song, this.game);
+    if (this.animalsFound === this.numberOfAnimals) {
+      this.currentTween.onComplete.add(this.allFound, this);
+    }
+    this.currentTween.onComplete.add(() => this.currentTween = undefined, this);
+    this.currentTween.start();
     // image.kill();
+  }
+
+  allFound() {
+    const rowWidth = this.animalImages.map(image => image.width).sum() + ((this.numberOfAnimals - 1) * this.rowMargin);
+    let currentX = (this.game.width / 2) - (rowWidth / 2);
+    this.game.add.audio(this.song.segments[0]).play();
+    const tweens = [];
+    for (let i = 0; i < this.animalImages.length; i++) {
+      const currentImage = this.animalImages[i];
+      currentX += currentImage.width / 2;
+      tweens.push(danceInterperter.createAllAnimalsFoundDance(currentImage, i, this.song, this.game, currentX));
+      currentX += (this.animalImages[i].width / 2) + this.rowMargin;
+    }
+
+    tweens.forEach(t => t.start());
+
+
   }
 
   static update() {

@@ -1,4 +1,105 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = [['l', 'l', 'l', 'l'], // 1
+['r', 'r', 'r', 'r'], // 2
+['l', 'l', 'l', 'l'], // 3
+['r', 'r', 'r', 'r'], // 4
+['l', 'l', 'l', 'l'], // 5
+['r', 'r', 'r', 'r'], // 6
+['l', 'l', 'l', 'l'], // 7
+['r', 'r', 'r', 'r'], // 8
+['l', 'r', 'r', 'r'], // 9
+['-', 'l', 'r', 'r'], // 10
+['-', '-', 'l', 'r'], // 11
+['-', '-', '-', 'l'], // 12
+['r', 'r', 'r', 'r'], // 13
+['l', 'l', 'l', 'l'], // 14
+['r', 'r', 'r', 'r'], // 15
+['l', 'l', 'l', 'l'], // 16
+['u', 'u', 'u', 'u'], // 17
+['d', 'd', 'd', 'd'], // 18
+['u', 'u', 'u', 'u'], // 19
+['d', 'd', 'd', 'd'], // 20
+['u', '-', 'u', '-'], // 21
+['d', 'u', 'd', 'u'], // 22
+['u', 'd', 'u', 'd'], // 23
+['d', 'u', 'd', 'u'], // 24
+['r', 'r', 'r', 'r'], // 25
+['l', 'l', 'l', 'l'], // 26
+['r', 'r', 'r', 'r'], // 27
+['l', 'l', 'l', 'l'], // 28
+['u', 'u', 'u', 'u'], // 29
+['d', 'd', 'd', 'd'], // 30
+['u', 'u', 'u', 'u'], // 31
+['d', 'd', 'd', 'd']];
+module.exports = exports['default'];
+// 32
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var DanceInterperter = (function () {
+  function DanceInterperter() {
+    _classCallCheck(this, DanceInterperter);
+  }
+
+  _createClass(DanceInterperter, [{
+    key: 'createAnimalFoundDance',
+    value: function createAnimalFoundDance(image, song, game) {
+      var autoStart = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+
+      return game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, autoStart, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ x: game.width / 2, y: -image.height }, 100, Phaser.Easing.Linear.None);
+    }
+  }, {
+    key: 'createAllAnimalsFoundDance',
+    value: function createAllAnimalsFoundDance(image, index, song, game, x) {
+      var autoStart = arguments.length <= 5 || arguments[5] === undefined ? false : arguments[5];
+
+      var tween = game.add.tween(image).to({ x: x, y: game.height / 2, angle: 0 }, song.intro * song.beat, Phaser.Easing.Cubic.Out, false);
+      var delay = 0;
+      song.dance.map(function (step) {
+        return step[index];
+      }).forEach(function (step) {
+        if (step === 'r') {
+          tween = tween.to({ angle: -20, y: game.height / 2 }, song.beat, Phaser.Easing.Cubic.Out, false, delay);
+          delay = 0;
+        } else if (step === 'l') {
+          tween = tween.to({ angle: 20, y: game.height / 2 }, song.beat, Phaser.Easing.Cubic.Out, false, delay);
+          delay = 0;
+        } else if (step === 'u') {
+          tween = tween.to({ angle: 0, y: game.height / 2 - 20 }, song.beat, Phaser.Easing.Cubic.Out, false, delay);
+          delay = 0;
+        } else if (step === 'd') {
+          tween = tween.to({ angle: 0, y: game.height / 2 }, song.beat, Phaser.Easing.Cubic.Out, false, delay);
+          delay = 0;
+        } else if (step === '-') {
+          delay += song.beat;
+        }
+      });
+      if (autoStart) tween.start();
+      return tween;
+    }
+  }]);
+
+  return DanceInterperter;
+})();
+
+exports['default'] = new DanceInterperter();
+module.exports = exports['default'];
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Array.prototype.random = function () {
@@ -15,7 +116,19 @@ Array.prototype.flatMap = function (lambda) {
   return Array.prototype.concat.apply([], this.map(lambda));
 };
 
-},{}],2:[function(require,module,exports){
+Array.prototype.sum = function () {
+  return this.reduce(function (a, b) {
+    return a + b;
+  }, 0);
+};
+
+Array.prototype.max = function () {
+  return this.reduce(function (a, b) {
+    return a > b ? a : b;
+  }, Number.MIN_SAFE_INTEGER);
+};
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -70,7 +183,7 @@ var Game = (function (_Phaser$Game) {
 
 new Game();
 
-},{"./extensions":1,"./states/Boot":10,"./states/GameOver":11,"./states/GameTitle":12,"./states/Main":13,"./states/Preload":14}],3:[function(require,module,exports){
+},{"./extensions":3,"./states/Boot":12,"./states/GameOver":13,"./states/GameTitle":14,"./states/Main":15,"./states/Preload":16}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -90,7 +203,7 @@ var Animal = function Animal(name, w, h) {
 exports["default"] = Animal;
 module.exports = exports["default"];
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -109,7 +222,7 @@ var Scene = function Scene(name, locations) {
 exports["default"] = Scene;
 module.exports = exports["default"];
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -118,7 +231,7 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Song = function Song(name, bpm) {
+var Song = function Song(name, bpm, intro, dance) {
   _classCallCheck(this, Song);
 
   this.name = name;
@@ -130,13 +243,14 @@ var Song = function Song(name, bpm) {
   this.bpm = bpm;
   this.beat = 60000 / bpm;
   console.log(this.beat);
-  this.intro = 0.15;
+  this.intro = intro;
+  this.dance = dance;
 };
 
 exports["default"] = Song;
 module.exports = exports["default"];
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -167,7 +281,7 @@ var Repository = (function () {
 exports["default"] = Repository;
 module.exports = exports["default"];
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -205,7 +319,7 @@ var AnimalRepository = (function (_Repository) {
 exports['default'] = new AnimalRepository();
 module.exports = exports['default'];
 
-},{"../objects/Animal":3,"./Repository":6}],8:[function(require,module,exports){
+},{"../objects/Animal":5,"./Repository":8}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -243,7 +357,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../objects/Scene":4,"./Repository":6}],9:[function(require,module,exports){
+},{"../objects/Scene":6,"./Repository":8}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -262,6 +376,10 @@ var _objectsSong = require('../objects/Song');
 
 var _objectsSong2 = _interopRequireDefault(_objectsSong);
 
+var _dancesClock = require('../dances/clock');
+
+var _dancesClock2 = _interopRequireDefault(_dancesClock);
+
 var _Repository2 = require('./Repository');
 
 var _Repository3 = _interopRequireDefault(_Repository2);
@@ -272,7 +390,7 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsSong2['default']('clock', 110)]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsSong2['default']('clock', 110, 0.15, _dancesClock2['default'])]);
   }
 
   return SceneRepository;
@@ -281,7 +399,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../objects/Song":5,"./Repository":6}],10:[function(require,module,exports){
+},{"../dances/clock":1,"../objects/Song":7,"./Repository":8}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -322,7 +440,7 @@ var Boot = (function (_Phaser$State) {
 exports["default"] = Boot;
 module.exports = exports["default"];
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -362,7 +480,7 @@ var GameOver = (function (_Phaser$State) {
 exports["default"] = GameOver;
 module.exports = exports["default"];
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -402,7 +520,7 @@ var GameTitle = (function (_Phaser$State) {
 exports["default"] = GameTitle;
 module.exports = exports["default"];
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -432,6 +550,10 @@ var _repositoriesSongRepository = require('../repositories/songRepository');
 
 var _repositoriesSongRepository2 = _interopRequireDefault(_repositoriesSongRepository);
 
+var _dancesDanceInterperter = require('../dances/danceInterperter');
+
+var _dancesDanceInterperter2 = _interopRequireDefault(_dancesDanceInterperter);
+
 var Main = (function (_Phaser$State) {
   _inherits(Main, _Phaser$State);
 
@@ -443,6 +565,7 @@ var Main = (function (_Phaser$State) {
     _get(Object.getPrototypeOf(Main.prototype), 'constructor', this).call(this, game);
     this.numberOfAnimals = numberOfAnimals;
     this.animalsFound = 0;
+    this.rowMargin = 50;
   }
 
   _createClass(Main, [{
@@ -453,6 +576,7 @@ var Main = (function (_Phaser$State) {
       this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
       var locations = this.scene.locations.random(this.numberOfAnimals);
       this.song = _repositoriesSongRepository2['default'].random();
+      console.log(_dancesDanceInterperter2['default']);
 
       // set background
       var background = game.add.image(game.world.centerX, game.world.centerY, this.scene.name);
@@ -465,6 +589,7 @@ var Main = (function (_Phaser$State) {
       // });
 
       // place animals
+      this.animalImages = [];
       for (var i = 0; i < this.animals.length; i++) {
         var animal = this.animals[i];
         var _location = locations[i];
@@ -474,17 +599,48 @@ var Main = (function (_Phaser$State) {
         image.height = animal.h;
         image.inputEnabled = true;
         image.events.onInputDown.add(this.animalFound, this);
+        this.animalImages.push(image);
       }
     }
   }, {
     key: 'animalFound',
     value: function animalFound(image) {
+      var _this = this;
+
+      // this.allFound(); return;
+      if (this.currentTween) return;
+
       this.animalsFound++;
       this.game.add.audio(this.song.segments[this.animalsFound]).play();
-      var tween = this.game.add.tween(image).to({ angle: 20 }, this.song.beat, Phaser.Easing.Cubic.Out, false, this.song.intro * this.song.beat).to({ angle: -20 }, this.song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, this.song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, this.song.beat, Phaser.Easing.Cubic.Out).to({ x: this.game.width / 2, y: -image.height }, 100, Phaser.Easing.Linear.None);
-      tween.start();
-
+      this.currentTween = _dancesDanceInterperter2['default'].createAnimalFoundDance(image, this.song, this.game);
+      if (this.animalsFound === this.numberOfAnimals) {
+        this.currentTween.onComplete.add(this.allFound, this);
+      }
+      this.currentTween.onComplete.add(function () {
+        return _this.currentTween = undefined;
+      }, this);
+      this.currentTween.start();
       // image.kill();
+    }
+  }, {
+    key: 'allFound',
+    value: function allFound() {
+      var rowWidth = this.animalImages.map(function (image) {
+        return image.width;
+      }).sum() + (this.numberOfAnimals - 1) * this.rowMargin;
+      var currentX = this.game.width / 2 - rowWidth / 2;
+      this.game.add.audio(this.song.segments[0]).play();
+      var tweens = [];
+      for (var i = 0; i < this.animalImages.length; i++) {
+        var currentImage = this.animalImages[i];
+        currentX += currentImage.width / 2;
+        tweens.push(_dancesDanceInterperter2['default'].createAllAnimalsFoundDance(currentImage, i, this.song, this.game, currentX));
+        currentX += this.animalImages[i].width / 2 + this.rowMargin;
+      }
+
+      tweens.forEach(function (t) {
+        return t.start();
+      });
     }
   }], [{
     key: 'update',
@@ -497,7 +653,7 @@ var Main = (function (_Phaser$State) {
 exports['default'] = Main;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":7,"../repositories/sceneRepository":8,"../repositories/songRepository":9}],14:[function(require,module,exports){
+},{"../dances/danceInterperter":2,"../repositories/animalRepository":9,"../repositories/sceneRepository":10,"../repositories/songRepository":11}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -566,5 +722,5 @@ var Preload = (function (_Phaser$State) {
 exports['default'] = Preload;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":7,"../repositories/sceneRepository":8,"../repositories/songRepository":9}]},{},[2])
+},{"../repositories/animalRepository":9,"../repositories/sceneRepository":10,"../repositories/songRepository":11}]},{},[4])
 //# sourceMappingURL=game.js.map
