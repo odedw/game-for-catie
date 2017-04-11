@@ -16,7 +16,9 @@ module.exports = {
       "no-plusplus": 0,
       "no-loop-func": 0,
       "no-param-reassign": 0,
-      "no-console": 0
+      "no-console": 0,
+      "class-methods-use-this": 0,
+      "no-mixed-operators": 0
     },
     "env": {
         "browser": true

@@ -46,6 +46,8 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -57,10 +59,8 @@ var DanceInterperter = (function () {
 
   _createClass(DanceInterperter, [{
     key: 'createAnimalFoundDance',
-    value: function createAnimalFoundDance(image, song, game) {
-      var autoStart = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
-
-      return game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, autoStart, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ x: game.width / 2, y: -image.height }, 100, Phaser.Easing.Linear.None);
+    value: function createAnimalFoundDance(image, song, game, target) {
+      return game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None);
     }
   }, {
     key: 'createAllAnimalsFoundDance',
@@ -183,7 +183,7 @@ var Game = (function (_Phaser$Game) {
 
 new Game();
 
-},{"./extensions":3,"./states/Boot":12,"./states/GameOver":13,"./states/GameTitle":14,"./states/Main":15,"./states/Preload":16}],5:[function(require,module,exports){
+},{"./extensions":3,"./states/Boot":13,"./states/GameOver":14,"./states/GameTitle":15,"./states/Main":16,"./states/Preload":17}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -204,6 +204,60 @@ exports["default"] = Animal;
 module.exports = exports["default"];
 
 },{}],6:[function(require,module,exports){
+/// <reference path="../../typings/phaser.d.ts" />
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Panel = (function () {
+  function Panel(game, animalImages, group) {
+    _classCallCheck(this, Panel);
+
+    this.game = game;
+    var backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel');
+    backPanel.anchor.setTo(0.5, 0.5);
+    backPanel.targetWidth = game.width / 2;
+    backPanel.targetHeight = 200;
+    backPanel.UpdateImageSizes();
+    group.add(backPanel);
+    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 100, 'panel-dark');
+    this.frontPanel.anchor.setTo(0.5, 0.5);
+    this.frontPanel.targetWidth = game.width / 3;
+    this.frontPanel.targetHeight = 300;
+    this.frontPanel.UpdateImageSizes();
+    this.frontPanel.tint = Math.random() * 0xfeffff;
+    group.add(this.frontPanel);
+
+    var animalWidth = animalImages.map(function (image) {
+      return image.width;
+    }).sum();
+    this.margin = (this.frontPanel.targetWidth - animalWidth) / (animalImages.length + 1);
+    this.currentX = this.frontPanel.x + this.margin - this.frontPanel.targetWidth / 2;
+  }
+
+  _createClass(Panel, [{
+    key: 'getNextAnimalPlace',
+    value: function getNextAnimalPlace(animalImage) {
+      var result = { x: this.currentX + animalImage.width / 2, y: this.frontPanel.y };
+      this.currentX += animalImage.width + this.margin;
+      return result;
+    }
+  }]);
+
+  return Panel;
+})();
+
+exports['default'] = Panel;
+module.exports = exports['default'];
+
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -222,7 +276,7 @@ var Scene = function Scene(name, locations) {
 exports["default"] = Scene;
 module.exports = exports["default"];
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -250,7 +304,7 @@ var Song = function Song(name, bpm, intro, dance) {
 exports["default"] = Song;
 module.exports = exports["default"];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -281,7 +335,7 @@ var Repository = (function () {
 exports["default"] = Repository;
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -319,7 +373,7 @@ var AnimalRepository = (function (_Repository) {
 exports['default'] = new AnimalRepository();
 module.exports = exports['default'];
 
-},{"../objects/Animal":5,"./Repository":8}],10:[function(require,module,exports){
+},{"../objects/Animal":5,"./Repository":9}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -357,7 +411,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../objects/Scene":6,"./Repository":8}],11:[function(require,module,exports){
+},{"../objects/Scene":7,"./Repository":9}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -399,7 +453,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../dances/clock":1,"../objects/Song":7,"./Repository":8}],12:[function(require,module,exports){
+},{"../dances/clock":1,"../objects/Song":8,"./Repository":9}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -440,7 +494,7 @@ var Boot = (function (_Phaser$State) {
 exports["default"] = Boot;
 module.exports = exports["default"];
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -480,7 +534,7 @@ var GameOver = (function (_Phaser$State) {
 exports["default"] = GameOver;
 module.exports = exports["default"];
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -520,7 +574,7 @@ var GameTitle = (function (_Phaser$State) {
 exports["default"] = GameTitle;
 module.exports = exports["default"];
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -554,6 +608,10 @@ var _dancesDanceInterperter = require('../dances/danceInterperter');
 
 var _dancesDanceInterperter2 = _interopRequireDefault(_dancesDanceInterperter);
 
+var _objectsPanel = require('../objects/Panel');
+
+var _objectsPanel2 = _interopRequireDefault(_objectsPanel);
+
 var Main = (function (_Phaser$State) {
   _inherits(Main, _Phaser$State);
 
@@ -576,10 +634,12 @@ var Main = (function (_Phaser$State) {
       this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
       var locations = this.scene.locations.random(this.numberOfAnimals);
       this.song = _repositoriesSongRepository2['default'].random();
-      console.log(_dancesDanceInterperter2['default']);
+
+      var backgroundGroup = game.add.group();
+      var animalGroup = game.add.group();
 
       // set background
-      var background = game.add.image(game.world.centerX, game.world.centerY, this.scene.name);
+      var background = backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
       background.anchor.set(0.5);
       background.width = game.width;
       background.height = game.height;
@@ -593,7 +653,7 @@ var Main = (function (_Phaser$State) {
       for (var i = 0; i < this.animals.length; i++) {
         var animal = this.animals[i];
         var _location = locations[i];
-        var image = game.add.image(game.width * (_location.x / 100), game.height * (_location.y / 100), animal.name);
+        var image = animalGroup.create(game.width * (_location.x / 100), game.height * (_location.y / 100), animal.name);
         image.anchor.set(0.5);
         image.width = animal.w;
         image.height = animal.h;
@@ -601,6 +661,9 @@ var Main = (function (_Phaser$State) {
         image.events.onInputDown.add(this.animalFound, this);
         this.animalImages.push(image);
       }
+
+      // panel
+      this.panel = new _objectsPanel2['default'](game, this.animalImages, backgroundGroup);
     }
   }, {
     key: 'animalFound',
@@ -612,7 +675,7 @@ var Main = (function (_Phaser$State) {
 
       this.animalsFound++;
       this.game.add.audio(this.song.segments[this.animalsFound]).play();
-      this.currentTween = _dancesDanceInterperter2['default'].createAnimalFoundDance(image, this.song, this.game);
+      this.currentTween = _dancesDanceInterperter2['default'].createAnimalFoundDance(image, this.song, this.game, this.panel.getNextAnimalPlace(image));
       if (this.animalsFound === this.numberOfAnimals) {
         this.currentTween.onComplete.add(this.allFound, this);
       }
@@ -653,7 +716,7 @@ var Main = (function (_Phaser$State) {
 exports['default'] = Main;
 module.exports = exports['default'];
 
-},{"../dances/danceInterperter":2,"../repositories/animalRepository":9,"../repositories/sceneRepository":10,"../repositories/songRepository":11}],16:[function(require,module,exports){
+},{"../dances/danceInterperter":2,"../objects/Panel":6,"../repositories/animalRepository":10,"../repositories/sceneRepository":11,"../repositories/songRepository":12}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -701,6 +764,8 @@ var Preload = (function (_Phaser$State) {
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/assets/images/animals/' + item.name + '.png');
       });
+      game.load.image('panel', 'static/assets/images/panel.png');
+      game.load.image('panel-dark', 'static/assets/images/panel-dark.png');
       _repositoriesSongRepository2['default'].items.forEach(function (item) {
         return item.segments.forEach(function (segment) {
           return ['mp3', 'ogg'].forEach(function (format) {
@@ -712,6 +777,8 @@ var Preload = (function (_Phaser$State) {
   }, {
     key: 'create',
     value: function create() {
+      this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
+      this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
       this.game.state.start('Main');
     }
   }]);
@@ -722,5 +789,5 @@ var Preload = (function (_Phaser$State) {
 exports['default'] = Preload;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":9,"../repositories/sceneRepository":10,"../repositories/songRepository":11}]},{},[4])
+},{"../repositories/animalRepository":10,"../repositories/sceneRepository":11,"../repositories/songRepository":12}]},{},[4])
 //# sourceMappingURL=game.js.map

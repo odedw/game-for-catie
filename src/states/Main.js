@@ -3,6 +3,8 @@ import animalRepo from '../repositories/animalRepository';
 import sceneRepo from '../repositories/sceneRepository';
 import songRepo from '../repositories/songRepository';
 import danceInterperter from '../dances/danceInterperter';
+import Panel from '../objects/Panel';
+
 
 class Main extends Phaser.State {
   constructor(game, numberOfAnimals = 4) {
@@ -17,10 +19,12 @@ class Main extends Phaser.State {
     this.animals = animalRepo.random(this.numberOfAnimals);
     const locations = this.scene.locations.random(this.numberOfAnimals);
     this.song = songRepo.random();
-    console.log(danceInterperter);
+
+    const backgroundGroup = game.add.group();
+    const animalGroup = game.add.group();
 
     // set background
-    const background = game.add.image(game.world.centerX, game.world.centerY, this.scene.name);
+    const background = backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
     background.anchor.set(0.5);
     background.width = game.width;
     background.height = game.height;
@@ -29,12 +33,14 @@ class Main extends Phaser.State {
     //   console.log('{x: '+(100 * game.input.mousePointer.x / game.width) + ', y:' + (100 * game.input.mousePointer.y / game.height) + '}');
     // });
 
+    
+
     // place animals
     this.animalImages = [];
     for (let i = 0; i < this.animals.length; i++) {
       const animal = this.animals[i];
       const location = locations[i];
-      const image = game.add.image(game.width * (location.x / 100), game.height * (location.y / 100), animal.name);
+      const image = animalGroup.create(game.width * (location.x / 100), game.height * (location.y / 100), animal.name);
       image.anchor.set(0.5);
       image.width = animal.w;
       image.height = animal.h;
@@ -42,6 +48,9 @@ class Main extends Phaser.State {
       image.events.onInputDown.add(this.animalFound, this);
       this.animalImages.push(image);
     }
+
+    // panel
+    this.panel = new Panel(game, this.animalImages, backgroundGroup);
   }
 
   animalFound(image) {
@@ -50,7 +59,7 @@ class Main extends Phaser.State {
 
     this.animalsFound++;
     this.game.add.audio(this.song.segments[this.animalsFound]).play();
-    this.currentTween = danceInterperter.createAnimalFoundDance(image, this.song, this.game);
+    this.currentTween = danceInterperter.createAnimalFoundDance(image, this.song, this.game, this.panel.getNextAnimalPlace(image));
     if (this.animalsFound === this.numberOfAnimals) {
       this.currentTween.onComplete.add(this.allFound, this);
     }
