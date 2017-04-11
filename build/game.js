@@ -221,19 +221,31 @@ var Panel = (function () {
     _classCallCheck(this, Panel);
 
     this.game = game;
-    var backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel');
+    var backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel-dark');
     backPanel.anchor.setTo(0.5, 0.5);
     backPanel.targetWidth = game.width / 2;
     backPanel.targetHeight = 200;
     backPanel.UpdateImageSizes();
     group.add(backPanel);
-    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 100, 'panel-dark');
+    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 100, 'panel');
     this.frontPanel.anchor.setTo(0.5, 0.5);
     this.frontPanel.targetWidth = game.width / 3;
     this.frontPanel.targetHeight = 300;
     this.frontPanel.UpdateImageSizes();
     this.frontPanel.tint = Math.random() * 0xfeffff;
     group.add(this.frontPanel);
+
+    var btnMargin = 30;
+    var btnWidth = (backPanel.targetWidth - this.frontPanel.targetWidth) / 2 - btnMargin * 2;
+    this.hintButton = game.add.button(backPanel.x - backPanel.targetWidth / 2 + btnWidth / 2 + btnMargin, backPanel.y - 5, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
+    this.hintButton.anchor.setTo(0.5, 0.5);
+    this.hintButton.width = btnWidth;
+    this.hintButton.height = 100;
+
+    this.pauseButton = game.add.button(backPanel.x + backPanel.targetWidth / 2 - btnWidth / 2 - btnMargin, backPanel.y - 5, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
+    this.pauseButton.anchor.setTo(0.5, 0.5);
+    this.pauseButton.width = btnWidth;
+    this.pauseButton.height = 100;
 
     var animalWidth = animalImages.map(function (image) {
       return image.width;
@@ -664,6 +676,8 @@ var Main = (function (_Phaser$State) {
 
       // panel
       this.panel = new _objectsPanel2['default'](game, this.animalImages, backgroundGroup);
+      this.panel.hintButton.events.onInputUp.add(this.onHint, this);
+      this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
     }
   }, {
     key: 'animalFound',
@@ -705,6 +719,14 @@ var Main = (function (_Phaser$State) {
         return t.start();
       });
     }
+  }, {
+    key: 'onHint',
+    value: function onHint() {
+      console.log('hint');
+    }
+  }, {
+    key: 'onPause',
+    value: function onPause() {}
   }], [{
     key: 'update',
     value: function update() {}
@@ -764,8 +786,10 @@ var Preload = (function (_Phaser$State) {
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/assets/images/animals/' + item.name + '.png');
       });
-      game.load.image('panel', 'static/assets/images/panel.png');
-      game.load.image('panel-dark', 'static/assets/images/panel-dark.png');
+      this.loadImage('panel');
+      this.loadImage('panel-dark');
+      // this.loadImage('btn');
+      // this.loadImage('btn-down');
       _repositoriesSongRepository2['default'].items.forEach(function (item) {
         return item.segments.forEach(function (segment) {
           return ['mp3', 'ogg'].forEach(function (format) {
@@ -773,12 +797,21 @@ var Preload = (function (_Phaser$State) {
           });
         });
       });
+
+      game.load.atlasJSONHash('button', 'static/assets/images/button.png', 'static/assets/images/button.json');
+    }
+  }, {
+    key: 'loadImage',
+    value: function loadImage(name) {
+      this.game.load.image(name, 'static/assets/images/' + name + '.png');
     }
   }, {
     key: 'create',
     value: function create() {
       this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
       this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
+      // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
+      // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
       this.game.state.start('Main');
     }
   }]);

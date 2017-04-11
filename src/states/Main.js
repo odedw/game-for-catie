@@ -51,6 +51,8 @@ class Main extends Phaser.State {
 
     // panel
     this.panel = new Panel(game, this.animalImages, backgroundGroup);
+    this.panel.hintButton.events.onInputUp.add(this.onHint, this);
+    this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
   }
 
   animalFound(image) {
@@ -84,7 +86,14 @@ class Main extends Phaser.State {
 
 
   }
+  
+  onHint() {
+    console.log('hint');
+  }
 
+  onPause() {
+
+  }
   static update() {
   }
 }
