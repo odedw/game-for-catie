@@ -68,6 +68,11 @@ function copyStatic() {
         .pipe(gulp.dest(BUILD_PATH));
 }
 
+function copyStaticJs() {
+    return gulp.src(STATIC_PATH + '/assets/js/*')
+        .pipe(gulp.dest(BUILD_PATH));
+}
+
 /**
  * Copies required Phaser files from the './node_modules/Phaser' folder into the './build/scripts' folder.
  * This way you can call 'npm update', get the lastest Phaser version and use it on your project with ease.
@@ -150,7 +155,8 @@ function serve() {
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
 gulp.task('copyPhaser', ['cleanBuild'], copyPhaser);
-gulp.task('build', ['copyPhaser'], build);
+gulp.task('copyStaticJs', ['cleanBuild'], copyStaticJs);
+gulp.task('build', ['copyPhaser', 'copyStaticJs'], build);
 gulp.task('fastBuild', build);
 gulp.task('serve', ['build'], serve);
 gulp.task('watch-js', ['fastBuild'], browserSync.reload); // Rebuilds and reloads the project when executed.
