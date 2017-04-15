@@ -52,6 +52,9 @@ class Main extends Phaser.State {
     this.panel = new Panel(game, this.animalImages, backgroundGroup);
     this.panel.hintButton.events.onInputUp.add(this.onHint, this);
     this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
+
+    // peek repeat
+    game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
   }
 
   animalFound(image) {
@@ -86,12 +89,16 @@ class Main extends Phaser.State {
       currentX += (this.animalImagesFound[i].width / 2) + this.rowMargin;
     }
 
+    this.game.events.removeAll();
+
     tweens.forEach(t => t.start());
   }
-  
+
   onHint() {
     const image = this.animalImages.random();
-    this.danceInterperter.createAnimalPeekDance(image);
+    console.log('here');
+    if (image) this.danceInterperter.createAnimalPeekDance(image);
+    this.game.add.audio('peek' + (Math.floor(Math.random() * 4) + 1).toString()).play();
   }
 
   onPause() {

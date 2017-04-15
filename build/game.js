@@ -696,6 +696,9 @@ var Main = (function (_Phaser$State) {
       this.panel = new _objectsPanel2['default'](game, this.animalImages, backgroundGroup);
       this.panel.hintButton.events.onInputUp.add(this.onHint, this);
       this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
+
+      // peek repeat
+      game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
     }
   }, {
     key: 'animalFound',
@@ -738,6 +741,8 @@ var Main = (function (_Phaser$State) {
         currentX += this.animalImagesFound[i].width / 2 + this.rowMargin;
       }
 
+      this.game.events.removeAll();
+
       tweens.forEach(function (t) {
         return t.start();
       });
@@ -746,7 +751,9 @@ var Main = (function (_Phaser$State) {
     key: 'onHint',
     value: function onHint() {
       var image = this.animalImages.random();
-      this.danceInterperter.createAnimalPeekDance(image);
+      console.log('here');
+      if (image) this.danceInterperter.createAnimalPeekDance(image);
+      this.game.add.audio('peek' + (Math.floor(Math.random() * 4) + 1).toString()).play();
     }
   }, {
     key: 'onPause',
@@ -804,6 +811,8 @@ var Preload = (function (_Phaser$State) {
     key: 'preload',
     value: function preload() {
       var game = this.game;
+
+      // images
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/assets/images/scenes/' + item.name + '.png');
       });
@@ -814,6 +823,8 @@ var Preload = (function (_Phaser$State) {
       this.loadImage('panel-dark');
       // this.loadImage('btn');
       // this.loadImage('btn-down');
+
+      // sounds
       _repositoriesSongRepository2['default'].items.forEach(function (item) {
         return item.segments.forEach(function (segment) {
           return ['mp3', 'ogg'].forEach(function (format) {
@@ -821,13 +832,24 @@ var Preload = (function (_Phaser$State) {
           });
         });
       });
+      this.loadSound('peek1');
+      this.loadSound('peek2');
+      this.loadSound('peek3');
+      this.loadSound('peek4');
 
+      // atlas
       game.load.atlasJSONHash('button', 'static/assets/images/button.png', 'static/assets/images/button.json');
     }
   }, {
     key: 'loadImage',
     value: function loadImage(name) {
       this.game.load.image(name, 'static/assets/images/' + name + '.png');
+    }
+  }, {
+    key: 'loadSound',
+    value: function loadSound(name) {
+      this.game.load.audio(name, 'static/assets/sounds/' + name + '.mp3');
+      this.game.load.audio(name, 'static/assets/sounds/' + name + '.ogg');
     }
   }, {
     key: 'create',
