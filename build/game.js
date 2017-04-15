@@ -26,12 +26,12 @@ var DanceInterperter = (function () {
   }, {
     key: 'createAnimalPeekDance',
     value: function createAnimalPeekDance(image) {
-      var maxAngle = 5;
+      var maxAngle = 10;
       var tween = this.game.add.tween(image);
       var firstTween = tween;
       var direction = 1;
       for (var i = maxAngle; i >= 0; i--) {
-        tween = tween.to({ angle: i * direction }, i * 15, Phaser.Easing.Cubic.Out, false);
+        tween = tween.to({ angle: i * direction }, i * 5, Phaser.Easing.Cubic.Out, false);
         direction *= -1;
       }
       firstTween.start();

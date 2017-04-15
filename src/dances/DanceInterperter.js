@@ -13,12 +13,12 @@ class DanceInterperter {
   }
 
   createAnimalPeekDance(image) {
-    const maxAngle = 5;
+    const maxAngle = 10;
     let tween = this.game.add.tween(image);
     const firstTween = tween;
     let direction = 1;
     for (let i = maxAngle; i >= 0; i--) {
-      tween = tween.to({ angle: i * direction }, i * 15, Phaser.Easing.Cubic.Out, false);
+      tween = tween.to({ angle: i * direction }, i * 5, Phaser.Easing.Cubic.Out, false);
       direction *= -1;
     }
     firstTween.start();
