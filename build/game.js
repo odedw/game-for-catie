@@ -751,9 +751,8 @@ var Main = (function (_Phaser$State) {
     key: 'onHint',
     value: function onHint() {
       var image = this.animalImages.random();
-      console.log('here');
       if (image) this.danceInterperter.createAnimalPeekDance(image);
-      this.game.add.audio('peek' + (Math.floor(Math.random() * 4) + 1).toString()).play();
+      this.game.add.audio('peek' + (Math.floor(Math.random() * 4) + 1)).play();
     }
   }, {
     key: 'onPause',

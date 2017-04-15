@@ -96,9 +96,8 @@ class Main extends Phaser.State {
 
   onHint() {
     const image = this.animalImages.random();
-    console.log('here');
     if (image) this.danceInterperter.createAnimalPeekDance(image);
-    this.game.add.audio('peek' + (Math.floor(Math.random() * 4) + 1).toString()).play();
+    this.game.add.audio(`peek${(Math.floor(Math.random() * 4) + 1)}`).play();
   }
 
   onPause() {
