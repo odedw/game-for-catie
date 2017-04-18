@@ -4,6 +4,7 @@ import sceneRepo from '../repositories/sceneRepository';
 import songRepo from '../repositories/songRepository';
 import DanceInterperter from '../dances/DanceInterperter';
 import Panel from '../objects/Panel';
+import PauseMenu from '../objects/PauseMenu';
 
 
 class Main extends Phaser.State {
@@ -16,7 +17,7 @@ class Main extends Phaser.State {
 
   init(scene) {
     this.scene = scene || sceneRepo.random();
-    
+
     const game = this.game;
     this.animals = animalRepo.random(this.numberOfAnimals);
     this.animalImagesFound = [];
@@ -51,12 +52,15 @@ class Main extends Phaser.State {
     this.panel.hintButton.events.onInputUp.add(this.onHint, this);
     this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
+    // menu
+    // this.menu = new PauseMenu(game);
+
     // peek repeat
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
   }
 
   create() {
-    
+
   }
 
   animalFound(image) {

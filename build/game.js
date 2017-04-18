@@ -200,7 +200,7 @@ var Game = (function (_Phaser$Game) {
 
 new Game();
 
-},{"./extensions":3,"./states/Boot":13,"./states/GameOver":14,"./states/GameTitle":15,"./states/Main":16,"./states/Preload":17}],5:[function(require,module,exports){
+},{"./extensions":3,"./states/Boot":14,"./states/GameOver":15,"./states/GameTitle":16,"./states/Main":17,"./states/Preload":18}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -287,6 +287,46 @@ exports['default'] = Panel;
 module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
+/// <reference path="../../typings/phaser.d.ts" />
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var PauseMenu = (function () {
+  function PauseMenu(game) {
+    _classCallCheck(this, PauseMenu);
+
+    this.game = game;
+    this.container = game.add.group();
+    this.panel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.centerY, 'panel');
+    this.panel.anchor.setTo(0.5, 0.5);
+    this.panel.targetWidth = 200;
+    this.panel.targetHeight = 200;
+    this.panel.UpdateImageSizes();
+    this.container.visible = false;
+  }
+
+  _createClass(PauseMenu, [{
+    key: 'show',
+    value: function show() {
+      this.container.visible = true;
+    }
+  }]);
+
+  return PauseMenu;
+})();
+
+exports['default'] = PauseMenu;
+module.exports = exports['default'];
+
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -305,7 +345,7 @@ var Scene = function Scene(name, locations) {
 exports["default"] = Scene;
 module.exports = exports["default"];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -333,7 +373,7 @@ var Song = function Song(name, bpm, intro, dance) {
 exports["default"] = Song;
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -364,7 +404,7 @@ var Repository = (function () {
 exports["default"] = Repository;
 module.exports = exports["default"];
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -402,7 +442,7 @@ var AnimalRepository = (function (_Repository) {
 exports['default'] = new AnimalRepository();
 module.exports = exports['default'];
 
-},{"../objects/Animal":5,"./Repository":9}],11:[function(require,module,exports){
+},{"../objects/Animal":5,"./Repository":10}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -441,7 +481,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../objects/Scene":7,"./Repository":9}],12:[function(require,module,exports){
+},{"../objects/Scene":8,"./Repository":10}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -483,7 +523,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../dances/clock":2,"../objects/Song":8,"./Repository":9}],13:[function(require,module,exports){
+},{"../dances/clock":2,"../objects/Song":9,"./Repository":10}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -524,7 +564,7 @@ var Boot = (function (_Phaser$State) {
 exports["default"] = Boot;
 module.exports = exports["default"];
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -564,7 +604,7 @@ var GameOver = (function (_Phaser$State) {
 exports["default"] = GameOver;
 module.exports = exports["default"];
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -599,7 +639,7 @@ var GameTitle = (function (_Phaser$State) {
     value: function create() {
       var _this = this;
 
-      // this.game.stage.backgroundColor = '#e6e6e6';
+      this.game.stage.backgroundColor = '#e6e6e6';
       var imagesPerRow = 4;
 
       var rows = Math.ceil(_repositoriesSceneRepository2['default'].items.length / imagesPerRow);
@@ -607,6 +647,7 @@ var GameTitle = (function (_Phaser$State) {
       var imageHeight = 9 * imageWidth / 16;
       var margin = (this.game.width - imageWidth * imagesPerRow) / 5;
       var yMargin = (this.game.height - (rows * imageHeight + (rows - 1) * margin)) / 2;
+      var graphics = this.game.add.graphics(0, 0);
 
       var _loop = function (index) {
         var scene = _repositoriesSceneRepository2['default'].items[index];
@@ -619,6 +660,15 @@ var GameTitle = (function (_Phaser$State) {
         image.events.onInputDown.add(function () {
           return _this.startGame(scene);
         }, _this);
+        var mask = _this.game.add.graphics(0, 0);
+        mask.beginFill(0xffffff);
+        mask.drawRoundedRect(image.x, image.y, image.width, image.height, 50);
+        image.mask = mask;
+        mask.endFill();
+
+        graphics.beginFill(0);
+        graphics.drawRoundedRect(image.x - 1, image.y - 1, image.width + 2, image.height + 2, 50);
+        graphics.endFill();
       };
 
       for (var index = 0; index < _repositoriesSceneRepository2['default'].items.length; index++) {
@@ -638,7 +688,7 @@ var GameTitle = (function (_Phaser$State) {
 exports['default'] = GameTitle;
 module.exports = exports['default'];
 
-},{"../repositories/sceneRepository":11}],16:[function(require,module,exports){
+},{"../repositories/sceneRepository":12}],17:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -675,6 +725,10 @@ var _dancesDanceInterperter2 = _interopRequireDefault(_dancesDanceInterperter);
 var _objectsPanel = require('../objects/Panel');
 
 var _objectsPanel2 = _interopRequireDefault(_objectsPanel);
+
+var _objectsPauseMenu = require('../objects/PauseMenu');
+
+var _objectsPauseMenu2 = _interopRequireDefault(_objectsPauseMenu);
 
 var Main = (function (_Phaser$State) {
   _inherits(Main, _Phaser$State);
@@ -728,6 +782,9 @@ var Main = (function (_Phaser$State) {
       this.panel = new _objectsPanel2['default'](game, this.animalImages, backgroundGroup);
       this.panel.hintButton.events.onInputUp.add(this.onHint, this);
       this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
+
+      // menu
+      // this.menu = new PauseMenu(game);
 
       // peek repeat
       game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -803,7 +860,7 @@ var Main = (function (_Phaser$State) {
 exports['default'] = Main;
 module.exports = exports['default'];
 
-},{"../dances/DanceInterperter":1,"../objects/Panel":6,"../repositories/animalRepository":10,"../repositories/sceneRepository":11,"../repositories/songRepository":12}],17:[function(require,module,exports){
+},{"../dances/DanceInterperter":1,"../objects/Panel":6,"../objects/PauseMenu":7,"../repositories/animalRepository":11,"../repositories/sceneRepository":12,"../repositories/songRepository":13}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -902,5 +959,5 @@ var Preload = (function (_Phaser$State) {
 exports['default'] = Preload;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":10,"../repositories/sceneRepository":11,"../repositories/songRepository":12}]},{},[4])
+},{"../repositories/animalRepository":11,"../repositories/sceneRepository":12,"../repositories/songRepository":13}]},{},[4])
 //# sourceMappingURL=game.js.map
