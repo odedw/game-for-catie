@@ -7,15 +7,17 @@ import Panel from '../objects/Panel';
 
 
 class Main extends Phaser.State {
-  constructor(game, numberOfAnimals = 4) {
+  constructor(game, params, numberOfAnimals = 4) {
     super(game);
     this.numberOfAnimals = numberOfAnimals;
     this.rowMargin = 50;
     this.danceInterperter = new DanceInterperter(game);
   }
-  create() {
+
+  init(scene) {
+    this.scene = scene || sceneRepo.random();
+    
     const game = this.game;
-    this.scene = sceneRepo.random();
     this.animals = animalRepo.random(this.numberOfAnimals);
     this.animalImagesFound = [];
     const locations = this.scene.locations.random(this.numberOfAnimals);
@@ -29,10 +31,6 @@ class Main extends Phaser.State {
     background.anchor.set(0.5);
     background.width = game.width;
     background.height = game.height;
-    // background.inputEnabled = true;
-    // background.events.onInputDown.add(() => {
-    //   console.log('{x: '+(100 * game.input.mousePointer.x / game.width) + ', y:' + (100 * game.input.mousePointer.y / game.height) + '}');
-    // });
 
     // place animals
     this.animalImages = [];
@@ -55,6 +53,10 @@ class Main extends Phaser.State {
 
     // peek repeat
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
+  }
+
+  create() {
+    
   }
 
   animalFound(image) {
@@ -89,7 +91,7 @@ class Main extends Phaser.State {
       currentX += (this.animalImagesFound[i].width / 2) + this.rowMargin;
     }
 
-    this.game.events.removeAll();
+    this.game.time.events.removeAll();
 
     tweens.forEach(t => t.start());
   }

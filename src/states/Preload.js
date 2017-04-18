@@ -42,7 +42,7 @@ class Preload extends Phaser.State {
     this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
     // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
     // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
-    this.game.state.start('Main');
+    this.game.state.start('GameTitle');
   }
 
 }

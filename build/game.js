@@ -431,12 +431,13 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('a', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('b', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('c', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('a', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('b', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('c', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('d', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('e', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('f', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('g', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('h', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
   }
 
   return SceneRepository;
 })(_Repository3['default']);
 
+// new Scene('i', [{x: 14, y:25}, {x: 25, y:74}, {x: 43, y:19}, {x: 45, y:62}, {x: 58, y:24}, {x: 58, y:65}, {x: 68, y:26}, {x: 82, y:69}, {x: 90, y:24}]),
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
@@ -564,46 +565,80 @@ exports["default"] = GameOver;
 module.exports = exports["default"];
 
 },{}],15:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _repositoriesSceneRepository = require('../repositories/sceneRepository');
+
+var _repositoriesSceneRepository2 = _interopRequireDefault(_repositoriesSceneRepository);
 
 var GameTitle = (function (_Phaser$State) {
-	_inherits(GameTitle, _Phaser$State);
+  _inherits(GameTitle, _Phaser$State);
 
-	function GameTitle() {
-		_classCallCheck(this, GameTitle);
+  function GameTitle() {
+    _classCallCheck(this, GameTitle);
 
-		_get(Object.getPrototypeOf(GameTitle.prototype), "constructor", this).apply(this, arguments);
-	}
+    _get(Object.getPrototypeOf(GameTitle.prototype), 'constructor', this).apply(this, arguments);
+  }
 
-	_createClass(GameTitle, [{
-		key: "create",
-		value: function create() {}
-	}, {
-		key: "startGame",
-		value: function startGame() {
-			this.game.state.start("Main");
-		}
-	}]);
+  _createClass(GameTitle, [{
+    key: 'create',
+    value: function create() {
+      var _this = this;
 
-	return GameTitle;
+      // this.game.stage.backgroundColor = '#e6e6e6';
+      var imagesPerRow = 4;
+
+      var rows = Math.ceil(_repositoriesSceneRepository2['default'].items.length / imagesPerRow);
+      var imageWidth = this.game.width / (imagesPerRow + 2);
+      var imageHeight = 9 * imageWidth / 16;
+      var margin = (this.game.width - imageWidth * imagesPerRow) / 5;
+      var yMargin = (this.game.height - (rows * imageHeight + (rows - 1) * margin)) / 2;
+
+      var _loop = function (index) {
+        var scene = _repositoriesSceneRepository2['default'].items[index];
+        var x = index % imagesPerRow;
+        var y = Math.floor(index / imagesPerRow);
+        var image = _this.game.add.sprite((x + 1) * margin + x * imageWidth, yMargin + y * margin + y * imageHeight, scene.name);
+        image.width = imageWidth;
+        image.height = imageHeight;
+        image.inputEnabled = true;
+        image.events.onInputDown.add(function () {
+          return _this.startGame(scene);
+        }, _this);
+      };
+
+      for (var index = 0; index < _repositoriesSceneRepository2['default'].items.length; index++) {
+        _loop(index);
+      }
+    }
+  }, {
+    key: 'startGame',
+    value: function startGame(scene) {
+      this.game.state.start('Main', true, false, scene);
+    }
+  }]);
+
+  return GameTitle;
 })(Phaser.State);
 
-exports["default"] = GameTitle;
-module.exports = exports["default"];
+exports['default'] = GameTitle;
+module.exports = exports['default'];
 
-},{}],16:[function(require,module,exports){
+},{"../repositories/sceneRepository":11}],16:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -644,8 +679,8 @@ var _objectsPanel2 = _interopRequireDefault(_objectsPanel);
 var Main = (function (_Phaser$State) {
   _inherits(Main, _Phaser$State);
 
-  function Main(game) {
-    var numberOfAnimals = arguments.length <= 1 || arguments[1] === undefined ? 4 : arguments[1];
+  function Main(game, params) {
+    var numberOfAnimals = arguments.length <= 2 || arguments[2] === undefined ? 4 : arguments[2];
 
     _classCallCheck(this, Main);
 
@@ -656,10 +691,11 @@ var Main = (function (_Phaser$State) {
   }
 
   _createClass(Main, [{
-    key: 'create',
-    value: function create() {
+    key: 'init',
+    value: function init(scene) {
+      this.scene = scene || _repositoriesSceneRepository2['default'].random();
+
       var game = this.game;
-      this.scene = _repositoriesSceneRepository2['default'].random();
       this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
       this.animalImagesFound = [];
       var locations = this.scene.locations.random(this.numberOfAnimals);
@@ -673,10 +709,6 @@ var Main = (function (_Phaser$State) {
       background.anchor.set(0.5);
       background.width = game.width;
       background.height = game.height;
-      // background.inputEnabled = true;
-      // background.events.onInputDown.add(() => {
-      //   console.log('{x: '+(100 * game.input.mousePointer.x / game.width) + ', y:' + (100 * game.input.mousePointer.y / game.height) + '}');
-      // });
 
       // place animals
       this.animalImages = [];
@@ -700,6 +732,9 @@ var Main = (function (_Phaser$State) {
       // peek repeat
       game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
     }
+  }, {
+    key: 'create',
+    value: function create() {}
   }, {
     key: 'animalFound',
     value: function animalFound(image) {
@@ -741,7 +776,7 @@ var Main = (function (_Phaser$State) {
         currentX += this.animalImagesFound[i].width / 2 + this.rowMargin;
       }
 
-      this.game.events.removeAll();
+      this.game.time.events.removeAll();
 
       tweens.forEach(function (t) {
         return t.start();
@@ -857,7 +892,7 @@ var Preload = (function (_Phaser$State) {
       this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
       // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
       // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
-      this.game.state.start('Main');
+      this.game.state.start('GameTitle');
     }
   }]);
 
