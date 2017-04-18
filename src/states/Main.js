@@ -53,7 +53,7 @@ class Main extends Phaser.State {
     this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
     // menu
-    // this.menu = new PauseMenu(game);
+    this.menu = new PauseMenu(game);
 
     // peek repeat
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -107,7 +107,7 @@ class Main extends Phaser.State {
   }
 
   onPause() {
-
+    this.menu.show();
   }
   static update() {
   }

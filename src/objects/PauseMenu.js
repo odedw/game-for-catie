@@ -9,6 +9,7 @@ class PauseMenu {
     this.panel.targetWidth = 200;
     this.panel.targetHeight = 200;
     this.panel.UpdateImageSizes();
+    this.container.add(this.panel);
     this.container.visible = false;
   }
 
