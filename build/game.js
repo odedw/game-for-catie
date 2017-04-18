@@ -310,6 +310,7 @@ var PauseMenu = (function () {
     this.panel.targetWidth = 200;
     this.panel.targetHeight = 200;
     this.panel.UpdateImageSizes();
+    this.container.add(this.panel);
     this.container.visible = false;
   }
 
@@ -647,7 +648,8 @@ var GameTitle = (function (_Phaser$State) {
       var imageHeight = 9 * imageWidth / 16;
       var margin = (this.game.width - imageWidth * imagesPerRow) / 5;
       var yMargin = (this.game.height - (rows * imageHeight + (rows - 1) * margin)) / 2;
-      var graphics = this.game.add.graphics(0, 0);
+      this.graphics = this.game.add.graphics(0, 0);
+      var mask = this.game.add.graphics(0, 0);
 
       var _loop = function (index) {
         var scene = _repositoriesSceneRepository2['default'].items[index];
@@ -660,15 +662,14 @@ var GameTitle = (function (_Phaser$State) {
         image.events.onInputDown.add(function () {
           return _this.startGame(scene);
         }, _this);
-        var mask = _this.game.add.graphics(0, 0);
         mask.beginFill(0xffffff);
         mask.drawRoundedRect(image.x, image.y, image.width, image.height, 50);
         image.mask = mask;
         mask.endFill();
 
-        graphics.beginFill(0);
-        graphics.drawRoundedRect(image.x - 1, image.y - 1, image.width + 2, image.height + 2, 50);
-        graphics.endFill();
+        _this.graphics.beginFill(0);
+        _this.graphics.drawRoundedRect(image.x - 1, image.y - 1, image.width + 2, image.height + 2, 50);
+        _this.graphics.endFill();
       };
 
       for (var index = 0; index < _repositoriesSceneRepository2['default'].items.length; index++) {
@@ -678,7 +679,19 @@ var GameTitle = (function (_Phaser$State) {
   }, {
     key: 'startGame',
     value: function startGame(scene) {
-      this.game.state.start('Main', true, false, scene);
+      // this.game.state.start('Main', true, false, scene);
+      // this.graphics.destroy();
+      this.game.state.start('Main', {
+        ease: Phaser.Easing.Exponential.InOut,
+        duration: 500,
+        intro: false,
+        props: { alpha: 0 }
+      }, {
+        ease: Phaser.Easing.Exponential.InOut,
+        duration: 500,
+        intro: true,
+        props: { alpha: 1 }
+      }, true, false, scene);
     }
   }]);
 
@@ -784,7 +797,7 @@ var Main = (function (_Phaser$State) {
       this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
       // menu
-      // this.menu = new PauseMenu(game);
+      this.menu = new _objectsPauseMenu2['default'](game);
 
       // peek repeat
       game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -848,7 +861,9 @@ var Main = (function (_Phaser$State) {
     }
   }, {
     key: 'onPause',
-    value: function onPause() {}
+    value: function onPause() {
+      this.menu.show();
+    }
   }], [{
     key: 'update',
     value: function update() {}

@@ -11,7 +11,8 @@ class GameTitle extends Phaser.State {
     const imageHeight = 9 * imageWidth / 16;
     const margin = (this.game.width - (imageWidth * imagesPerRow)) / 5;
     const yMargin = (this.game.height - ((rows * imageHeight) + (rows - 1) * margin)) / 2;
-    const graphics = this.game.add.graphics(0, 0);
+    this.graphics = this.game.add.graphics(0, 0);
+      const mask = this.game.add.graphics(0, 0);
 
     for (let index = 0; index < sceneRepo.items.length; index++) {
       const scene = sceneRepo.items[index];
@@ -24,20 +25,31 @@ class GameTitle extends Phaser.State {
       image.height = imageHeight;
       image.inputEnabled = true;
       image.events.onInputDown.add(() => this.startGame(scene), this);
-      const mask = this.game.add.graphics(0, 0);
       mask.beginFill(0xffffff);
       mask.drawRoundedRect(image.x, image.y, image.width, image.height, 50);
       image.mask = mask;
       mask.endFill();
 
-      graphics.beginFill(0);
-      graphics.drawRoundedRect(image.x - 1, image.y - 1, image.width + 2, image.height + 2, 50);
-      graphics.endFill();
+      this.graphics.beginFill(0);
+      this.graphics.drawRoundedRect(image.x - 1, image.y - 1, image.width + 2, image.height + 2, 50);
+      this.graphics.endFill();
     }
   }
 
   startGame(scene) {
-    this.game.state.start('Main', true, false, scene);
+    // this.game.state.start('Main', true, false, scene);
+    // this.graphics.destroy();
+    this.game.state.start('Main', {
+      ease: Phaser.Easing.Exponential.InOut,
+      duration: 500,
+      intro: false,
+      props: { alpha: 0 },
+    }, {
+      ease: Phaser.Easing.Exponential.InOut,
+      duration: 500,
+      intro: true,
+      props: { alpha: 1 },
+    }, true, false, scene);
   }
 
 }
