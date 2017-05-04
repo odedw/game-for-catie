@@ -775,11 +775,11 @@ var Main = (function (_Phaser$State) {
       var animalGroup = game.add.group();
 
       // set background
-      var background = backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
-      background.anchor.set(0.5);
-      background.width = game.width;
-      background.height = game.height;
-
+      this.background = backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
+      this.background.anchor.set(0.5);
+      this.background.width = game.width;
+      this.background.height = game.height;
+      this.game.stage.backgroundColor = '#000000';
       // place animals
       this.animalImages = [];
       for (var i = 0; i < this.animals.length; i++) {
@@ -850,7 +850,7 @@ var Main = (function (_Phaser$State) {
       }
 
       this.game.time.events.removeAll();
-
+      tweens.push(this.game.add.tween(this.background).to({ alpha: 0.1 }, this.song.beat, Phaser.Easing.Cubic.Out));
       tweens.forEach(function (t) {
         return t.start();
       });
@@ -858,6 +858,8 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onHint',
     value: function onHint() {
+      if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+
       var image = this.animalImages.random();
       if (image) this.danceInterperter.createAnimalPeekDance(image);
       this.game.add.audio('peek' + (Math.floor(Math.random() * 4) + 1)).play();
@@ -865,6 +867,8 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onPause',
     value: function onPause() {
+      if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+
       this.menu.show();
     }
   }], [{
