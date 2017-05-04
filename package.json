@@ -33,6 +33,6 @@
     "eslint-plugin-react": "^6.10.0"
   },
   "dependencies": {
-    "phaser": "^2.4.1"
+    "phaser": "^2.6.2"
   }
 }

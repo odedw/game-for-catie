@@ -69,7 +69,7 @@ function copyStatic() {
 }
 
 function copyStaticJs() {
-    return gulp.src(STATIC_PATH + '/assets/js/*')
+    return gulp.src(STATIC_PATH + '/js/*')
         .pipe(gulp.dest(BUILD_PATH));
 }
 

@@ -7,8 +7,8 @@ class Preload extends Phaser.State {
     const game = this.game;
 
     // images
-    sceneRepository.items.forEach(item => game.load.image(item.name, `static/assets/images/scenes/${item.name}.png`));
-    animalRepository.items.forEach(item => game.load.image(item.name, `static/assets/images/animals/${item.name}.png`));
+    sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
+    animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
     this.loadImage('panel');
     this.loadImage('panel-dark');
     // this.loadImage('btn');
@@ -17,7 +17,7 @@ class Preload extends Phaser.State {
     // sounds
     songRepository.items.forEach(item =>
       item.segments.forEach(segment => ['mp3', 'ogg']
-        .forEach(format => game.load.audio(segment, `static/assets/sounds/songs/${item.name}/${segment}.${format}`),
+        .forEach(format => game.load.audio(segment, `static/sounds/songs/${item.name}/${segment}.${format}`),
       )));
     this.loadSound('peek1');
     this.loadSound('peek2');
@@ -25,16 +25,17 @@ class Preload extends Phaser.State {
     this.loadSound('peek4');
 
     // atlas
-    game.load.atlasJSONHash('button', 'static/assets/images/button.png', 'static/assets/images/button.json');
+    game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
+
   }
 
   loadImage(name) {
-    this.game.load.image(name, `static/assets/images/${name}.png`);
+    this.game.load.image(name, `static/images/${name}.png`);
   }
 
   loadSound(name) {
-    this.game.load.audio(name, `static/assets/sounds/${name}.mp3`);
-    this.game.load.audio(name, `static/assets/sounds/${name}.ogg`);
+    this.game.load.audio(name, `static/sounds/${name}.mp3`);
+    this.game.load.audio(name, `static/sounds/${name}.ogg`);
   }
 
   create() {

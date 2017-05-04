@@ -472,7 +472,10 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('a', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('b', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('c', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('d', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('e', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('f', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('g', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('h', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('a', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('b', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('c', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('d', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('e', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('f', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]),
+    // new Scene('h', [{x: 14, y:25}, {x: 25, y:74}, {x: 43, y:19}, {x: 45, y:62}, {x: 58, y:24}, {x: 58, y:65}, {x: 68, y:26}, {x: 82, y:69}, {x: 90, y:24}]),
+    // new Scene('i', [{x: 14, y:25}, {x: 25, y:74}, {x: 43, y:19}, {x: 45, y:62}, {x: 58, y:24}, {x: 58, y:65}, {x: 68, y:26}, {x: 82, y:69}, {x: 90, y:24}]),
+    new _objectsScene2['default']('swings1', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('swings2', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('rothschild', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('habima', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
   }
 
   return SceneRepository;
@@ -920,10 +923,10 @@ var Preload = (function (_Phaser$State) {
 
       // images
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
-        return game.load.image(item.name, 'static/assets/images/scenes/' + item.name + '.png');
+        return game.load.image(item.name, 'static/images/scenes/' + item.name + '.png');
       });
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
-        return game.load.image(item.name, 'static/assets/images/animals/' + item.name + '.png');
+        return game.load.image(item.name, 'static/images/animals/' + item.name + '.png');
       });
       this.loadImage('panel');
       this.loadImage('panel-dark');
@@ -934,7 +937,7 @@ var Preload = (function (_Phaser$State) {
       _repositoriesSongRepository2['default'].items.forEach(function (item) {
         return item.segments.forEach(function (segment) {
           return ['mp3', 'ogg'].forEach(function (format) {
-            return game.load.audio(segment, 'static/assets/sounds/songs/' + item.name + '/' + segment + '.' + format);
+            return game.load.audio(segment, 'static/sounds/songs/' + item.name + '/' + segment + '.' + format);
           });
         });
       });
@@ -944,18 +947,18 @@ var Preload = (function (_Phaser$State) {
       this.loadSound('peek4');
 
       // atlas
-      game.load.atlasJSONHash('button', 'static/assets/images/button.png', 'static/assets/images/button.json');
+      game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
     }
   }, {
     key: 'loadImage',
     value: function loadImage(name) {
-      this.game.load.image(name, 'static/assets/images/' + name + '.png');
+      this.game.load.image(name, 'static/images/' + name + '.png');
     }
   }, {
     key: 'loadSound',
     value: function loadSound(name) {
-      this.game.load.audio(name, 'static/assets/sounds/' + name + '.mp3');
-      this.game.load.audio(name, 'static/assets/sounds/' + name + '.ogg');
+      this.game.load.audio(name, 'static/sounds/' + name + '.mp3');
+      this.game.load.audio(name, 'static/sounds/' + name + '.ogg');
     }
   }, {
     key: 'create',
