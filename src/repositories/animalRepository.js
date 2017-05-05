@@ -6,7 +6,7 @@ class AnimalRepository extends Repository {
     super([
       new Animal('1', 100, 100),
       new Animal('2', 150, 75),
-      new Animal('3', 75, 150),
+      new Animal('bunnies', 200, 237),
       new Animal('bernard', 176, 250),
     ]);
   }
