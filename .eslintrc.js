@@ -19,7 +19,8 @@ module.exports = {
       "no-console": 0,
       "class-methods-use-this": 0,
       "no-mixed-operators": 0,
-      "no-return-assign": 0
+      "no-return-assign": 0,
+      "no-trailing-spaces": 0
     },
     "env": {
         "browser": true

@@ -222,70 +222,77 @@ module.exports = exports["default"];
 
 },{}],6:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var Panel = (function () {
-  function Panel(game, animalImages, group) {
-    _classCallCheck(this, Panel);
+var animalOuterMargin = 40;
+var animalInnerMargin = 10;
+var btnMargin = 30;
+var btnWidth = 200;
 
-    this.game = game;
-    this.group = game.add.group();
-    group.add(this.group);
-    var backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel-dark');
-    backPanel.anchor.setTo(0.5, 0.5);
-    backPanel.targetWidth = game.width / 2;
-    backPanel.targetHeight = 200;
-    backPanel.UpdateImageSizes();
-    this.group.add(backPanel);
-    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 150, 'panel');
-    this.frontPanel.anchor.setTo(0.5, 0.5);
-    this.frontPanel.targetWidth = game.width / 3;
-    this.frontPanel.targetHeight = 350;
-    this.frontPanel.UpdateImageSizes();
-    this.frontPanel.tint = Math.random() * 0xfeffff;
-    this.group.add(this.frontPanel);
+var Panel = function Panel(game, animalImages, group) {
+  _classCallCheck(this, Panel);
 
-    var btnMargin = 30;
-    var btnWidth = (backPanel.targetWidth - this.frontPanel.targetWidth) / 2 - btnMargin * 2;
-    this.hintButton = game.add.button(backPanel.x - backPanel.targetWidth / 2 + btnWidth / 2 + btnMargin, backPanel.y - 5, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
-    this.hintButton.anchor.setTo(0.5, 0.5);
-    this.hintButton.width = btnWidth;
-    this.hintButton.height = 100;
-    this.group.add(this.hintButton);
+  this.game = game;
+  this.group = game.add.group();
+  group.add(this.group);
 
-    this.pauseButton = game.add.button(backPanel.x + backPanel.targetWidth / 2 - btnWidth / 2 - btnMargin, backPanel.y - 5, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
-    this.pauseButton.anchor.setTo(0.5, 0.5);
-    this.pauseButton.width = btnWidth;
-    this.pauseButton.height = 100;
-    this.group.add(this.pauseButton);
+  var panelHeight = animalImages.map(function (i) {
+    return i.height;
+  }).max() + animalInnerMargin * 2 + animalOuterMargin * 2;
+  this.frontPanel = new Phaser.NinePatchImage(this.game, this.game.world.centerX, this.game.world.height - panelHeight / 2, 'panel');
+  this.frontPanel.anchor.setTo(0.5, 0.5);
+  this.frontPanel.targetWidth = animalImages.map(function (i) {
+    return i.width;
+  }).sum() + (animalImages.length + 1) * animalOuterMargin + animalImages.length * 2 * animalInnerMargin + (btnWidth + btnMargin * 2) * 2;
 
-    var animalWidth = animalImages.map(function (image) {
-      return image.width;
-    }).sum();
-    this.margin = (this.frontPanel.targetWidth - animalWidth) / (animalImages.length + 1);
-    this.currentX = this.frontPanel.x + this.margin - this.frontPanel.targetWidth / 2;
+  this.frontPanel.targetHeight = panelHeight;
+  this.frontPanel.UpdateImageSizes();
+  this.frontPanel.tint = Math.random() * 0xfeffff;
+  this.group.add(this.frontPanel);
+  this.animalContainers = {};
+  var x = this.frontPanel.x - this.frontPanel.targetWidth / 2 + animalOuterMargin + animalInnerMargin + btnMargin * 2 + btnWidth;
+  for (var i = 0; i < animalImages.length; i++) {
+    var image = animalImages[i];
+    var container = new Phaser.NinePatchImage(this.game, x + image.width / 2, this.frontPanel.y, 'panel-dark');
+    container.anchor.setTo(0.5, 0.5);
+    container.targetWidth = animalInnerMargin * 2 + image.width;
+    container.targetHeight = panelHeight - animalOuterMargin * 2;
+    this.group.add(container);
+    this.animalContainers[image.name] = container;
+    x += container.targetWidth + animalOuterMargin;
   }
 
-  _createClass(Panel, [{
-    key: 'getNextAnimalPlace',
-    value: function getNextAnimalPlace(animalImage) {
-      var result = { x: this.currentX + animalImage.width / 2, y: this.frontPanel.y };
-      this.currentX += animalImage.width + this.margin;
-      return result;
-    }
-  }]);
+  // const backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel-dark');
+  // backPanel.anchor.setTo(0.5, 0.5);
+  // backPanel.targetWidth = game.width / 2;
+  // backPanel.targetHeight = 200;
+  // backPanel.UpdateImageSizes();
+  // this.group.add(backPanel);
 
-  return Panel;
-})();
+  this.hintButton = game.add.button(this.frontPanel.x - this.frontPanel.targetWidth / 2 + btnMargin + btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
+  this.hintButton.anchor.setTo(0.5, 0.5);
+  this.hintButton.width = btnWidth;
+  this.hintButton.height = this.frontPanel.targetHeight - btnMargin * 2;
+  this.group.add(this.hintButton);
+
+  this.pauseButton = game.add.button(this.frontPanel.x + this.frontPanel.targetWidth / 2 - btnMargin - btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
+  this.pauseButton.anchor.setTo(0.5, 0.5);
+  this.pauseButton.width = btnWidth;
+  this.pauseButton.height = this.frontPanel.targetHeight - btnMargin * 2;
+  this.group.add(this.pauseButton);
+
+  var animalWidth = animalImages.map(function (image) {
+    return image.width;
+  }).sum();
+  this.margin = (this.frontPanel.targetWidth - animalWidth) / (animalImages.length + 1);
+  this.currentX = this.frontPanel.x + this.margin - this.frontPanel.targetWidth / 2;
+};
 
 exports['default'] = Panel;
 module.exports = exports['default'];
@@ -781,6 +788,7 @@ var Main = (function (_Phaser$State) {
       this.background.width = game.width;
       this.background.height = game.height;
       this.game.stage.backgroundColor = '#000000';
+
       // place animals
       this.animalImages = [];
       for (var i = 0; i < this.animals.length; i++) {
@@ -793,6 +801,7 @@ var Main = (function (_Phaser$State) {
         image.inputEnabled = true;
         image.events.onInputDown.add(this.animalFound, this);
         this.animalImages.push(image);
+        image.name = animal.name;
       }
 
       // panel
@@ -824,7 +833,7 @@ var Main = (function (_Phaser$State) {
       image.events.onInputDown.removeAll();
 
       this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
-      this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song, this.panel.getNextAnimalPlace(image));
+      this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song, { x: this.panel.animalContainers[image.name].x, y: this.panel.animalContainers[image.name].y });
       if (this.animalImagesFound.length === this.numberOfAnimals) {
         this.currentTween.onComplete.add(this.allFound, this);
       }

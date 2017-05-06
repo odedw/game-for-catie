@@ -33,6 +33,7 @@ class Main extends Phaser.State {
     this.background.width = game.width;
     this.background.height = game.height;
     this.game.stage.backgroundColor = '#000000';
+
     // place animals
     this.animalImages = [];
     for (let i = 0; i < this.animals.length; i++) {
@@ -45,6 +46,7 @@ class Main extends Phaser.State {
       image.inputEnabled = true;
       image.events.onInputDown.add(this.animalFound, this);
       this.animalImages.push(image);
+      image.name = animal.name;
     }
 
     // panel
@@ -73,7 +75,8 @@ class Main extends Phaser.State {
     image.events.onInputDown.removeAll();
 
     this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
-    this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song, this.panel.getNextAnimalPlace(image));
+    this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song,
+      { x: this.panel.animalContainers[image.name].x, y: this.panel.animalContainers[image.name].y });
     if (this.animalImagesFound.length === this.numberOfAnimals) {
       this.currentTween.onComplete.add(this.allFound, this);
     }
