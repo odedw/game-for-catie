@@ -24,11 +24,11 @@ class Main extends Phaser.State {
     const locations = this.scene.locations.random(this.numberOfAnimals);
     this.song = songRepo.random();
 
-    const backgroundGroup = game.add.group();
+    this.backgroundGroup = game.add.group();
     const animalGroup = game.add.group();
 
     // set background
-    this.background = backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
+    this.background = this.backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
     this.background.anchor.set(0.5);
     this.background.width = game.width;
     this.background.height = game.height;
@@ -48,7 +48,7 @@ class Main extends Phaser.State {
     }
 
     // panel
-    this.panel = new Panel(game, this.animalImages, backgroundGroup);
+    this.panel = new Panel(game, this.animalImages, this.backgroundGroup);
     this.panel.hintButton.events.onInputUp.add(this.onHint, this);
     this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
@@ -96,6 +96,7 @@ class Main extends Phaser.State {
 
     this.game.time.events.removeAll();
     tweens.push(this.game.add.tween(this.background).to({ alpha: 0.1 }, this.song.beat, Phaser.Easing.Cubic.Out));
+    tweens.push(this.game.add.tween(this.panel.group).to({ alpha: 0 }, this.song.beat, Phaser.Easing.Cubic.Out));
     tweens.forEach(t => t.start());
   }
 

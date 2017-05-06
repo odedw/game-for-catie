@@ -238,19 +238,21 @@ var Panel = (function () {
     _classCallCheck(this, Panel);
 
     this.game = game;
+    this.group = game.add.group();
+    group.add(this.group);
     var backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel-dark');
     backPanel.anchor.setTo(0.5, 0.5);
     backPanel.targetWidth = game.width / 2;
     backPanel.targetHeight = 200;
     backPanel.UpdateImageSizes();
-    group.add(backPanel);
+    this.group.add(backPanel);
     this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 100, 'panel');
     this.frontPanel.anchor.setTo(0.5, 0.5);
     this.frontPanel.targetWidth = game.width / 3;
     this.frontPanel.targetHeight = 300;
     this.frontPanel.UpdateImageSizes();
     this.frontPanel.tint = Math.random() * 0xfeffff;
-    group.add(this.frontPanel);
+    this.group.add(this.frontPanel);
 
     var btnMargin = 30;
     var btnWidth = (backPanel.targetWidth - this.frontPanel.targetWidth) / 2 - btnMargin * 2;
@@ -258,11 +260,13 @@ var Panel = (function () {
     this.hintButton.anchor.setTo(0.5, 0.5);
     this.hintButton.width = btnWidth;
     this.hintButton.height = 100;
+    this.group.add(this.hintButton);
 
     this.pauseButton = game.add.button(backPanel.x + backPanel.targetWidth / 2 - btnWidth / 2 - btnMargin, backPanel.y - 5, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
     this.pauseButton.anchor.setTo(0.5, 0.5);
     this.pauseButton.width = btnWidth;
     this.pauseButton.height = 100;
+    this.group.add(this.pauseButton);
 
     var animalWidth = animalImages.map(function (image) {
       return image.width;
@@ -768,11 +772,11 @@ var Main = (function (_Phaser$State) {
       var locations = this.scene.locations.random(this.numberOfAnimals);
       this.song = _repositoriesSongRepository2['default'].random();
 
-      var backgroundGroup = game.add.group();
+      this.backgroundGroup = game.add.group();
       var animalGroup = game.add.group();
 
       // set background
-      this.background = backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
+      this.background = this.backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
       this.background.anchor.set(0.5);
       this.background.width = game.width;
       this.background.height = game.height;
@@ -792,7 +796,7 @@ var Main = (function (_Phaser$State) {
       }
 
       // panel
-      this.panel = new _objectsPanel2['default'](game, this.animalImages, backgroundGroup);
+      this.panel = new _objectsPanel2['default'](game, this.animalImages, this.backgroundGroup);
       this.panel.hintButton.events.onInputUp.add(this.onHint, this);
       this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
@@ -848,6 +852,7 @@ var Main = (function (_Phaser$State) {
 
       this.game.time.events.removeAll();
       tweens.push(this.game.add.tween(this.background).to({ alpha: 0.1 }, this.song.beat, Phaser.Easing.Cubic.Out));
+      tweens.push(this.game.add.tween(this.panel.group).to({ alpha: 0 }, this.song.beat, Phaser.Easing.Cubic.Out));
       tweens.forEach(function (t) {
         return t.start();
       });
