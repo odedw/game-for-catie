@@ -5,6 +5,7 @@ class AnimalRepository extends Repository {
   constructor() {
     super([
       new Animal('monster', 188, 250),
+      new Animal('bunny', 179, 200),
       new Animal('cookiemonster', 164, 250),
       new Animal('redkitty', 187, 225),
       new Animal('bunnies', 200, 237),
