@@ -246,10 +246,10 @@ var Panel = (function () {
     backPanel.targetHeight = 200;
     backPanel.UpdateImageSizes();
     this.group.add(backPanel);
-    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 100, 'panel');
+    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 150, 'panel');
     this.frontPanel.anchor.setTo(0.5, 0.5);
     this.frontPanel.targetWidth = game.width / 3;
-    this.frontPanel.targetHeight = 300;
+    this.frontPanel.targetHeight = 350;
     this.frontPanel.UpdateImageSizes();
     this.frontPanel.tint = Math.random() * 0xfeffff;
     this.group.add(this.frontPanel);
@@ -438,7 +438,7 @@ var AnimalRepository = (function (_Repository) {
   function AnimalRepository() {
     _classCallCheck(this, AnimalRepository);
 
-    _get(Object.getPrototypeOf(AnimalRepository.prototype), 'constructor', this).call(this, [new _objectsAnimal2['default']('monster', 188, 250), new _objectsAnimal2['default']('redkitty', 187, 225), new _objectsAnimal2['default']('bunnies', 200, 237), new _objectsAnimal2['default']('bernard', 176, 250), new _objectsAnimal2['default']('monkey', 177, 250), new _objectsAnimal2['default']('gerald', 178, 250)]);
+    _get(Object.getPrototypeOf(AnimalRepository.prototype), 'constructor', this).call(this, [new _objectsAnimal2['default']('monster', 188, 250), new _objectsAnimal2['default']('cookiemonster', 164, 250), new _objectsAnimal2['default']('redkitty', 187, 225), new _objectsAnimal2['default']('bunnies', 200, 237), new _objectsAnimal2['default']('bernard', 176, 250), new _objectsAnimal2['default']('monkey', 177, 250), new _objectsAnimal2['default']('gerald', 178, 250)]);
   }
 
   return AnimalRepository;

@@ -11,10 +11,10 @@ class Panel {
     backPanel.targetHeight = 200;
     backPanel.UpdateImageSizes();
     this.group.add(backPanel);
-    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 100, 'panel');
+    this.frontPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 150, 'panel');
     this.frontPanel.anchor.setTo(0.5, 0.5);
     this.frontPanel.targetWidth = game.width / 3;
-    this.frontPanel.targetHeight = 300;
+    this.frontPanel.targetHeight = 350;
     this.frontPanel.UpdateImageSizes();
     this.frontPanel.tint = Math.random() * 0xfeffff;
     this.group.add(this.frontPanel);
