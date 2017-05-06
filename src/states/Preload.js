@@ -25,8 +25,8 @@ class Preload extends Phaser.State {
     this.loadSound('peek4');
 
     // atlas
-    game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
-
+    // game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
+    game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
   }
 
   loadImage(name) {

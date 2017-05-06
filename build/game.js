@@ -275,16 +275,16 @@ var Panel = function Panel(game, animalImages, group) {
   // backPanel.UpdateImageSizes();
   // this.group.add(backPanel);
 
-  this.hintButton = game.add.button(this.frontPanel.x - this.frontPanel.targetWidth / 2 + btnMargin + btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
+  this.hintButton = game.add.button(this.frontPanel.x - this.frontPanel.targetWidth / 2 + btnMargin + btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 0, 0, 1);
   this.hintButton.anchor.setTo(0.5, 0.5);
   this.hintButton.width = btnWidth;
-  this.hintButton.height = this.frontPanel.targetHeight - btnMargin * 2;
+  this.hintButton.height = btnWidth;
   this.group.add(this.hintButton);
 
-  this.pauseButton = game.add.button(this.frontPanel.x + this.frontPanel.targetWidth / 2 - btnMargin - btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 'btn.png', 'btn.png', 'btn-down.png');
+  this.pauseButton = game.add.button(this.frontPanel.x + this.frontPanel.targetWidth / 2 - btnMargin - btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 2, 2, 5);
   this.pauseButton.anchor.setTo(0.5, 0.5);
   this.pauseButton.width = btnWidth;
-  this.pauseButton.height = this.frontPanel.targetHeight - btnMargin * 2;
+  this.pauseButton.height = btnWidth;
   this.group.add(this.pauseButton);
 
   var animalWidth = animalImages.map(function (image) {
@@ -962,7 +962,8 @@ var Preload = (function (_Phaser$State) {
       this.loadSound('peek4');
 
       // atlas
-      game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
+      // game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
+      game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
     }
   }, {
     key: 'loadImage',
