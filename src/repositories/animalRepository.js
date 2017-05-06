@@ -4,6 +4,7 @@ import Repository from './Repository';
 class AnimalRepository extends Repository {
   constructor() {
     super([
+      new Animal('inja', 250, 209),
       new Animal('barney', 127, 250),
       new Animal('rudy', 152, 250),
       new Animal('monster', 188, 250),
