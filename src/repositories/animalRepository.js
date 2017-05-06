@@ -8,6 +8,7 @@ class AnimalRepository extends Repository {
       new Animal('redkitty', 187, 225),
       new Animal('bunnies', 200, 237),
       new Animal('bernard', 176, 250),
+      new Animal('monkey', 177, 250),
     ]);
   }
 }
