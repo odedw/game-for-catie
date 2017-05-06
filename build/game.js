@@ -438,7 +438,7 @@ var AnimalRepository = (function (_Repository) {
   function AnimalRepository() {
     _classCallCheck(this, AnimalRepository);
 
-    _get(Object.getPrototypeOf(AnimalRepository.prototype), 'constructor', this).call(this, [new _objectsAnimal2['default']('monster', 188, 250), new _objectsAnimal2['default']('bunny', 179, 200), new _objectsAnimal2['default']('cookiemonster', 164, 250), new _objectsAnimal2['default']('redkitty', 187, 225), new _objectsAnimal2['default']('bunnies', 200, 237), new _objectsAnimal2['default']('bernard', 176, 250), new _objectsAnimal2['default']('monkey', 177, 250), new _objectsAnimal2['default']('gerald', 178, 250)]);
+    _get(Object.getPrototypeOf(AnimalRepository.prototype), 'constructor', this).call(this, [new _objectsAnimal2['default']('rudy', 152, 250), new _objectsAnimal2['default']('monster', 188, 250), new _objectsAnimal2['default']('bunny', 179, 200), new _objectsAnimal2['default']('cookiemonster', 164, 250), new _objectsAnimal2['default']('redkitty', 187, 225), new _objectsAnimal2['default']('bunnies', 200, 237), new _objectsAnimal2['default']('bernard', 176, 250), new _objectsAnimal2['default']('monkey', 177, 250), new _objectsAnimal2['default']('gerald', 178, 250)]);
   }
 
   return AnimalRepository;
