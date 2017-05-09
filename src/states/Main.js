@@ -30,10 +30,7 @@ class Main extends Phaser.State {
     // set background
     this.background = this.backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
     this.background.anchor.set(0.5);
-    const ratio = this.background.width / this.background.height;
-    this.background.width = game.width;
-    this.background.height = game.width / ratio;
-    
+    const backgroundRatio = this.background.width / this.background.height;
     this.game.stage.backgroundColor = '#000000';
 
     // place animals
@@ -55,6 +52,11 @@ class Main extends Phaser.State {
     this.panel = new Panel(game, this.animalImages, this.backgroundGroup);
     this.panel.hintButton.events.onInputUp.add(this.onHint, this);
     this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
+
+    // reposition background according to panel
+    this.background.x = game.world.centerX - this.panel.container.width / 2;
+    this.background.width = game.width - this.panel.container.width;
+    this.background.height = this.background.width / backgroundRatio;
 
     // menu
     this.menu = new PauseMenu(game);
