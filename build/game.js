@@ -233,7 +233,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var animalOuterMargin = 40;
 var animalInnerMargin = 10;
 var btnMargin = 30;
-var btnWidth = 200;
+var btnWidth = 210;
+var btnHeight = 200;
 
 var Panel = function Panel(game, animalImages, group) {
   _classCallCheck(this, Panel);
@@ -249,14 +250,14 @@ var Panel = function Panel(game, animalImages, group) {
   this.frontPanel.anchor.setTo(0.5, 0.5);
   this.frontPanel.targetWidth = animalImages.map(function (i) {
     return i.width;
-  }).sum() + (animalImages.length + 1) * animalOuterMargin + animalImages.length * 2 * animalInnerMargin + (btnWidth + btnMargin * 2) * 2;
+  }).sum() + (animalImages.length - 1) * animalOuterMargin + animalImages.length * 2 * animalInnerMargin + (btnWidth + btnMargin * 2) * 2;
 
   this.frontPanel.targetHeight = panelHeight;
   this.frontPanel.UpdateImageSizes();
   this.frontPanel.tint = Math.random() * 0xfeffff;
   this.group.add(this.frontPanel);
   this.animalContainers = {};
-  var x = this.frontPanel.x - this.frontPanel.targetWidth / 2 + animalOuterMargin + animalInnerMargin + btnMargin * 2 + btnWidth;
+  var x = this.frontPanel.x - this.frontPanel.targetWidth / 2 + animalInnerMargin + btnMargin * 2 + btnWidth;
   for (var i = 0; i < animalImages.length; i++) {
     var image = animalImages[i];
     var container = new Phaser.NinePatchImage(this.game, x + image.width / 2, this.frontPanel.y, 'panel-dark');
@@ -268,23 +269,16 @@ var Panel = function Panel(game, animalImages, group) {
     x += container.targetWidth + animalOuterMargin;
   }
 
-  // const backPanel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.height - 80, 'panel-dark');
-  // backPanel.anchor.setTo(0.5, 0.5);
-  // backPanel.targetWidth = game.width / 2;
-  // backPanel.targetHeight = 200;
-  // backPanel.UpdateImageSizes();
-  // this.group.add(backPanel);
-
   this.hintButton = game.add.button(this.frontPanel.x - this.frontPanel.targetWidth / 2 + btnMargin + btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 0, 0, 1);
   this.hintButton.anchor.setTo(0.5, 0.5);
   this.hintButton.width = btnWidth;
-  this.hintButton.height = btnWidth;
+  this.hintButton.height = btnHeight;
   this.group.add(this.hintButton);
 
   this.pauseButton = game.add.button(this.frontPanel.x + this.frontPanel.targetWidth / 2 - btnMargin - btnWidth / 2, this.frontPanel.y, 'button', undefined, this, 2, 2, 5);
   this.pauseButton.anchor.setTo(0.5, 0.5);
   this.pauseButton.width = btnWidth;
-  this.pauseButton.height = btnWidth;
+  this.pauseButton.height = btnHeight;
   this.group.add(this.pauseButton);
 
   var animalWidth = animalImages.map(function (image) {
