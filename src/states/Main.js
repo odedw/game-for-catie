@@ -30,8 +30,10 @@ class Main extends Phaser.State {
     // set background
     this.background = this.backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
     this.background.anchor.set(0.5);
+    const ratio = this.background.width / this.background.height;
     this.background.width = game.width;
-    this.background.height = game.height;
+    this.background.height = game.width / ratio;
+    
     this.game.stage.backgroundColor = '#000000';
 
     // place animals

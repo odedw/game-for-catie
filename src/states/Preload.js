@@ -11,8 +11,6 @@ class Preload extends Phaser.State {
     animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
     this.loadImage('panel');
     this.loadImage('panel-dark');
-    // this.loadImage('btn');
-    // this.loadImage('btn-down');
     
     // sounds
     songRepository.items.forEach(item =>
@@ -25,8 +23,8 @@ class Preload extends Phaser.State {
     this.loadSound('peek4');
 
     // atlas
-    // game.load.atlasJSONHash('button', 'static/images/button.png', 'static/images/button.json');
     game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
+    game.load.spritesheet('buttons-long', 'static/images/buttons-long.png', 407, 256);
   }
 
   loadImage(name) {
