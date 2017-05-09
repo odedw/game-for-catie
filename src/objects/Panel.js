@@ -11,11 +11,6 @@ class Panel {
     this.container = new Phaser.NinePatchImage(this.game, this.game.width - panelWidth / 2, this.game.world.centerY, 'panel');
     this.container.anchor.setTo(0.5, 0.5);
     this.container.targetHeight = this.game.height;
-    // this.container.targetHeight = animalImages.map(i => i.height).sum() +
-    //   (animalImages.length - 1) * animalOuterMargin +
-    //   animalImages.length * 2 * animalInnerMargin +
-    //   (btnHeight + btnMargin * 2) * 2;
-    
     this.container.targetWidth = panelWidth;
     this.container.UpdateImageSizes();
     this.group.add(this.container);
@@ -38,17 +33,18 @@ class Panel {
     const btnWidth = panelWidth - animalOuterMargin * 2;    
     const btnHeight = (this.game.height - y - animalOuterMargin * 2) / 2;
 
-    this.hintButton = game.add.button(this.container.x, y + btnHeight / 2, 'buttons-long', undefined, this, 6, 6, 5);
-    this.hintButton.anchor.setTo(0.5, 0.5);
-    this.hintButton.width = btnWidth;
-    this.hintButton.height = btnHeight;
-    this.group.add(this.hintButton);
-    y += animalOuterMargin + btnHeight;
     this.pauseButton = game.add.button(this.container.x, y + btnHeight / 2, 'buttons-long', undefined, this, 10, 10, 12);
     this.pauseButton.anchor.setTo(0.5, 0.5);
     this.pauseButton.width = btnWidth;
     this.pauseButton.height = btnHeight;
     this.group.add(this.pauseButton);
+
+    y += animalOuterMargin + btnHeight;
+    this.hintButton = game.add.button(this.container.x, y + btnHeight / 2, 'buttons-long', undefined, this, 6, 6, 5);
+    this.hintButton.anchor.setTo(0.5, 0.5);
+    this.hintButton.width = btnWidth;
+    this.hintButton.height = btnHeight;
+    this.group.add(this.hintButton);
 
     const animalWidth = animalImages.map(image => image.width).sum();
     this.margin = (this.container.targetWidth - animalWidth) / (animalImages.length + 1);
