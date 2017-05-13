@@ -21,6 +21,7 @@ class Preload extends Phaser.State {
     this.loadSound('peek2');
     this.loadSound('peek3');
     this.loadSound('peek4');
+    this.loadSound('button');
 
     // atlas
     game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
@@ -39,6 +40,9 @@ class Preload extends Phaser.State {
   create() {
     this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
     this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
+    const buttonClickSound = this.game.add.audio('button');
+    this.game.buttonClick = () => buttonClickSound.play();
+
     // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
     // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
     this.game.state.start('GameTitle');

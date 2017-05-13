@@ -166,6 +166,7 @@ class Main extends Phaser.State {
 
   newScene() {
     if (this.audio) this.audio.stop();
+    this.game.buttonClick();
     this.game.state.start('Main');    
   }
 
@@ -179,11 +180,12 @@ class Main extends Phaser.State {
 
   onPause() {
     if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
-  
+    this.game.buttonClick();
     this.menu.show();
   }
 
   onExit() {
+    this.game.buttonClick();
     if (this.audio) this.audio.stop();
     this.game.add.audio(this.song.segments[0]).stop();
     this.game.state.start('GameTitle');    

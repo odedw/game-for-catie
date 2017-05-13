@@ -348,6 +348,7 @@ var PauseMenu = (function () {
     value: function hide() {
       var _this = this;
 
+      this.game.buttonClick();
       this.game.input.onDown.remove(this.onClick, this);
       this.showing = false;
       this.game.add.tween(this.backgroundGroup).to({ alpha: 1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
@@ -727,6 +728,7 @@ var GameTitle = (function (_Phaser$State) {
   }, {
     key: 'startGame',
     value: function startGame(scene) {
+      this.game.buttonClick();
       this.game.state.start('Main', {
         ease: Phaser.Easing.Exponential.InOut,
         duration: 500,
@@ -963,6 +965,7 @@ var Main = (function (_Phaser$State) {
     key: 'newScene',
     value: function newScene() {
       if (this.audio) this.audio.stop();
+      this.game.buttonClick();
       this.game.state.start('Main');
     }
   }, {
@@ -978,12 +981,13 @@ var Main = (function (_Phaser$State) {
     key: 'onPause',
     value: function onPause() {
       if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
-
+      this.game.buttonClick();
       this.menu.show();
     }
   }, {
     key: 'onExit',
     value: function onExit() {
+      this.game.buttonClick();
       if (this.audio) this.audio.stop();
       this.game.add.audio(this.song.segments[0]).stop();
       this.game.state.start('GameTitle');
@@ -1064,6 +1068,7 @@ var Preload = (function (_Phaser$State) {
       this.loadSound('peek2');
       this.loadSound('peek3');
       this.loadSound('peek4');
+      this.loadSound('button');
 
       // atlas
       game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
@@ -1085,6 +1090,11 @@ var Preload = (function (_Phaser$State) {
     value: function create() {
       this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
       this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
+      var buttonClickSound = this.game.add.audio('button');
+      this.game.buttonClick = function () {
+        return buttonClickSound.play();
+      };
+
       // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
       // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
       this.game.state.start('GameTitle');

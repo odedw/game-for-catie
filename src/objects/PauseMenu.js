@@ -54,6 +54,7 @@ class PauseMenu {
   }
 
   hide() {
+    this.game.buttonClick();
     this.game.input.onDown.remove(this.onClick, this);
     this.showing = false;
     this.game.add.tween(this.backgroundGroup).to({ alpha: 1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);

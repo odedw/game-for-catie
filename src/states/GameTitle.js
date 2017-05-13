@@ -37,6 +37,7 @@ class GameTitle extends Phaser.State {
   }
 
   startGame(scene) {
+    this.game.buttonClick();
     this.game.state.start('Main', {
       ease: Phaser.Easing.Exponential.InOut,
       duration: 500,
