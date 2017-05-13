@@ -76,7 +76,7 @@ class Main extends Phaser.State {
     }
     
     // menu
-    this.menu = new PauseMenu(game, this.backgroundGroup, animalGroup);
+    this.menu = new PauseMenu(game, this.backgroundGroup, animalGroup, this.onExit, this);
 
     // peek repeat
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -87,7 +87,7 @@ class Main extends Phaser.State {
     return {
       x: this.background.x - (this.background.width / 2) + (this.background.width * (location.x / 100)),
       y: this.background.y - (this.background.height / 2) + (this.background.height * (location.y / 100)),
-    }
+    };
   }
 
   create() {
@@ -148,6 +148,11 @@ class Main extends Phaser.State {
   
     this.menu.show();
   }
+
+  onExit() {
+    this.game.state.start('GameTitle');    
+  }
+
   static update() {
   }
 }

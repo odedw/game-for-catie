@@ -12,7 +12,7 @@ class GameTitle extends Phaser.State {
     const margin = (this.game.width - (imageWidth * imagesPerRow)) / 5;
     const yMargin = (this.game.height - ((rows * imageHeight) + (rows - 1) * margin)) / 2;
     this.graphics = this.game.add.graphics(0, 0);
-      const mask = this.game.add.graphics(0, 0);
+    const mask = this.game.add.graphics(0, 0);
 
     for (let index = 0; index < sceneRepo.items.length; index++) {
       const scene = sceneRepo.items[index];
@@ -37,8 +37,6 @@ class GameTitle extends Phaser.State {
   }
 
   startGame(scene) {
-    // this.game.state.start('Main', true, false, scene);
-    // this.graphics.destroy();
     this.game.state.start('Main', {
       ease: Phaser.Easing.Exponential.InOut,
       duration: 500,

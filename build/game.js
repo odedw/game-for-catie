@@ -280,7 +280,6 @@ module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -291,16 +290,20 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+var margin = 20;
+
 var PauseMenu = (function () {
-  function PauseMenu(game, backgroundGroup, foregroundGroup) {
+  function PauseMenu(game, backgroundGroup, foregroundGroup, onExit, onExitContext) {
     _classCallCheck(this, PauseMenu);
 
     this.game = game;
     this.container = game.add.group();
     this.panel = new Phaser.NinePatchImage(game, game.world.centerX, game.world.centerY, 'panel');
     this.panel.anchor.setTo(0.5, 0.5);
-    this.panel.targetWidth = 200;
-    this.panel.targetHeight = 200;
+    this.panel.targetWidth = this.game.width * 0.1;
+    var btnWidth = this.panel.targetWidth - margin * 2;
+    var btnHeight = btnWidth * 0.63;
+    this.panel.targetHeight = btnHeight * 2 + margin * 3;
     this.panel.UpdateImageSizes();
     this.container.add(this.panel);
     this.container.visible = false;
@@ -309,6 +312,17 @@ var PauseMenu = (function () {
     this.backgroundGroup = backgroundGroup;
     this.foregroundGroup = foregroundGroup;
     this.menuRect = new Phaser.Rectangle(this.panel.x - this.panel.targetWidth / 2, this.panel.y - this.panel.targetHeight / 2, this.panel.targetWidth, this.panel.targetHeight);
+    var playBtn = game.add.button(this.panel.x - btnWidth / 2, this.panel.y - this.panel.targetHeight / 2 + margin, 'buttons-long', undefined, this, 13, 13, 14);
+    playBtn.width = btnWidth;
+    playBtn.height = btnHeight;
+    playBtn.events.onInputUp.add(this.hide, this);
+    this.container.add(playBtn);
+
+    var exitBtn = game.add.button(this.panel.x - btnWidth / 2, playBtn.y + btnHeight + margin, 'buttons-long', undefined, this, 8, 8, 9);
+    exitBtn.width = btnWidth;
+    exitBtn.height = btnHeight;
+    exitBtn.events.onInputUp.add(onExit, onExitContext);
+    this.container.add(exitBtn);
   }
 
   _createClass(PauseMenu, [{
@@ -713,8 +727,6 @@ var GameTitle = (function (_Phaser$State) {
   }, {
     key: 'startGame',
     value: function startGame(scene) {
-      // this.game.state.start('Main', true, false, scene);
-      // this.graphics.destroy();
       this.game.state.start('Main', {
         ease: Phaser.Easing.Exponential.InOut,
         duration: 500,
@@ -853,7 +865,7 @@ var Main = (function (_Phaser$State) {
       }
 
       // menu
-      this.menu = new _objectsPauseMenu2['default'](game, this.backgroundGroup, animalGroup);
+      this.menu = new _objectsPauseMenu2['default'](game, this.backgroundGroup, animalGroup, this.onExit, this);
 
       // peek repeat
       game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -935,6 +947,11 @@ var Main = (function (_Phaser$State) {
       if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
 
       this.menu.show();
+    }
+  }, {
+    key: 'onExit',
+    value: function onExit() {
+      this.game.state.start('GameTitle');
     }
   }], [{
     key: 'update',
