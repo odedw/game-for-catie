@@ -21,7 +21,7 @@ var DanceInterperter = (function () {
   _createClass(DanceInterperter, [{
     key: 'createAnimalFoundDance',
     value: function createAnimalFoundDance(image, song, target) {
-      return this.game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None);
+      return [this.game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None)];
     }
   }, {
     key: 'createAnimalPeekDance',
@@ -38,12 +38,10 @@ var DanceInterperter = (function () {
     }
   }, {
     key: 'createAllAnimalsFoundDance',
-    value: function createAllAnimalsFoundDance(image, index, song, x) {
+    value: function createAllAnimalsFoundDance(image, index, song, x, scale) {
       var _this = this;
 
-      var autoStart = arguments.length <= 4 || arguments[4] === undefined ? false : arguments[4];
-
-      var tween = this.game.add.tween(image).to({ x: x, y: this.game.height / 2, angle: 0 }, song.intro * song.beat, Phaser.Easing.Cubic.Out, false);
+      var tween = this.game.add.tween(image).to({ x: x, y: this.game.height / 2, angle: 0, width: image.width / scale, height: image.height / scale }, song.intro * song.beat, Phaser.Easing.Cubic.Out, false);
       var delay = 0;
       song.dance.map(function (step) {
         return step[index];
@@ -64,7 +62,6 @@ var DanceInterperter = (function () {
           delay += song.beat;
         }
       });
-      if (autoStart) tween.start();
       return tween;
     }
   }]);
@@ -240,9 +237,9 @@ var Panel = function Panel(game, animalImages, group) {
   this.group = game.add.group();
   group.add(this.group);
 
-  var panelWidth = animalImages.map(function (i) {
+  var panelWidth = Math.min(game.width * 0.12, animalImages.map(function (i) {
     return i.width;
-  }).max() + animalInnerMargin * 2 + animalOuterMargin * 2;
+  }).max() + animalInnerMargin * 2 + animalOuterMargin * 2);
   this.container = new Phaser.NinePatchImage(this.game, this.game.width - panelWidth / 2, this.game.world.centerY, 'panel');
   this.container.anchor.setTo(0.5, 0.5);
   this.container.targetHeight = this.game.height;
@@ -251,28 +248,31 @@ var Panel = function Panel(game, animalImages, group) {
   this.group.add(this.container);
   this.animalContainers = {};
   var y = animalOuterMargin + animalInnerMargin;
+  var containerWidth = panelWidth - animalOuterMargin * 2;
   for (var i = 0; i < animalImages.length; i++) {
     var image = animalImages[i];
-    var container = new Phaser.NinePatchImage(this.game, this.container.x, y + image.height / 2, 'panel-dark');
+    var scale = (containerWidth - animalInnerMargin * 2) / image.width;
+    var container = new Phaser.NinePatchImage(this.game, this.container.x, y + image.height * scale / 2, 'panel-dark');
     container.anchor.setTo(0.5, 0.5);
-    container.targetWidth = panelWidth - animalOuterMargin * 2;
-    container.targetHeight = image.height + animalInnerMargin * 2;
+    container.targetWidth = containerWidth;
+    container.targetHeight = image.height * scale + animalInnerMargin * 2;
     this.group.add(container);
-    this.animalContainers[image.name] = container;
+    this.animalContainers[image.name] = { container: container, scale: scale };
     y += container.targetHeight + animalOuterMargin;
   }
 
   var btnWidth = panelWidth - animalOuterMargin * 2;
-  var btnHeight = (this.game.height - y - animalOuterMargin * 2) / 2;
+  var btnHeight = Math.min((this.game.height - y - animalOuterMargin * 2) / 2, btnWidth * 0.63);
 
-  this.pauseButton = game.add.button(this.container.x, y + btnHeight / 2, 'buttons-long', undefined, this, 10, 10, 12);
+  y = game.height - animalOuterMargin - btnHeight / 2;
+  this.pauseButton = game.add.button(this.container.x, y, 'buttons-long', undefined, this, 10, 10, 12);
   this.pauseButton.anchor.setTo(0.5, 0.5);
   this.pauseButton.width = btnWidth;
   this.pauseButton.height = btnHeight;
   this.group.add(this.pauseButton);
 
-  y += animalOuterMargin + btnHeight;
-  this.hintButton = game.add.button(this.container.x, y + btnHeight / 2, 'buttons-long', undefined, this, 6, 6, 5);
+  y -= animalOuterMargin + btnHeight;
+  this.hintButton = game.add.button(this.container.x, y, 'buttons-long', undefined, this, 6, 6, 5);
   this.hintButton.anchor.setTo(0.5, 0.5);
   this.hintButton.width = btnWidth;
   this.hintButton.height = btnHeight;
@@ -436,12 +436,23 @@ var AnimalRepository = (function (_Repository) {
   function AnimalRepository() {
     _classCallCheck(this, AnimalRepository);
 
-    _get(Object.getPrototypeOf(AnimalRepository.prototype), 'constructor', this).call(this, [new _objectsAnimal2['default']('elmo', 178, 250), new _objectsAnimal2['default']('horsey', 230, 175), new _objectsAnimal2['default']('greenkitty', 250, 225), new _objectsAnimal2['default']('pil', 225, 202), new _objectsAnimal2['default']('inja', 250, 209), new _objectsAnimal2['default']('barney', 127, 250), new _objectsAnimal2['default']('rudy', 152, 250), new _objectsAnimal2['default']('monster', 188, 250), new _objectsAnimal2['default']('bunny', 179, 200), new _objectsAnimal2['default']('cookiemonster', 164, 250), new _objectsAnimal2['default']('redkitty', 187, 225), new _objectsAnimal2['default']('bunnies', 200, 237), new _objectsAnimal2['default']('bernard', 176, 250), new _objectsAnimal2['default']('monkey', 177, 250), new _objectsAnimal2['default']('gerald', 178, 250)]);
+    _get(Object.getPrototypeOf(AnimalRepository.prototype), 'constructor', this).call(this, [new _objectsAnimal2['default']('elmo', 178, 250), new _objectsAnimal2['default']('horsey', 230, 175), new _objectsAnimal2['default']('greenkitty', 250, 225), new _objectsAnimal2['default']('pil', 225, 202)]);
   }
 
   return AnimalRepository;
 })(_Repository3['default']);
 
+// new Animal('inja', 250, 209),
+// new Animal('barney', 127, 250),
+// new Animal('rudy', 152, 250),
+// new Animal('monster', 188, 250),
+// new Animal('bunny', 179, 200),
+// new Animal('cookiemonster', 164, 250),
+// new Animal('redkitty', 187, 225),
+// new Animal('bunnies', 200, 237),
+// new Animal('bernard', 176, 250),
+// new Animal('monkey', 177, 250),
+// new Animal('gerald', 178, 250),
 exports['default'] = new AnimalRepository();
 module.exports = exports['default'];
 
@@ -474,13 +485,12 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('swings2', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('rothschild', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('habima', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }]), new _objectsScene2['default']('swings2', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('rothschild', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('habima', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('fountain', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('sefer', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('gan', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
   }
 
   return SceneRepository;
 })(_Repository3['default']);
 
-// new Scene('i', [{x: 14, y:25}, {x: 25, y:74}, {x: 43, y:19}, {x: 45, y:62}, {x: 58, y:24}, {x: 58, y:65}, {x: 68, y:26}, {x: 82, y:69}, {x: 90, y:24}]),
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
@@ -819,7 +829,7 @@ var Main = (function (_Phaser$State) {
       var _this = this;
 
       // this.allFound(); return;
-      if (this.currentTween) return;
+      if (this.currentTweens) return;
 
       // remove from live images
       this.animalImagesFound.push(image);
@@ -828,30 +838,35 @@ var Main = (function (_Phaser$State) {
       image.events.onInputDown.removeAll();
 
       this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
-      this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song, { x: this.panel.animalContainers[image.name].x, y: this.panel.animalContainers[image.name].y });
+      var c = this.panel.animalContainers[image.name];
+      this.currentTweens = this.danceInterperter.createAnimalFoundDance(image, this.song, { x: c.container.x, y: c.container.y, width: image.width * c.scale, height: image.height * c.scale }, c.scale);
       if (this.animalImagesFound.length === this.numberOfAnimals) {
-        this.currentTween.onComplete.add(this.allFound, this);
+        this.currentTweens[0].onComplete.add(this.allFound, this);
       }
-      this.currentTween.onComplete.add(function () {
-        return _this.currentTween = undefined;
+      this.currentTweens[0].onComplete.add(function () {
+        return _this.currentTweens = undefined;
       }, this);
-      this.currentTween.start();
-      // image.kill();
+      this.currentTweens.forEach(function (t) {
+        return t.start();
+      });
     }
   }, {
     key: 'allFound',
     value: function allFound() {
+      var _this2 = this;
+
       var rowWidth = this.animalImagesFound.map(function (image) {
-        return image.width;
+        return image.width / _this2.panel.animalContainers[image.name].scale;
       }).sum() + (this.numberOfAnimals - 1) * this.rowMargin;
       var currentX = this.game.width / 2 - rowWidth / 2;
       this.game.add.audio(this.song.segments[0]).play();
       var tweens = [];
       for (var i = 0; i < this.animalImagesFound.length; i++) {
         var currentImage = this.animalImagesFound[i];
-        currentX += currentImage.width / 2;
-        tweens.push(this.danceInterperter.createAllAnimalsFoundDance(currentImage, i, this.song, currentX));
-        currentX += this.animalImagesFound[i].width / 2 + this.rowMargin;
+        var scale = this.panel.animalContainers[currentImage.name].scale;
+        currentX += currentImage.width / (2 * scale);
+        tweens.push(this.danceInterperter.createAllAnimalsFoundDance(currentImage, i, this.song, currentX, scale));
+        currentX += this.animalImagesFound[i].width / (scale * 2) + this.rowMargin;
       }
 
       this.game.time.events.removeAll();
@@ -864,7 +879,7 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onHint',
     value: function onHint() {
-      if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+      if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
 
       var image = this.animalImages.random();
       if (image) this.danceInterperter.createAnimalPeekDance(image);
@@ -873,7 +888,7 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onPause',
     value: function onPause() {
-      if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+      if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
 
       this.menu.show();
     }

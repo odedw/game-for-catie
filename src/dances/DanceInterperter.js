@@ -4,12 +4,14 @@ class DanceInterperter {
   }
 
   createAnimalFoundDance(image, song, target) {
-    return this.game.add.tween(image)
+    return [
+      this.game.add.tween(image)
     .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat)
     .to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out)
     .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out)
     .to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out)
-    .to({ ...target, angle: 0 }, 100, Phaser.Easing.Linear.None);
+    .to({ ...target, angle: 0 }, 100, Phaser.Easing.Linear.None),
+    ];
   }
 
   createAnimalPeekDance(image) {
@@ -24,8 +26,9 @@ class DanceInterperter {
     firstTween.start();
   }
 
-  createAllAnimalsFoundDance(image, index, song, x, autoStart = false) {
-    let tween = this.game.add.tween(image).to({ x, y: this.game.height / 2, angle: 0 }, song.intro * song.beat, Phaser.Easing.Cubic.Out, false);
+  createAllAnimalsFoundDance(image, index, song, x, scale) {
+    let tween = this.game.add.tween(image).to({ x, y: this.game.height / 2, angle: 0, width: image.width / scale, height: image.height / scale }, 
+      song.intro * song.beat, Phaser.Easing.Cubic.Out, false);
     let delay = 0;
     song.dance.map(step => step[index]).forEach((step) => {
       if (step === 'r') {
@@ -44,7 +47,6 @@ class DanceInterperter {
         delay += song.beat;
       }
     });
-    if (autoStart) tween.start();
     return tween;
   }
 }

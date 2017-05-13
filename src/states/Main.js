@@ -57,7 +57,7 @@ class Main extends Phaser.State {
     this.background.x = game.world.centerX - this.panel.container.width / 2;
     this.background.width = game.width - this.panel.container.width;
     this.background.height = this.background.width / backgroundRatio;
-
+  
     // menu
     this.menu = new PauseMenu(game);
 
@@ -70,7 +70,7 @@ class Main extends Phaser.State {
 
   animalFound(image) {
     // this.allFound(); return;
-    if (this.currentTween) return;
+    if (this.currentTweens) return;
 
     // remove from live images
     this.animalImagesFound.push(image);
@@ -79,26 +79,28 @@ class Main extends Phaser.State {
     image.events.onInputDown.removeAll();
 
     this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
-    this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song,
-      { x: this.panel.animalContainers[image.name].x, y: this.panel.animalContainers[image.name].y });
+    const c = this.panel.animalContainers[image.name];
+    this.currentTweens = this.danceInterperter.createAnimalFoundDance(image, this.song,
+      { x: c.container.x, y: c.container.y, width: image.width * c.scale, height: image.height * c.scale }, c.scale);
     if (this.animalImagesFound.length === this.numberOfAnimals) {
-      this.currentTween.onComplete.add(this.allFound, this);
+      this.currentTweens[0].onComplete.add(this.allFound, this);
     }
-    this.currentTween.onComplete.add(() => this.currentTween = undefined, this);
-    this.currentTween.start();
-    // image.kill();
+    this.currentTweens[0].onComplete.add(() => this.currentTweens = undefined, this);
+    this.currentTweens.forEach(t => t.start());
   }
 
   allFound() {
-    const rowWidth = this.animalImagesFound.map(image => image.width).sum() + ((this.numberOfAnimals - 1) * this.rowMargin);
+    const rowWidth = this.animalImagesFound
+      .map(image => image.width / this.panel.animalContainers[image.name].scale).sum() + ((this.numberOfAnimals - 1) * this.rowMargin);
     let currentX = (this.game.width / 2) - (rowWidth / 2);
     this.game.add.audio(this.song.segments[0]).play();
     const tweens = [];
     for (let i = 0; i < this.animalImagesFound.length; i++) {
       const currentImage = this.animalImagesFound[i];
-      currentX += currentImage.width / 2;
-      tweens.push(this.danceInterperter.createAllAnimalsFoundDance(currentImage, i, this.song, currentX));
-      currentX += (this.animalImagesFound[i].width / 2) + this.rowMargin;
+      const scale = this.panel.animalContainers[currentImage.name].scale;
+      currentX += currentImage.width / (2 * scale);
+      tweens.push(this.danceInterperter.createAllAnimalsFoundDance(currentImage, i, this.song, currentX, scale));
+      currentX += (this.animalImagesFound[i].width / (scale * 2)) + this.rowMargin;
     }
 
     this.game.time.events.removeAll();
@@ -108,7 +110,7 @@ class Main extends Phaser.State {
   }
 
   onHint() {
-    if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+    if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
     
     const image = this.animalImages.random();
     if (image) this.danceInterperter.createAnimalPeekDance(image);
@@ -116,7 +118,7 @@ class Main extends Phaser.State {
   }
 
   onPause() {
-    if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+    if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
     
     this.menu.show();
   }
