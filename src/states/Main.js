@@ -80,6 +80,28 @@ class Main extends Phaser.State {
 
     // peek repeat
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
+
+    const btnWidth = this.game.width * 0.08;
+    const btnHeight = btnWidth * 0.63;
+    const margin = btnWidth / 3;
+    const maxAnimalHeight = this.animalImages.map(i => i.height).max();
+    this.playBtn = this.game.add.button(this.game.world.centerX + margin / 2, 
+      this.game.world.centerY + margin + maxAnimalHeight / 2, 
+      'buttons-long', undefined, this, 13, 13, 14);
+    this.playBtn.width = btnWidth;
+    this.playBtn.height = btnHeight;
+    this.playBtn.visible = false;
+    this.playBtn.alpha = 0;
+    this.playBtn.events.onInputUp.add(this.newScene, this);
+
+    this.exitBtn = this.game.add.button(this.game.world.centerX - btnWidth - margin / 2, 
+      this.game.world.centerY + margin + maxAnimalHeight / 2, 
+      'buttons-long', undefined, this, 8, 8, 9);
+    this.exitBtn.width = btnWidth;
+    this.exitBtn.height = btnHeight;
+    this.exitBtn.visible = false;
+    this.exitBtn.alpha = 0;
+    this.exitBtn.events.onInputUp.add(this.onExit, this);    
   }
 
   
@@ -107,7 +129,10 @@ class Main extends Phaser.State {
     this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
     const c = this.panel.animalContainers[image.name];
     this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song,
-      { x: c.container.x, y: c.container.y, width: image.width * c.scale, height: image.height * c.scale }, c.scale);
+      { x: c.container.x + c.container.targetWidth / 2, 
+        y: c.container.y + c.container.targetHeight / 2,  
+        width: image.width * c.scale, 
+        height: image.height * c.scale }, c.scale);
     if (this.animalImagesFound.length === this.numberOfAnimals) {
       this.currentTween.onComplete.add(this.allFound, this);
     }
@@ -119,7 +144,7 @@ class Main extends Phaser.State {
     const rowWidth = this.animalImagesFound
       .map(image => image.width / this.panel.animalContainers[image.name].scale).sum() + ((this.numberOfAnimals - 1) * this.rowMargin);
     let currentX = (this.game.width / 2) - (rowWidth / 2);
-    this.game.add.audio(this.song.segments[0]).play();
+    this.audio = this.game.add.audio(this.song.segments[0]).play();
     const tweens = [];
     for (let i = 0; i < this.animalImagesFound.length; i++) {
       const currentImage = this.animalImagesFound[i];
@@ -132,7 +157,16 @@ class Main extends Phaser.State {
     this.game.time.events.removeAll();
     tweens.push(this.game.add.tween(this.background).to({ alpha: 0.1 }, this.song.beat, Phaser.Easing.Cubic.Out));
     tweens.push(this.game.add.tween(this.panel.group).to({ alpha: 0 }, this.song.beat, Phaser.Easing.Cubic.Out));
+    this.exitBtn.visible = true;
+    this.playBtn.visible = true;
+    tweens.push(this.game.add.tween(this.exitBtn).to({ alpha: 1 }, this.song.beat, Phaser.Easing.Cubic.Out));
+    tweens.push(this.game.add.tween(this.playBtn).to({ alpha: 1 }, this.song.beat, Phaser.Easing.Cubic.Out));
     tweens.forEach(t => t.start());
+  }
+
+  newScene() {
+    if (this.audio) this.audio.stop();
+    this.game.state.start('Main');    
   }
 
   onHint() {
@@ -150,6 +184,8 @@ class Main extends Phaser.State {
   }
 
   onExit() {
+    if (this.audio) this.audio.stop();
+    this.game.add.audio(this.song.segments[0]).stop();
     this.game.state.start('GameTitle');    
   }
 
