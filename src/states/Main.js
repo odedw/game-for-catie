@@ -76,7 +76,7 @@ class Main extends Phaser.State {
     }
     
     // menu
-    this.menu = new PauseMenu(game);
+    this.menu = new PauseMenu(game, this.backgroundGroup, animalGroup);
 
     // peek repeat
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -96,7 +96,7 @@ class Main extends Phaser.State {
 
   animalFound(image) {
     // this.allFound(); return;
-    if (this.currentTweens) return;
+    if (this.currentTween) return;
 
     // remove from live images
     this.animalImagesFound.push(image);
@@ -106,13 +106,13 @@ class Main extends Phaser.State {
 
     this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
     const c = this.panel.animalContainers[image.name];
-    this.currentTweens = this.danceInterperter.createAnimalFoundDance(image, this.song,
+    this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song,
       { x: c.container.x, y: c.container.y, width: image.width * c.scale, height: image.height * c.scale }, c.scale);
     if (this.animalImagesFound.length === this.numberOfAnimals) {
-      this.currentTweens[0].onComplete.add(this.allFound, this);
+      this.currentTween.onComplete.add(this.allFound, this);
     }
-    this.currentTweens[0].onComplete.add(() => this.currentTweens = undefined, this);
-    this.currentTweens.forEach(t => t.start());
+    this.currentTween.onComplete.add(() => this.currentTween = undefined, this);
+    this.currentTween.start();
   }
 
   allFound() {
@@ -136,7 +136,7 @@ class Main extends Phaser.State {
   }
 
   onHint() {
-    if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
+    if (this.menu.showing || this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
     
     const image = this.animalImages.random();
     if (image) this.danceInterperter.createAnimalPeekDance(image);
@@ -144,8 +144,8 @@ class Main extends Phaser.State {
   }
 
   onPause() {
-    if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
-    
+    if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
+  
     this.menu.show();
   }
   static update() {

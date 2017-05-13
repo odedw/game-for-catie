@@ -21,7 +21,7 @@ var DanceInterperter = (function () {
   _createClass(DanceInterperter, [{
     key: 'createAnimalFoundDance',
     value: function createAnimalFoundDance(image, song, target) {
-      return [this.game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None)];
+      return this.game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None);
     }
   }, {
     key: 'createAnimalPeekDance',
@@ -292,7 +292,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var PauseMenu = (function () {
-  function PauseMenu(game) {
+  function PauseMenu(game, backgroundGroup, foregroundGroup) {
     _classCallCheck(this, PauseMenu);
 
     this.game = game;
@@ -304,12 +304,44 @@ var PauseMenu = (function () {
     this.panel.UpdateImageSizes();
     this.container.add(this.panel);
     this.container.visible = false;
+    this.container.alpha = 0;
+    this.tweenTime = 200;
+    this.backgroundGroup = backgroundGroup;
+    this.foregroundGroup = foregroundGroup;
+    this.menuRect = new Phaser.Rectangle(this.panel.x - this.panel.targetWidth / 2, this.panel.y - this.panel.targetHeight / 2, this.panel.targetWidth, this.panel.targetHeight);
   }
 
   _createClass(PauseMenu, [{
     key: 'show',
     value: function show() {
+      this.showing = true;
       this.container.visible = true;
+      this.game.add.tween(this.backgroundGroup).to({ alpha: 0.1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
+      this.game.add.tween(this.foregroundGroup).to({ alpha: 0.1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
+      this.game.add.tween(this.container).to({ alpha: 1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
+      this.backgroundGroup.inputEnabled = true;
+      this.game.input.onDown.add(this.onClick, this);
+    }
+  }, {
+    key: 'onClick',
+    value: function onClick() {
+      if (!this.menuRect.contains(this.game.input.mousePointer.x, this.game.input.mousePointer.y)) {
+        this.hide();
+      }
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      var _this = this;
+
+      this.game.input.onDown.remove(this.onClick, this);
+      this.showing = false;
+      this.game.add.tween(this.backgroundGroup).to({ alpha: 1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
+      this.game.add.tween(this.foregroundGroup).to({ alpha: 1 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
+      var t = this.game.add.tween(this.container).to({ alpha: 0 }, this.tweenTime, Phaser.Easing.Cubic.Out, true);
+      t.onComplete.add(function () {
+        return _this.container.visible = false;
+      });
     }
   }]);
 
@@ -821,7 +853,7 @@ var Main = (function (_Phaser$State) {
       }
 
       // menu
-      this.menu = new _objectsPauseMenu2['default'](game);
+      this.menu = new _objectsPauseMenu2['default'](game, this.backgroundGroup, animalGroup);
 
       // peek repeat
       game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
@@ -843,7 +875,7 @@ var Main = (function (_Phaser$State) {
       var _this2 = this;
 
       // this.allFound(); return;
-      if (this.currentTweens) return;
+      if (this.currentTween) return;
 
       // remove from live images
       this.animalImagesFound.push(image);
@@ -853,16 +885,14 @@ var Main = (function (_Phaser$State) {
 
       this.game.add.audio(this.song.segments[this.animalImagesFound.length]).play();
       var c = this.panel.animalContainers[image.name];
-      this.currentTweens = this.danceInterperter.createAnimalFoundDance(image, this.song, { x: c.container.x, y: c.container.y, width: image.width * c.scale, height: image.height * c.scale }, c.scale);
+      this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song, { x: c.container.x, y: c.container.y, width: image.width * c.scale, height: image.height * c.scale }, c.scale);
       if (this.animalImagesFound.length === this.numberOfAnimals) {
-        this.currentTweens[0].onComplete.add(this.allFound, this);
+        this.currentTween.onComplete.add(this.allFound, this);
       }
-      this.currentTweens[0].onComplete.add(function () {
-        return _this2.currentTweens = undefined;
+      this.currentTween.onComplete.add(function () {
+        return _this2.currentTween = undefined;
       }, this);
-      this.currentTweens.forEach(function (t) {
-        return t.start();
-      });
+      this.currentTween.start();
     }
   }, {
     key: 'allFound',
@@ -893,7 +923,7 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onHint',
     value: function onHint() {
-      if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
+      if (this.menu.showing || this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
 
       var image = this.animalImages.random();
       if (image) this.danceInterperter.createAnimalPeekDance(image);
@@ -902,7 +932,7 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onPause',
     value: function onPause() {
-      if (this.currentTweens || this.animalImagesFound.length === this.numberOfAnimals) return;
+      if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
 
       this.menu.show();
     }

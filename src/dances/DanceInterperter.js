@@ -4,14 +4,12 @@ class DanceInterperter {
   }
 
   createAnimalFoundDance(image, song, target) {
-    return [
-      this.game.add.tween(image)
+    return this.game.add.tween(image)
     .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat)
     .to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out)
     .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out)
     .to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out)
-    .to({ ...target, angle: 0 }, 100, Phaser.Easing.Linear.None),
-    ];
+    .to({ ...target, angle: 0 }, 100, Phaser.Easing.Linear.None);
   }
 
   createAnimalPeekDance(image) {
