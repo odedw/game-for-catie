@@ -21,7 +21,6 @@ class Main extends Phaser.State {
     const game = this.game;
     this.animals = animalRepo.random(this.numberOfAnimals);
     this.animalImagesFound = [];
-    const locations = this.scene.locations.random(this.numberOfAnimals);
     this.song = songRepo.random();
 
     this.backgroundGroup = game.add.group();
@@ -30,15 +29,13 @@ class Main extends Phaser.State {
     // set background
     this.background = this.backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
     this.background.anchor.set(0.5);
-    const backgroundRatio = this.background.width / this.background.height;
     this.game.stage.backgroundColor = '#000000';
 
-    // place animals
+    // create animals
     this.animalImages = [];
     for (let i = 0; i < this.animals.length; i++) {
       const animal = this.animals[i];
-      const location = locations[i];
-      const image = animalGroup.create(game.width * (location.x / 100), game.height * (location.y / 100), animal.name);
+      const image = animalGroup.create(0, 0, /*game.width * (location.x / 100), game.height * (location.y / 100),*/ animal.name);
       image.anchor.set(0.5);
       image.width = animal.w;
       image.height = animal.h;
@@ -54,10 +51,30 @@ class Main extends Phaser.State {
     this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
     // reposition background according to panel
+    const gameRatio = (game.width - this.panel.container.width) / game.height;
+    const backgroundRatio = this.background.width / this.background.height;
+    if (gameRatio > backgroundRatio) {
+      this.background.width = game.width - this.panel.container.width;
+      this.background.height = this.background.width / backgroundRatio;
+    } else {
+      this.background.height = game.height;
+      this.background.width = game.height * backgroundRatio;
+    }
     this.background.x = game.world.centerX - this.panel.container.width / 2;
-    this.background.width = game.width - this.panel.container.width;
-    this.background.height = this.background.width / backgroundRatio;
   
+    // position animals
+    const locations = this.scene.locations
+    .filter((location) => {
+      const pos = this.getLocationPosition(location);
+      return pos.x > 0 && pos.y > 0 && pos.x < pos.y < game.height &&
+          this.panel.container.x - (this.panel.container.width / 2);
+    })
+    .random(this.numberOfAnimals);
+    for (let i = 0; i < this.animals.length; i++) {
+      this.animalImages[i].x = this.background.x - (this.background.width / 2) + (this.background.width * (locations[i].x / 100));
+      this.animalImages[i].y = this.background.y - (this.background.height / 2) + (this.background.height * (locations[i].y / 100));
+    }
+    
     // menu
     this.menu = new PauseMenu(game);
 
@@ -65,7 +82,16 @@ class Main extends Phaser.State {
     game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
   }
 
+  
+  getLocationPosition(location) {
+    return {
+      x: this.background.x - (this.background.width / 2) + (this.background.width * (location.x / 100)),
+      y: this.background.y - (this.background.height / 2) + (this.background.height * (location.y / 100)),
+    }
+  }
+
   create() {
+
   }
 
   animalFound(image) {

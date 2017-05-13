@@ -485,7 +485,7 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }]), new _objectsScene2['default']('swings2', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('rothschild', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('habima', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('fountain', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('sefer', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('gan', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 6, y: 50 }, { x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }]), new _objectsScene2['default']('swings2', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('rothschild', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('habima', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('fountain', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('sefer', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('gan', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
   }
 
   return SceneRepository;
@@ -772,12 +772,13 @@ var Main = (function (_Phaser$State) {
   _createClass(Main, [{
     key: 'init',
     value: function init(scene) {
+      var _this = this;
+
       this.scene = scene || _repositoriesSceneRepository2['default'].random();
 
       var game = this.game;
       this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
       this.animalImagesFound = [];
-      var locations = this.scene.locations.random(this.numberOfAnimals);
       this.song = _repositoriesSongRepository2['default'].random();
 
       this.backgroundGroup = game.add.group();
@@ -786,15 +787,13 @@ var Main = (function (_Phaser$State) {
       // set background
       this.background = this.backgroundGroup.create(game.world.centerX, game.world.centerY, this.scene.name);
       this.background.anchor.set(0.5);
-      var backgroundRatio = this.background.width / this.background.height;
       this.game.stage.backgroundColor = '#000000';
 
-      // place animals
+      // create animals
       this.animalImages = [];
       for (var i = 0; i < this.animals.length; i++) {
         var animal = this.animals[i];
-        var _location = locations[i];
-        var image = animalGroup.create(game.width * (_location.x / 100), game.height * (_location.y / 100), animal.name);
+        var image = animalGroup.create(0, 0, /*game.width * (location.x / 100), game.height * (location.y / 100),*/animal.name);
         image.anchor.set(0.5);
         image.width = animal.w;
         image.height = animal.h;
@@ -810,9 +809,26 @@ var Main = (function (_Phaser$State) {
       this.panel.pauseButton.events.onInputUp.add(this.onPause, this);
 
       // reposition background according to panel
+      var gameRatio = (game.width - this.panel.container.width) / game.height;
+      var backgroundRatio = this.background.width / this.background.height;
+      if (gameRatio > backgroundRatio) {
+        this.background.width = game.width - this.panel.container.width;
+        this.background.height = this.background.width / backgroundRatio;
+      } else {
+        this.background.height = game.height;
+        this.background.width = game.height * backgroundRatio;
+      }
       this.background.x = game.world.centerX - this.panel.container.width / 2;
-      this.background.width = game.width - this.panel.container.width;
-      this.background.height = this.background.width / backgroundRatio;
+
+      // position animals
+      var locations = this.scene.locations.filter(function (location) {
+        var pos = _this.getLocationPosition(location);
+        return pos.x > 0 && pos.y > 0 && pos.x < pos.y < game.height && _this.panel.container.x - _this.panel.container.width / 2;
+      }).random(this.numberOfAnimals);
+      for (var i = 0; i < this.animals.length; i++) {
+        this.animalImages[i].x = this.background.x - this.background.width / 2 + this.background.width * (locations[i].x / 100);
+        this.animalImages[i].y = this.background.y - this.background.height / 2 + this.background.height * (locations[i].y / 100);
+      }
 
       // menu
       this.menu = new _objectsPauseMenu2['default'](game);
@@ -821,12 +837,20 @@ var Main = (function (_Phaser$State) {
       game.time.events.repeat(Phaser.Timer.SECOND * 10, 10, this.onHint, this);
     }
   }, {
+    key: 'getLocationPosition',
+    value: function getLocationPosition(location) {
+      return {
+        x: this.background.x - this.background.width / 2 + this.background.width * (location.x / 100),
+        y: this.background.y - this.background.height / 2 + this.background.height * (location.y / 100)
+      };
+    }
+  }, {
     key: 'create',
     value: function create() {}
   }, {
     key: 'animalFound',
     value: function animalFound(image) {
-      var _this = this;
+      var _this2 = this;
 
       // this.allFound(); return;
       if (this.currentTweens) return;
@@ -844,7 +868,7 @@ var Main = (function (_Phaser$State) {
         this.currentTweens[0].onComplete.add(this.allFound, this);
       }
       this.currentTweens[0].onComplete.add(function () {
-        return _this.currentTweens = undefined;
+        return _this2.currentTweens = undefined;
       }, this);
       this.currentTweens.forEach(function (t) {
         return t.start();
@@ -853,10 +877,10 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'allFound',
     value: function allFound() {
-      var _this2 = this;
+      var _this3 = this;
 
       var rowWidth = this.animalImagesFound.map(function (image) {
-        return image.width / _this2.panel.animalContainers[image.name].scale;
+        return image.width / _this3.panel.animalContainers[image.name].scale;
       }).sum() + (this.numberOfAnimals - 1) * this.rowMargin;
       var currentX = this.game.width / 2 - rowWidth / 2;
       this.game.add.audio(this.song.segments[0]).play();
