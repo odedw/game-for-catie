@@ -227,8 +227,8 @@ Object.defineProperty(exports, '__esModule', {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var animalOuterMargin = 20;
-var animalInnerMargin = 10;
+var outerMargin = 20;
+var innerMargin = 10;
 
 var Panel = function Panel(game, animalImages, group) {
   _classCallCheck(this, Panel);
@@ -239,50 +239,40 @@ var Panel = function Panel(game, animalImages, group) {
 
   var panelWidth = Math.min(game.width * 0.12, animalImages.map(function (i) {
     return i.width;
-  }).max() + animalInnerMargin * 2 + animalOuterMargin * 2);
-  this.container = new Phaser.NinePatchImage(this.game, this.game.width - panelWidth / 2, this.game.world.centerY, 'panel');
-  this.container.anchor.setTo(0.5, 0.5);
+  }).max() + innerMargin * 2 + outerMargin * 2);
+  this.container = new Phaser.NinePatchImage(this.game, this.game.width - panelWidth, 0, 'panel');
   this.container.targetHeight = this.game.height;
   this.container.targetWidth = panelWidth;
   this.container.UpdateImageSizes();
   this.group.add(this.container);
   this.animalContainers = {};
-  var y = animalOuterMargin + animalInnerMargin;
-  var containerWidth = panelWidth - animalOuterMargin * 2;
+  var y = outerMargin + innerMargin;
+  var containerWidth = panelWidth - outerMargin * 2;
   for (var i = 0; i < animalImages.length; i++) {
     var image = animalImages[i];
-    var scale = (containerWidth - animalInnerMargin * 2) / image.width;
-    var container = new Phaser.NinePatchImage(this.game, this.container.x, y + image.height * scale / 2, 'panel-dark');
-    container.anchor.setTo(0.5, 0.5);
+    var scale = (containerWidth - innerMargin * 2) / image.width;
+    var container = new Phaser.NinePatchImage(this.game, this.container.x + outerMargin, y, 'panel-dark');
     container.targetWidth = containerWidth;
-    container.targetHeight = image.height * scale + animalInnerMargin * 2;
+    container.targetHeight = image.height * scale + innerMargin * 2;
     this.group.add(container);
     this.animalContainers[image.name] = { container: container, scale: scale };
-    y += container.targetHeight + animalOuterMargin;
+    y += container.targetHeight + outerMargin;
   }
 
-  var btnWidth = panelWidth - animalOuterMargin * 2;
-  var btnHeight = Math.min((this.game.height - y - animalOuterMargin * 2) / 2, btnWidth * 0.63);
+  var btnWidth = panelWidth - outerMargin * 2;
+  var btnHeight = Math.min((this.game.height - y - outerMargin * 2) / 2, btnWidth * 0.63);
 
-  y = game.height - animalOuterMargin - btnHeight / 2;
-  this.pauseButton = game.add.button(this.container.x, y, 'buttons-long', undefined, this, 10, 10, 12);
-  this.pauseButton.anchor.setTo(0.5, 0.5);
+  y = game.height - outerMargin - btnHeight;
+  this.pauseButton = game.add.button(this.container.x + outerMargin, y, 'buttons-long', undefined, this, 10, 10, 12);
   this.pauseButton.width = btnWidth;
   this.pauseButton.height = btnHeight;
   this.group.add(this.pauseButton);
 
-  y -= animalOuterMargin + btnHeight;
-  this.hintButton = game.add.button(this.container.x, y, 'buttons-long', undefined, this, 6, 6, 5);
-  this.hintButton.anchor.setTo(0.5, 0.5);
+  y -= outerMargin + btnHeight;
+  this.hintButton = game.add.button(this.container.x + outerMargin, y, 'buttons-long', undefined, this, 6, 6, 5);
   this.hintButton.width = btnWidth;
   this.hintButton.height = btnHeight;
   this.group.add(this.hintButton);
-
-  var animalWidth = animalImages.map(function (image) {
-    return image.width;
-  }).sum();
-  this.margin = (this.container.targetWidth - animalWidth) / (animalImages.length + 1);
-  this.currentX = this.container.x + this.margin - this.container.targetWidth / 2;
 };
 
 exports['default'] = Panel;
@@ -793,7 +783,7 @@ var Main = (function (_Phaser$State) {
       this.animalImages = [];
       for (var i = 0; i < this.animals.length; i++) {
         var animal = this.animals[i];
-        var image = animalGroup.create(0, 0, /*game.width * (location.x / 100), game.height * (location.y / 100),*/animal.name);
+        var image = animalGroup.create(0, 0, animal.name);
         image.anchor.set(0.5);
         image.width = animal.w;
         image.height = animal.h;

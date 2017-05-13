@@ -35,7 +35,7 @@ class Main extends Phaser.State {
     this.animalImages = [];
     for (let i = 0; i < this.animals.length; i++) {
       const animal = this.animals[i];
-      const image = animalGroup.create(0, 0, /*game.width * (location.x / 100), game.height * (location.y / 100),*/ animal.name);
+      const image = animalGroup.create(0, 0, animal.name);
       image.anchor.set(0.5);
       image.width = animal.w;
       image.height = animal.h;
