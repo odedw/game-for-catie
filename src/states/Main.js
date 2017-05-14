@@ -40,7 +40,7 @@ class Main extends Phaser.State {
       image.width = animal.w * game.width / 3200;
       image.height = animal.h * game.width / 3200;
       image.inputEnabled = true;
-      image.events.onInputDown.add(this.animalFound, this);
+      // image.events.onInputDown.add(this.animalFound, this);
       this.animalImages.push(image);
       image.name = animal.name;
     }
@@ -73,8 +73,9 @@ class Main extends Phaser.State {
     })
     .random(this.numberOfAnimals);
     for (let i = 0; i < this.animals.length; i++) {
-      this.animalImages[i].x = this.background.x - (this.background.width / 2) + (this.background.width * (locations[i].x / 100));
-      this.animalImages[i].y = this.background.y - (this.background.height / 2) + (this.background.height * (locations[i].y / 100));
+      const pos = this.getLocationPosition(locations[i]);
+      this.animalImages[i].x = pos.x;
+      this.animalImages[i].y = pos.y;
     }
     
     // menu
@@ -104,6 +105,14 @@ class Main extends Phaser.State {
     this.exitBtn.visible = false;
     this.exitBtn.alpha = 0;
     this.exitBtn.events.onInputUp.add(this.onExit, this);    
+
+    this.game.input.onDown.add(() => {
+      const x = (this.game.input.mousePointer.x - (this.background.x - this.background.width / 2)) * 100 / this.background.width;
+      const y = (this.game.input.mousePointer.y - (this.background.y - this.background.height / 2)) * 100 / this.background.height;
+      console.log(`{x: ${x.toFixed(2)}, y:${y.toFixed(2)}},`);
+      this.animalImages[0].x = this.game.input.mousePointer.x;
+      this.animalImages[0].y = this.game.input.mousePointer.y;
+    });
   }
 
   
