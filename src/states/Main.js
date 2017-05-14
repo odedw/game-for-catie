@@ -63,11 +63,13 @@ class Main extends Phaser.State {
     this.background.x = game.world.centerX - this.panel.container.width / 2;
   
     // position animals
+    const maxAnimalHeight = this.animalImages.map(i => i.height).max();
+    const maxAnimalWidth = this.animalImages.map(i => i.width).max();
     const locations = this.scene.locations
     .filter((location) => {
       const pos = this.getLocationPosition(location);
-      return pos.x > 0 && pos.y > 0 && pos.x < pos.y < game.height &&
-          this.panel.container.x - (this.panel.container.width / 2);
+      return pos.x - maxAnimalWidth / 2 > 0 && pos.y - maxAnimalHeight / 2 > 0 && pos.y - maxAnimalHeight / 2 < game.height &&
+          pos.x - maxAnimalWidth / 2 < this.panel.container.x - (this.panel.container.width / 2);
     })
     .random(this.numberOfAnimals);
     for (let i = 0; i < this.animals.length; i++) {
@@ -84,7 +86,7 @@ class Main extends Phaser.State {
     const btnWidth = this.game.width * 0.08;
     const btnHeight = btnWidth * 0.63;
     const margin = btnWidth / 3;
-    const maxAnimalHeight = this.animalImages.map(i => i.height).max();
+   
     this.playBtn = this.game.add.button(this.game.world.centerX + margin / 2, 
       this.game.world.centerY + margin + maxAnimalHeight / 2, 
       'buttons-long', undefined, this, 13, 13, 14);

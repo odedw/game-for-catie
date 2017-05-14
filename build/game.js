@@ -856,9 +856,15 @@ var Main = (function (_Phaser$State) {
       this.background.x = game.world.centerX - this.panel.container.width / 2;
 
       // position animals
+      var maxAnimalHeight = this.animalImages.map(function (i) {
+        return i.height;
+      }).max();
+      var maxAnimalWidth = this.animalImages.map(function (i) {
+        return i.width;
+      }).max();
       var locations = this.scene.locations.filter(function (location) {
         var pos = _this.getLocationPosition(location);
-        return pos.x > 0 && pos.y > 0 && pos.x < pos.y < game.height && _this.panel.container.x - _this.panel.container.width / 2;
+        return pos.x - maxAnimalWidth / 2 > 0 && pos.y - maxAnimalHeight / 2 > 0 && pos.y - maxAnimalHeight / 2 < game.height && pos.x - maxAnimalWidth / 2 < _this.panel.container.x - _this.panel.container.width / 2;
       }).random(this.numberOfAnimals);
       for (var i = 0; i < this.animals.length; i++) {
         this.animalImages[i].x = this.background.x - this.background.width / 2 + this.background.width * (locations[i].x / 100);
@@ -874,9 +880,7 @@ var Main = (function (_Phaser$State) {
       var btnWidth = this.game.width * 0.08;
       var btnHeight = btnWidth * 0.63;
       var margin = btnWidth / 3;
-      var maxAnimalHeight = this.animalImages.map(function (i) {
-        return i.height;
-      }).max();
+
       this.playBtn = this.game.add.button(this.game.world.centerX + margin / 2, this.game.world.centerY + margin + maxAnimalHeight / 2, 'buttons-long', undefined, this, 13, 13, 14);
       this.playBtn.width = btnWidth;
       this.playBtn.height = btnHeight;
