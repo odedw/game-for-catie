@@ -8,7 +8,6 @@ class Song {
     }
     this.bpm = bpm;
     this.beat = 60000 / bpm;
-    console.log(this.beat);
     this.intro = intro;
     this.dance = dance;
   }

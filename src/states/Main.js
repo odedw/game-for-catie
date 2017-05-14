@@ -37,8 +37,8 @@ class Main extends Phaser.State {
       const animal = this.animals[i];
       const image = animalGroup.create(0, 0, animal.name);
       image.anchor.set(0.5);
-      image.width = animal.w;
-      image.height = animal.h;
+      image.width = animal.w * game.width / 3200;
+      image.height = animal.h * game.width / 3200;
       image.inputEnabled = true;
       image.events.onInputDown.add(this.animalFound, this);
       this.animalImages.push(image);
