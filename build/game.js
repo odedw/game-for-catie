@@ -701,11 +701,7 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [
-    // new Song('clock', 110, 0.15, clockDance),
-    // new Song('auto', 110, 0.15, autoDance),
-    // new Song('bay', 110, 1.375, bayDance),
-    new _objectsSong2['default']('hokey', 170, 1.375, _dancesHokey2['default'])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsSong2['default']('clock', 110, 0.15, _dancesClock2['default']), new _objectsSong2['default']('auto', 110, 0.15, _dancesAuto2['default']), new _objectsSong2['default']('bay', 110, 1.375, _dancesBay2['default']), new _objectsSong2['default']('hokey', 170, 1.375, _dancesHokey2['default'])]);
   }
 
   return SceneRepository;
