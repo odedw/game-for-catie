@@ -146,7 +146,7 @@ class Main extends Phaser.State {
       { x: c.container.x + c.container.targetWidth / 2, 
         y: c.container.y + c.container.targetHeight / 2,  
         width: image.width * c.scale, 
-        height: image.height * c.scale }, c.scale);
+        height: image.height * c.scale }, this.animalImagesFound.length);
     if (this.animalImagesFound.length === this.numberOfAnimals) {
       this.currentTween.onComplete.add(this.allFound, this);
     }

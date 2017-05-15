@@ -20,8 +20,8 @@ var DanceInterperter = (function () {
 
   _createClass(DanceInterperter, [{
     key: 'createAnimalFoundDance',
-    value: function createAnimalFoundDance(image, song, target) {
-      return this.game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None);
+    value: function createAnimalFoundDance(image, song, target, numberOfAnimalsFound) {
+      return this.game.add.tween(image).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat * (song.introEveryBeat || numberOfAnimalsFound === 1 ? 1 : 0)).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out).to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out).to(_extends({}, target, { angle: 0 }), 100, Phaser.Easing.Linear.None);
     }
   }, {
     key: 'createAnimalPeekDance',
@@ -119,6 +119,47 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports['default'] = [['u', 'd', 'd', 'd'], // 1
+['d', 'u', '-', '-'], // 2
+['-', 'd', 'u', '-'], // 3
+['-', '-', 'd', 'u'], // 4
+['-', '-', 'u', 'd'], // 5
+['-', 'u', 'd', '-'], // 6
+['u', 'd', '-', '-'], // 7
+['d', '-', '-', '-'], // 8
+['l', 'l', 'l', 'l'], // 9
+['r', 'r', 'r', 'r'], // 10
+['l', 'l', 'l', 'l'], // 11
+['r', 'r', 'r', 'r'], // 12
+['u', 'u', 'u', 'u'], // 13
+['d', 'd', 'd', 'd'], // 14
+['u', 'u', 'u', 'u'], // 15
+['d', 'd', 'd', 'd'], // 16
+['u', 'd', 'd', 'd'], // 17
+['d', 'u', 'd', 'd'], // 18
+['d', 'd', 'u', 'd'], // 19
+['d', 'd', 'd', 'u'], // 20
+['u', 'u', '-', 'd'], // 21
+['d', 'd', 'u', 'u'], // 22
+['u', 'u', 'd', 'd'], // 23
+['d', 'u', 'd', 'u'], // 24
+['r', 'r', 'r', 'r'], // 25
+['l', 'l', 'l', 'l'], // 26
+['r', 'r', 'r', 'r'], // 27
+['l', 'l', 'l', 'l'], // 28
+['u', 'u', 'u', 'u'], // 29
+['d', 'd', 'd', 'd'], // 30
+['u', 'u', 'u', 'u'], // 31
+['d', 'd', 'd', 'd']];
+module.exports = exports['default'];
+// 32
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 exports['default'] = [['l', 'l', 'l', 'l'], // 1
 ['r', 'r', 'r', 'r'], // 2
 ['l', 'l', 'l', 'l'], // 3
@@ -154,7 +195,7 @@ exports['default'] = [['l', 'l', 'l', 'l'], // 1
 module.exports = exports['default'];
 // 32
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Array.prototype.random = function () {
@@ -183,7 +224,7 @@ Array.prototype.max = function () {
   }, Number.MIN_SAFE_INTEGER);
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -238,7 +279,7 @@ var Game = (function (_Phaser$Game) {
 
 new Game();
 
-},{"./extensions":4,"./states/Boot":15,"./states/GameOver":16,"./states/GameTitle":17,"./states/Main":18,"./states/Preload":19}],6:[function(require,module,exports){
+},{"./extensions":5,"./states/Boot":16,"./states/GameOver":17,"./states/GameTitle":18,"./states/Main":19,"./states/Preload":20}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -258,7 +299,7 @@ var Animal = function Animal(name, w, h) {
 exports["default"] = Animal;
 module.exports = exports["default"];
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -319,7 +360,7 @@ var Panel = function Panel(game, animalImages, group) {
 exports['default'] = Panel;
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -407,7 +448,7 @@ var PauseMenu = (function () {
 exports['default'] = PauseMenu;
 module.exports = exports['default'];
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -426,7 +467,7 @@ var Scene = function Scene(name, locations) {
 exports["default"] = Scene;
 module.exports = exports["default"];
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -436,6 +477,8 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Song = function Song(name, bpm, intro, dance) {
+  var introEveryBeat = arguments.length <= 4 || arguments[4] === undefined ? false : arguments[4];
+
   _classCallCheck(this, Song);
 
   this.name = name;
@@ -448,12 +491,13 @@ var Song = function Song(name, bpm, intro, dance) {
   this.beat = 60000 / bpm;
   this.intro = intro;
   this.dance = dance;
+  this.introEveryBeat = introEveryBeat;
 };
 
 exports["default"] = Song;
 module.exports = exports["default"];
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -484,7 +528,7 @@ var Repository = (function () {
 exports["default"] = Repository;
 module.exports = exports["default"];
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -533,7 +577,7 @@ var AnimalRepository = (function (_Repository) {
 exports['default'] = new AnimalRepository();
 module.exports = exports['default'];
 
-},{"../objects/Animal":6,"./Repository":11}],13:[function(require,module,exports){
+},{"../objects/Animal":7,"./Repository":12}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -571,7 +615,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../objects/Scene":9,"./Repository":11}],14:[function(require,module,exports){
+},{"../objects/Scene":10,"./Repository":12}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -598,6 +642,10 @@ var _dancesAuto = require('../dances/auto');
 
 var _dancesAuto2 = _interopRequireDefault(_dancesAuto);
 
+var _dancesBay = require('../dances/bay');
+
+var _dancesBay2 = _interopRequireDefault(_dancesBay);
+
 var _Repository2 = require('./Repository');
 
 var _Repository3 = _interopRequireDefault(_Repository2);
@@ -608,7 +656,10 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsSong2['default']('clock', 110, 0.15, _dancesClock2['default']), new _objectsSong2['default']('auto', 110, 0.15, _dancesAuto2['default'])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [
+    // new Song('clock', 110, 0.15, clockDance),
+    // new Song('auto', 110, 0.15, autoDance),
+    new _objectsSong2['default']('bay', 110, 1.375, _dancesBay2['default'])]);
   }
 
   return SceneRepository;
@@ -617,7 +668,7 @@ var SceneRepository = (function (_Repository) {
 exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
-},{"../dances/auto":2,"../dances/clock":3,"../objects/Song":10,"./Repository":11}],15:[function(require,module,exports){
+},{"../dances/auto":2,"../dances/bay":3,"../dances/clock":4,"../objects/Song":11,"./Repository":12}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -658,7 +709,7 @@ var Boot = (function (_Phaser$State) {
 exports["default"] = Boot;
 module.exports = exports["default"];
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -698,7 +749,7 @@ var GameOver = (function (_Phaser$State) {
 exports["default"] = GameOver;
 module.exports = exports["default"];
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -793,7 +844,7 @@ var GameTitle = (function (_Phaser$State) {
 exports['default'] = GameTitle;
 module.exports = exports['default'];
 
-},{"../repositories/sceneRepository":13}],18:[function(require,module,exports){
+},{"../repositories/sceneRepository":14}],19:[function(require,module,exports){
 /// <reference path="../../typings/phaser.d.ts" />
 'use strict';
 
@@ -982,7 +1033,7 @@ var Main = (function (_Phaser$State) {
       this.currentTween = this.danceInterperter.createAnimalFoundDance(image, this.song, { x: c.container.x + c.container.targetWidth / 2,
         y: c.container.y + c.container.targetHeight / 2,
         width: image.width * c.scale,
-        height: image.height * c.scale }, c.scale);
+        height: image.height * c.scale }, this.animalImagesFound.length);
       if (this.animalImagesFound.length === this.numberOfAnimals) {
         this.currentTween.onComplete.add(this.allFound, this);
       }
@@ -1064,7 +1115,7 @@ var Main = (function (_Phaser$State) {
 exports['default'] = Main;
 module.exports = exports['default'];
 
-},{"../dances/DanceInterperter":1,"../objects/Panel":7,"../objects/PauseMenu":8,"../repositories/animalRepository":12,"../repositories/sceneRepository":13,"../repositories/songRepository":14}],19:[function(require,module,exports){
+},{"../dances/DanceInterperter":1,"../objects/Panel":8,"../objects/PauseMenu":9,"../repositories/animalRepository":13,"../repositories/sceneRepository":14,"../repositories/songRepository":15}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1168,5 +1219,5 @@ var Preload = (function (_Phaser$State) {
 exports['default'] = Preload;
 module.exports = exports['default'];
 
-},{"../repositories/animalRepository":12,"../repositories/sceneRepository":13,"../repositories/songRepository":14}]},{},[5])
+},{"../repositories/animalRepository":13,"../repositories/sceneRepository":14,"../repositories/songRepository":15}]},{},[6])
 //# sourceMappingURL=game.js.map

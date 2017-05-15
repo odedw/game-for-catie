@@ -3,9 +3,9 @@ class DanceInterperter {
     this.game = game;
   }
 
-  createAnimalFoundDance(image, song, target) {
+  createAnimalFoundDance(image, song, target, numberOfAnimalsFound) {
     return this.game.add.tween(image)
-    .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat)
+    .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out, false, song.intro * song.beat * (song.introEveryBeat || numberOfAnimalsFound === 1 ? 1 : 0))
     .to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out)
     .to({ angle: 20 }, song.beat, Phaser.Easing.Cubic.Out)
     .to({ angle: -20 }, song.beat, Phaser.Easing.Cubic.Out)
