@@ -16,6 +16,8 @@ class Main extends Phaser.State {
   }
 
   init(scene) {
+    console.log('--------------');
+    
     this.scene = scene || sceneRepo.random();
 
     const game = this.game;
