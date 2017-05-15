@@ -521,7 +521,7 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 6, y: 50 }, { x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }]), new _objectsScene2['default']('swings2', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('rothschild', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('habima', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('fountain', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('sefer', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }]), new _objectsScene2['default']('gan', [{ x: 14, y: 25 }, { x: 25, y: 74 }, { x: 43, y: 19 }, { x: 45, y: 62 }, { x: 58, y: 24 }, { x: 58, y: 65 }, { x: 68, y: 26 }, { x: 82, y: 69 }, { x: 90, y: 24 }])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 9.07, y: 52.91 }, { x: 17.51, y: 56.25 }, { x: 34.70, y: 60.13 }, { x: 54.08, y: 65.13 }, { x: 68.46, y: 70.68 }, { x: 77.21, y: 51.25 }, { x: 66.90, y: 51.80 }, { x: 13.13, y: 82.90 }, { x: 85.65, y: 79.01 }, { x: 66.90, y: 21.27 }, { x: 52.20, y: 24.04 }]), new _objectsScene2['default']('swings2', [{ x: 54.39, y: 78.46 }, { x: 49.39, y: 65.69 }, { x: 37.51, y: 65.69 }, { x: 66.90, y: 59.58 }, { x: 86.90, y: 59.02 }, { x: 14.38, y: 69.02 }, { x: 7.50, y: 55.69 }, { x: 42.20, y: 36.81 }]), new _objectsScene2['default']('rothschild', [{ x: 10.00, y: 72.38 }, { x: 27.20, y: 75.71 }, { x: 7.81, y: 49.03 }, { x: 60.33, y: 70.15 }, { x: 39.70, y: 56.81 }, { x: 81.90, y: 30.68 }, { x: 58.46, y: 47.36 }, { x: 87.21, y: 29.57 }, { x: 25.95, y: 40.13 }, { x: 20.01, y: 30.13 }, { x: 86.90, y: 69.60 }]), new _objectsScene2['default']('habima', [{ x: 72.84, y: 67.35 }, { x: 6.88, y: 81.24 }, { x: 16.88, y: 32.92 }, { x: 2.81, y: 54.58 }, { x: 10.00, y: 54.03 }, { x: 44.39, y: 67.91 }, { x: 83.78, y: 85.13 }, { x: 43.45, y: 40.70 }, { x: 84.09, y: 30.15 }]), new _objectsScene2['default']('fountain', [{ x: 6.88, y: 56.25 }, { x: 50.33, y: 37.91 }, { x: 86.28, y: 56.81 }, { x: 79.71, y: 82.37 }, { x: 86.90, y: 18.46 }, { x: 65.02, y: 54.03 }, { x: 28.76, y: 55.14 }, { x: 29.07, y: 17.91 }, { x: 53.77, y: 16.80 }]), new _objectsScene2['default']('sefer', [{ x: 22.51, y: 53.86 }, { x: 57.52, y: 53.86 }, { x: 86.90, y: 48.25 }, { x: 70.96, y: 75.86 }, { x: 47.51, y: 23.91 }, { x: 37.82, y: 54.80 }, { x: 30.63, y: 44.50 }, { x: 55.64, y: 42.16 }]), new _objectsScene2['default']('gan', [{ x: 65.65, y: 80.72 }, { x: 52.83, y: 66.26 }, { x: 17.82, y: 24.01 }, { x: 54.39, y: 23.45 }, { x: 4.69, y: 69.60 }, { x: 28.13, y: 75.71 }, { x: 39.39, y: 66.82 }, { x: 19.69, y: 11.22 }])]);
   }
 
   return SceneRepository;
@@ -867,8 +867,9 @@ var Main = (function (_Phaser$State) {
         return pos.x - maxAnimalWidth / 2 > 0 && pos.y - maxAnimalHeight / 2 > 0 && pos.y - maxAnimalHeight / 2 < game.height && pos.x - maxAnimalWidth / 2 < _this.panel.container.x - _this.panel.container.width / 2;
       }).random(this.numberOfAnimals);
       for (var i = 0; i < this.animals.length; i++) {
-        this.animalImages[i].x = this.background.x - this.background.width / 2 + this.background.width * (locations[i].x / 100);
-        this.animalImages[i].y = this.background.y - this.background.height / 2 + this.background.height * (locations[i].y / 100);
+        var pos = this.getLocationPosition(locations[i]);
+        this.animalImages[i].x = pos.x;
+        this.animalImages[i].y = pos.y;
       }
 
       // menu
@@ -894,6 +895,17 @@ var Main = (function (_Phaser$State) {
       this.exitBtn.visible = false;
       this.exitBtn.alpha = 0;
       this.exitBtn.events.onInputUp.add(this.onExit, this);
+
+      // this.locationsCollected = [];
+      // this.background.inputEnabled = true;
+      // this.background.events.onInputDown.add(() => {
+      //   const x = (this.game.input.mousePointer.x - (this.background.x - this.background.width / 2)) * 100 / this.background.width;
+      //   const y = (this.game.input.mousePointer.y - (this.background.y - this.background.height / 2)) * 100 / this.background.height;
+      //   this.animalImages[0].x = this.game.input.mousePointer.x;
+      //   this.animalImages[0].y = this.game.input.mousePointer.y;
+      //   this.locationsCollected.push({x, y});
+      //   console.log(`${this.locationsCollected.length} locations`);
+      // });
     }
   }, {
     key: 'getLocationPosition',
@@ -983,6 +995,7 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onPause',
     value: function onPause() {
+      // console.log('[' + this.locationsCollected.map(l => `{x: ${l.x.toFixed(2)}, y:${l.y.toFixed(2)}}`).join(', ') + ']');
       if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
       this.game.buttonClick();
       this.menu.show();
