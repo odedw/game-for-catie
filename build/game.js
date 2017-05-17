@@ -352,6 +352,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var outerMargin = 20;
 var innerMargin = 10;
+var btnWidth = 200;
+var btnHeight = 100;
+var panelWidth = btnWidth + 2 * outerMargin;
 
 var Panel = function Panel(game, animalImages, group) {
   _classCallCheck(this, Panel);
@@ -360,9 +363,14 @@ var Panel = function Panel(game, animalImages, group) {
   this.group = game.add.group();
   group.add(this.group);
 
-  var panelWidth = Math.min(game.width * 0.12, animalImages.map(function (i) {
+  // const panelWidth = Math.min(game.width * 0.12, animalImages.map(i => i.width).max() + innerMargin * 2 + outerMargin * 2);
+  var xScale = (panelWidth - outerMargin * 2 - innerMargin * 2) / animalImages.map(function (i) {
     return i.width;
-  }).max() + innerMargin * 2 + outerMargin * 2);
+  }).max();
+  var yScale = (game.height - outerMargin * (3 + animalImages.length) - innerMargin * animalImages.length - btnHeight * 2) / animalImages.map(function (i) {
+    return i.height;
+  }).max();
+  var scale = Math.min(xScale, yScale);
   this.container = new Phaser.NinePatchImage(this.game, this.game.width - panelWidth, 0, 'panel');
   this.container.targetHeight = this.game.height;
   this.container.targetWidth = panelWidth;
@@ -373,7 +381,7 @@ var Panel = function Panel(game, animalImages, group) {
   var containerWidth = panelWidth - outerMargin * 2;
   for (var i = 0; i < animalImages.length; i++) {
     var image = animalImages[i];
-    var scale = (containerWidth - innerMargin * 2) / image.width;
+    // const scale = (containerWidth - innerMargin * 2) / image.width;
     var container = new Phaser.NinePatchImage(this.game, this.container.x + outerMargin, y, 'panel-dark');
     container.targetWidth = containerWidth;
     container.targetHeight = image.height * scale + innerMargin * 2;
@@ -381,9 +389,6 @@ var Panel = function Panel(game, animalImages, group) {
     this.animalContainers[image.name] = { container: container, scale: scale };
     y += container.targetHeight + outerMargin;
   }
-
-  var btnWidth = panelWidth - outerMargin * 2;
-  var btnHeight = Math.min((this.game.height - y - outerMargin * 2) / 2, btnWidth * 0.63);
 
   y = game.height - outerMargin - btnHeight;
   this.pauseButton = game.add.button(this.container.x + outerMargin, y, 'buttons-long', undefined, this, 10, 10, 12);
@@ -935,8 +940,6 @@ var Main = (function (_Phaser$State) {
     key: 'init',
     value: function init(scene) {
       var _this = this;
-
-      console.log('--------------');
 
       this.scene = scene || _repositoriesSceneRepository2['default'].random();
 
