@@ -1205,15 +1205,16 @@ var Preload = (function (_Phaser$State) {
       var game = this.game;
       this.game.stage.backgroundColor = '#e6e6e6';
       //progress bar
-      this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
-      this.preloadBar.scale.x = 6;
-      this.preloadBar.scale.y = 4;
-      this.preloadBar.x -= this.preloadBar.width / 2;
-      this.preloadBar.y -= this.preloadBar.height / 2;
-      this.load.setPreloadSprite(this.preloadBar);
+      // this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
+      // this.preloadBar.scale.x = 6;
+      // this.preloadBar.scale.y = 4;
+      // this.preloadBar.x -= this.preloadBar.width / 2;
+      // this.preloadBar.y -= this.preloadBar.height / 2;
+      // this.load.setPreloadSprite(this.preloadBar);
 
       // debugging
-      this.text = game.add.text(10, 10, "0", { font: "65px Arial" });
+      this.text = game.add.text(game.world.centerX, game.world.centerY, '0%', { font: '140px', align: 'center' });
+      this.text.anchor.set(0.5);
 
       // images
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
@@ -1242,9 +1243,13 @@ var Preload = (function (_Phaser$State) {
       // atlas
       game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
       game.load.spritesheet('buttons-long', 'static/images/buttons-long.png', 407, 256);
-      var progressDisplay = 0;
+
+      // progress
       var timerEvt = game.time.events.loop(100, function () {
-        _this.text.text = game.load.progress;
+        _this.text.text = game.load.progress + '%';
+        if (game.load.progress >= 100) {
+          game.time.events.remove(timerEvt);
+        }
       }, this);
     }
   }, {
@@ -1261,14 +1266,12 @@ var Preload = (function (_Phaser$State) {
   }, {
     key: 'create',
     value: function create() {
-      this.preloadBar.cropEnabled = false;
       this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
       this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
       var buttonClickSound = this.game.add.audio('button');
       this.game.buttonClick = function () {
         return buttonClickSound.play();
       };
-      // console.log('--------------Preload.Create.End');
 
       this.game.state.start('GameTitle');
     }
