@@ -6,20 +6,13 @@ class Preload extends Phaser.State {
   preload() {
     const game = this.game;
     this.game.stage.backgroundColor = '#e6e6e6';
-    //progress bar
-    // this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
-    // this.preloadBar.scale.x = 6;
-    // this.preloadBar.scale.y = 4;
-    // this.preloadBar.x -= this.preloadBar.width / 2;
-    // this.preloadBar.y -= this.preloadBar.height / 2;
-    // this.load.setPreloadSprite(this.preloadBar);
 
     // debugging
     this.text = game.add.text(game.world.centerX, game.world.centerY, '0%', { font: '140px', align: 'center' });
     this.text.anchor.set(0.5);
 
     // images
-    sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
+    sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.jpg`));
     animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
     this.loadImage('panel');
     this.loadImage('panel-dark');

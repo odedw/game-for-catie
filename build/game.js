@@ -641,7 +641,7 @@ var SceneRepository = (function (_Repository) {
   function SceneRepository() {
     _classCallCheck(this, SceneRepository);
 
-    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 9.07, y: 52.91 }, { x: 17.51, y: 56.25 }, { x: 34.70, y: 60.13 }, { x: 54.08, y: 65.13 }, { x: 68.46, y: 70.68 }, { x: 77.21, y: 51.25 }, { x: 66.90, y: 51.80 }, { x: 13.13, y: 82.90 }, { x: 85.65, y: 79.01 }, { x: 66.90, y: 21.27 }, { x: 52.20, y: 24.04 }]), new _objectsScene2['default']('swings2', [{ x: 54.39, y: 78.46 }, { x: 49.39, y: 65.69 }, { x: 37.51, y: 65.69 }, { x: 66.90, y: 59.58 }, { x: 86.90, y: 59.02 }, { x: 14.38, y: 69.02 }, { x: 7.50, y: 55.69 }, { x: 42.20, y: 36.81 }]), new _objectsScene2['default']('rothschild', [{ x: 10.00, y: 72.38 }, { x: 27.20, y: 75.71 }, { x: 7.81, y: 49.03 }, { x: 60.33, y: 70.15 }, { x: 39.70, y: 56.81 }, { x: 81.90, y: 30.68 }, { x: 58.46, y: 47.36 }, { x: 87.21, y: 29.57 }, { x: 25.95, y: 40.13 }, { x: 20.01, y: 30.13 }, { x: 86.90, y: 69.60 }]), new _objectsScene2['default']('habima', [{ x: 72.84, y: 67.35 }, { x: 6.88, y: 81.24 }, { x: 16.88, y: 32.92 }, { x: 2.81, y: 54.58 }, { x: 10.00, y: 54.03 }, { x: 44.39, y: 67.91 }, { x: 83.78, y: 85.13 }, { x: 43.45, y: 40.70 }, { x: 84.09, y: 30.15 }]), new _objectsScene2['default']('fountain', [{ x: 6.88, y: 56.25 }, { x: 50.33, y: 37.91 }, { x: 86.28, y: 56.81 }, { x: 79.71, y: 82.37 }, { x: 86.90, y: 18.46 }, { x: 65.02, y: 54.03 }, { x: 28.76, y: 55.14 }, { x: 29.07, y: 17.91 }, { x: 53.77, y: 16.80 }]), new _objectsScene2['default']('sefer', [{ x: 22.51, y: 53.86 }, { x: 57.52, y: 53.86 }, { x: 86.90, y: 48.25 }, { x: 70.96, y: 75.86 }, { x: 47.51, y: 23.91 }, { x: 37.82, y: 54.80 }, { x: 30.63, y: 44.50 }, { x: 55.64, y: 42.16 }]), new _objectsScene2['default']('gan', [{ x: 65.65, y: 80.72 }, { x: 52.83, y: 66.26 }, { x: 17.82, y: 24.01 }, { x: 54.39, y: 23.45 }, { x: 4.69, y: 69.60 }, { x: 28.13, y: 75.71 }, { x: 39.39, y: 66.82 }, { x: 19.69, y: 11.22 }])]);
+    _get(Object.getPrototypeOf(SceneRepository.prototype), 'constructor', this).call(this, [new _objectsScene2['default']('swings1', [{ x: 9.07, y: 52.91 }, { x: 17.51, y: 56.25 }, { x: 34.70, y: 60.13 }, { x: 54.08, y: 65.13 }, { x: 68.46, y: 70.68 }, { x: 77.21, y: 51.25 }, { x: 66.90, y: 51.80 }, { x: 13.13, y: 82.90 }, { x: 85.65, y: 79.01 }, { x: 66.90, y: 21.27 }, { x: 52.20, y: 24.04 }]), new _objectsScene2['default']('swings2', [{ x: 54.39, y: 78.46 }, { x: 49.39, y: 65.69 }, { x: 37.51, y: 65.69 }, { x: 66.90, y: 59.58 }, { x: 86.90, y: 59.02 }, { x: 14.38, y: 69.02 }, { x: 7.50, y: 55.69 }, { x: 42.20, y: 36.81 }]), new _objectsScene2['default']('rothschild', [{ x: 10.00, y: 72.38 }, { x: 27.20, y: 75.71 }, { x: 7.81, y: 49.03 }, { x: 60.33, y: 70.15 }, { x: 39.70, y: 56.81 }, { x: 81.90, y: 30.68 }, { x: 58.46, y: 47.36 }, { x: 87.21, y: 29.57 }, { x: 25.95, y: 40.13 }, { x: 20.01, y: 30.13 }, { x: 86.90, y: 69.60 }]), new _objectsScene2['default']('habima', [{ x: 72.84, y: 67.35 }, { x: 6.88, y: 81.24 }, { x: 16.88, y: 32.92 }, { x: 2.81, y: 54.58 }, { x: 10.00, y: 54.03 }, { x: 44.39, y: 67.91 }, { x: 83.78, y: 85.13 }, { x: 43.45, y: 40.70 }, { x: 84.09, y: 30.15 }]), new _objectsScene2['default']('fountain', [{ x: 6.88, y: 56.25 }, { x: 50.33, y: 37.91 }, { x: 86.28, y: 56.81 }, { x: 79.71, y: 82.37 }, { x: 86.90, y: 18.46 }, { x: 65.02, y: 54.03 }, { x: 28.76, y: 55.14 }, { x: 29.07, y: 17.91 }, { x: 53.77, y: 16.80 }]), new _objectsScene2['default']('sefer', [{ x: 22.51, y: 53.86 }, { x: 57.52, y: 53.86 }, { x: 86.90, y: 48.25 }, { x: 70.96, y: 75.86 }, { x: 47.51, y: 23.91 }, { x: 37.82, y: 54.80 }, { x: 30.63, y: 44.50 }, { x: 55.64, y: 42.16 }]), new _objectsScene2['default']('gan', [{ x: 65.65, y: 80.72 }, { x: 52.83, y: 66.26 }, { x: 17.82, y: 24.01 }, { x: 54.39, y: 23.45 }, { x: 4.69, y: 69.60 }, { x: 28.13, y: 75.71 }, { x: 39.39, y: 66.82 }, { x: 19.69, y: 11.22 }]), new _objectsScene2['default']('clock', [{ x: 16.88, y: 68.88 }, { x: 37.82, y: 73.57 }, { x: 75.65, y: 29.01 }, { x: 50.33, y: 42.14 }, { x: 83.15, y: 65.13 }, { x: 60.33, y: 62.31 }, { x: 33.76, y: 42.61 }, { x: 5.31, y: 30.89 }])]);
   }
 
   return SceneRepository;
@@ -934,8 +934,6 @@ var Main = (function (_Phaser$State) {
 
     _classCallCheck(this, Main);
 
-    console.log('--------------Main.Ctor');
-
     _get(Object.getPrototypeOf(Main.prototype), 'constructor', this).call(this, game);
     this.numberOfAnimals = numberOfAnimals;
     this.rowMargin = 50;
@@ -948,7 +946,6 @@ var Main = (function (_Phaser$State) {
       var _this = this;
 
       this.scene = scene || _repositoriesSceneRepository2['default'].random();
-      console.log('--------------Main.Init.Start');
 
       var game = this.game;
       this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
@@ -972,7 +969,7 @@ var Main = (function (_Phaser$State) {
         image.width = animal.w * game.width / 3200;
         image.height = animal.h * game.width / 3200;
         image.inputEnabled = true;
-        image.events.onInputDown.add(this.animalFound, this);
+        // image.events.onInputDown.add(this.animalFound, this);
         this.animalImages.push(image);
         image.name = animal.name;
       }
@@ -1035,17 +1032,16 @@ var Main = (function (_Phaser$State) {
       this.exitBtn.alpha = 0;
       this.exitBtn.events.onInputUp.add(this.onExit, this);
 
-      // this.locationsCollected = [];
-      // this.background.inputEnabled = true;
-      // this.background.events.onInputDown.add(() => {
-      //   const x = (this.game.input.mousePointer.x - (this.background.x - this.background.width / 2)) * 100 / this.background.width;
-      //   const y = (this.game.input.mousePointer.y - (this.background.y - this.background.height / 2)) * 100 / this.background.height;
-      //   this.animalImages[0].x = this.game.input.mousePointer.x;
-      //   this.animalImages[0].y = this.game.input.mousePointer.y;
-      //   this.locationsCollected.push({x, y});
-      //   console.log(`${this.locationsCollected.length} locations`);
-      // });
-      console.log('--------------Main.Init.End');
+      this.locationsCollected = [];
+      this.background.inputEnabled = true;
+      this.background.events.onInputDown.add(function () {
+        var x = (_this.game.input.mousePointer.x - (_this.background.x - _this.background.width / 2)) * 100 / _this.background.width;
+        var y = (_this.game.input.mousePointer.y - (_this.background.y - _this.background.height / 2)) * 100 / _this.background.height;
+        _this.animalImages[0].x = _this.game.input.mousePointer.x;
+        _this.animalImages[0].y = _this.game.input.mousePointer.y;
+        _this.locationsCollected.push({ x: x, y: y });
+        console.log(_this.locationsCollected.length + ' locations');
+      });
     }
   }, {
     key: 'getLocationPosition',
@@ -1135,7 +1131,9 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onPause',
     value: function onPause() {
-      // console.log('[' + this.locationsCollected.map(l => `{x: ${l.x.toFixed(2)}, y:${l.y.toFixed(2)}}`).join(', ') + ']');
+      console.log('[' + this.locationsCollected.map(function (l) {
+        return '{x: ' + l.x.toFixed(2) + ', y:' + l.y.toFixed(2) + '}';
+      }).join(', ') + ']');
       if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
       this.game.buttonClick();
       this.menu.show();
@@ -1204,13 +1202,6 @@ var Preload = (function (_Phaser$State) {
 
       var game = this.game;
       this.game.stage.backgroundColor = '#e6e6e6';
-      //progress bar
-      // this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
-      // this.preloadBar.scale.x = 6;
-      // this.preloadBar.scale.y = 4;
-      // this.preloadBar.x -= this.preloadBar.width / 2;
-      // this.preloadBar.y -= this.preloadBar.height / 2;
-      // this.load.setPreloadSprite(this.preloadBar);
 
       // debugging
       this.text = game.add.text(game.world.centerX, game.world.centerY, '0%', { font: '140px', align: 'center' });
@@ -1218,7 +1209,7 @@ var Preload = (function (_Phaser$State) {
 
       // images
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
-        return game.load.image(item.name, 'static/images/scenes/' + item.name + '.png');
+        return game.load.image(item.name, 'static/images/scenes/' + item.name + '.jpg');
       });
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/images/animals/' + item.name + '.png');

@@ -9,7 +9,6 @@ import PauseMenu from '../objects/PauseMenu';
 
 class Main extends Phaser.State {
   constructor(game, params, numberOfAnimals = 4) {
-    console.log('--------------Main.Ctor');
 
     super(game);
     this.numberOfAnimals = numberOfAnimals;
@@ -19,7 +18,6 @@ class Main extends Phaser.State {
 
   init(scene) {
     this.scene = scene || sceneRepo.random();
-    console.log('--------------Main.Init.Start');
 
     const game = this.game;
     this.animals = animalRepo.random(this.numberOfAnimals);
@@ -43,7 +41,7 @@ class Main extends Phaser.State {
       image.width = animal.w * game.width / 3200;
       image.height = animal.h * game.width / 3200;
       image.inputEnabled = true;
-      image.events.onInputDown.add(this.animalFound, this);
+      // image.events.onInputDown.add(this.animalFound, this);
       this.animalImages.push(image);
       image.name = animal.name;
     }
@@ -109,18 +107,16 @@ class Main extends Phaser.State {
     this.exitBtn.alpha = 0;
     this.exitBtn.events.onInputUp.add(this.onExit, this);    
 
-    // this.locationsCollected = [];
-    // this.background.inputEnabled = true;
-    // this.background.events.onInputDown.add(() => {
-    //   const x = (this.game.input.mousePointer.x - (this.background.x - this.background.width / 2)) * 100 / this.background.width;
-    //   const y = (this.game.input.mousePointer.y - (this.background.y - this.background.height / 2)) * 100 / this.background.height;
-    //   this.animalImages[0].x = this.game.input.mousePointer.x;
-    //   this.animalImages[0].y = this.game.input.mousePointer.y;
-    //   this.locationsCollected.push({x, y});
-    //   console.log(`${this.locationsCollected.length} locations`);
-    // });
-    console.log('--------------Main.Init.End');
-    
+    this.locationsCollected = [];
+    this.background.inputEnabled = true;
+    this.background.events.onInputDown.add(() => {
+      const x = (this.game.input.mousePointer.x - (this.background.x - this.background.width / 2)) * 100 / this.background.width;
+      const y = (this.game.input.mousePointer.y - (this.background.y - this.background.height / 2)) * 100 / this.background.height;
+      this.animalImages[0].x = this.game.input.mousePointer.x;
+      this.animalImages[0].y = this.game.input.mousePointer.y;
+      this.locationsCollected.push({x, y});
+      console.log(`${this.locationsCollected.length} locations`);
+    });
   }
 
   
@@ -198,7 +194,7 @@ class Main extends Phaser.State {
   }
 
   onPause() {      
-    // console.log('[' + this.locationsCollected.map(l => `{x: ${l.x.toFixed(2)}, y:${l.y.toFixed(2)}}`).join(', ') + ']');
+    console.log('[' + this.locationsCollected.map(l => `{x: ${l.x.toFixed(2)}, y:${l.y.toFixed(2)}}`).join(', ') + ']');
     if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
     this.game.buttonClick();
     this.menu.show();
