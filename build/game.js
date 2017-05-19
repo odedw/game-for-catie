@@ -737,6 +737,8 @@ var Boot = (function (_Phaser$State) {
 		key: 'create',
 		value: function create() {
 			this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			this.scale.forceLandscape = true;
+			this.scale.pageAlignHorizontally = true;
 			this.game.state.start("Preload");
 		}
 	}]);
@@ -932,6 +934,8 @@ var Main = (function (_Phaser$State) {
 
     _classCallCheck(this, Main);
 
+    console.log('--------------Main.Ctor');
+
     _get(Object.getPrototypeOf(Main.prototype), 'constructor', this).call(this, game);
     this.numberOfAnimals = numberOfAnimals;
     this.rowMargin = 50;
@@ -944,6 +948,7 @@ var Main = (function (_Phaser$State) {
       var _this = this;
 
       this.scene = scene || _repositoriesSceneRepository2['default'].random();
+      console.log('--------------Main.Init.Start');
 
       var game = this.game;
       this.animals = _repositoriesAnimalRepository2['default'].random(this.numberOfAnimals);
@@ -1040,6 +1045,7 @@ var Main = (function (_Phaser$State) {
       //   this.locationsCollected.push({x, y});
       //   console.log(`${this.locationsCollected.length} locations`);
       // });
+      console.log('--------------Main.Init.End');
     }
   }, {
     key: 'getLocationPosition',
@@ -1196,13 +1202,17 @@ var Preload = (function (_Phaser$State) {
     value: function preload() {
       var game = this.game;
       this.game.stage.backgroundColor = '#e6e6e6';
-
+      //progress bar
       this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
       this.preloadBar.scale.x = 6;
       this.preloadBar.scale.y = 4;
       this.preloadBar.x -= this.preloadBar.width / 2;
       this.preloadBar.y -= this.preloadBar.height / 2;
       this.load.setPreloadSprite(this.preloadBar);
+
+      // debugging
+      this.text = game.add.text(10, 10, "Preload.Start", { font: "65px Arial" });
+
       // images
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/images/scenes/' + item.name + '.png');
@@ -1230,6 +1240,8 @@ var Preload = (function (_Phaser$State) {
       // atlas
       game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
       game.load.spritesheet('buttons-long', 'static/images/buttons-long.png', 407, 256);
+
+      this.text.text = "Preload.End";
     }
   }, {
     key: 'loadImage',
@@ -1245,12 +1257,17 @@ var Preload = (function (_Phaser$State) {
   }, {
     key: 'create',
     value: function create() {
+      this.text.text = "Create.Start";
+
+      this.preloadBar.cropEnabled = false;
       this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
       this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
       var buttonClickSound = this.game.add.audio('button');
       this.game.buttonClick = function () {
         return buttonClickSound.play();
       };
+      // console.log('--------------Preload.Create.End');
+      this.text.text = "Create.End";
 
       this.game.state.start('GameTitle');
     }

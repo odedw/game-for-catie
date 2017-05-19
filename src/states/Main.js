@@ -9,6 +9,8 @@ import PauseMenu from '../objects/PauseMenu';
 
 class Main extends Phaser.State {
   constructor(game, params, numberOfAnimals = 4) {
+    console.log('--------------Main.Ctor');
+
     super(game);
     this.numberOfAnimals = numberOfAnimals;
     this.rowMargin = 50;
@@ -17,6 +19,7 @@ class Main extends Phaser.State {
 
   init(scene) {
     this.scene = scene || sceneRepo.random();
+    console.log('--------------Main.Init.Start');
 
     const game = this.game;
     this.animals = animalRepo.random(this.numberOfAnimals);
@@ -116,6 +119,8 @@ class Main extends Phaser.State {
     //   this.locationsCollected.push({x, y});
     //   console.log(`${this.locationsCollected.length} locations`);
     // });
+    console.log('--------------Main.Init.End');
+    
   }
 
   
