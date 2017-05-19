@@ -969,7 +969,7 @@ var Main = (function (_Phaser$State) {
         image.width = animal.w * game.width / 3200;
         image.height = animal.h * game.width / 3200;
         image.inputEnabled = true;
-        // image.events.onInputDown.add(this.animalFound, this);
+        image.events.onInputDown.add(this.animalFound, this);
         this.animalImages.push(image);
         image.name = animal.name;
       }
@@ -1032,16 +1032,16 @@ var Main = (function (_Phaser$State) {
       this.exitBtn.alpha = 0;
       this.exitBtn.events.onInputUp.add(this.onExit, this);
 
-      this.locationsCollected = [];
-      this.background.inputEnabled = true;
-      this.background.events.onInputDown.add(function () {
-        var x = (_this.game.input.mousePointer.x - (_this.background.x - _this.background.width / 2)) * 100 / _this.background.width;
-        var y = (_this.game.input.mousePointer.y - (_this.background.y - _this.background.height / 2)) * 100 / _this.background.height;
-        _this.animalImages[0].x = _this.game.input.mousePointer.x;
-        _this.animalImages[0].y = _this.game.input.mousePointer.y;
-        _this.locationsCollected.push({ x: x, y: y });
-        console.log(_this.locationsCollected.length + ' locations');
-      });
+      // this.locationsCollected = [];
+      // this.background.inputEnabled = true;
+      // this.background.events.onInputDown.add(() => {
+      //   const x = (this.game.input.mousePointer.x - (this.background.x - this.background.width / 2)) * 100 / this.background.width;
+      //   const y = (this.game.input.mousePointer.y - (this.background.y - this.background.height / 2)) * 100 / this.background.height;
+      //   this.animalImages[0].x = this.game.input.mousePointer.x;
+      //   this.animalImages[0].y = this.game.input.mousePointer.y;
+      //   this.locationsCollected.push({x, y});
+      //   console.log(`${this.locationsCollected.length} locations`);
+      // });
     }
   }, {
     key: 'getLocationPosition',
@@ -1131,9 +1131,7 @@ var Main = (function (_Phaser$State) {
   }, {
     key: 'onPause',
     value: function onPause() {
-      console.log('[' + this.locationsCollected.map(function (l) {
-        return '{x: ' + l.x.toFixed(2) + ', y:' + l.y.toFixed(2) + '}';
-      }).join(', ') + ']');
+      // console.log('[' + this.locationsCollected.map(l => `{x: ${l.x.toFixed(2)}, y:${l.y.toFixed(2)}}`).join(', ') + ']');
       if (this.currentTween || this.animalImagesFound.length === this.numberOfAnimals) return;
       this.game.buttonClick();
       this.menu.show();
