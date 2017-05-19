@@ -705,19 +705,19 @@ exports['default'] = new SceneRepository();
 module.exports = exports['default'];
 
 },{"../dances/auto":2,"../dances/bay":3,"../dances/clock":4,"../dances/hokey":5,"../objects/Song":12,"./Repository":13}],17:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
 	value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Boot = (function (_Phaser$State) {
 	_inherits(Boot, _Phaser$State);
@@ -725,14 +725,16 @@ var Boot = (function (_Phaser$State) {
 	function Boot() {
 		_classCallCheck(this, Boot);
 
-		_get(Object.getPrototypeOf(Boot.prototype), "constructor", this).apply(this, arguments);
+		_get(Object.getPrototypeOf(Boot.prototype), 'constructor', this).apply(this, arguments);
 	}
 
 	_createClass(Boot, [{
-		key: "preload",
-		value: function preload() {}
+		key: 'preload',
+		value: function preload() {
+			this.load.image('preloaderBar', 'static/images/preloader_bar.png');
+		}
 	}, {
-		key: "create",
+		key: 'create',
 		value: function create() {
 			this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			this.game.state.start("Preload");
@@ -742,8 +744,8 @@ var Boot = (function (_Phaser$State) {
 	return Boot;
 })(Phaser.State);
 
-exports["default"] = Boot;
-module.exports = exports["default"];
+exports['default'] = Boot;
+module.exports = exports['default'];
 
 },{}],18:[function(require,module,exports){
 "use strict";
@@ -1193,7 +1195,14 @@ var Preload = (function (_Phaser$State) {
     key: 'preload',
     value: function preload() {
       var game = this.game;
+      this.game.stage.backgroundColor = '#e6e6e6';
 
+      this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
+      this.preloadBar.scale.x = 6;
+      this.preloadBar.scale.y = 4;
+      this.preloadBar.x -= this.preloadBar.width / 2;
+      this.preloadBar.y -= this.preloadBar.height / 2;
+      this.load.setPreloadSprite(this.preloadBar);
       // images
       _repositoriesSceneRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/images/scenes/' + item.name + '.png');
@@ -1243,8 +1252,6 @@ var Preload = (function (_Phaser$State) {
         return buttonClickSound.play();
       };
 
-      // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
-      // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
       this.game.state.start('GameTitle');
     }
   }]);

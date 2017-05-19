@@ -5,7 +5,14 @@ import songRepository from '../repositories/songRepository';
 class Preload extends Phaser.State {
   preload() {
     const game = this.game;
+    this.game.stage.backgroundColor = '#e6e6e6';
 
+    this.preloadBar = this.add.sprite(game.world.centerX, game.world.centerY, 'preloaderBar');
+    this.preloadBar.scale.x = 6;
+    this.preloadBar.scale.y = 4;
+    this.preloadBar.x -= this.preloadBar.width / 2;
+    this.preloadBar.y -= this.preloadBar.height / 2;
+    this.load.setPreloadSprite(this.preloadBar);
     // images
     sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
     animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
@@ -43,8 +50,6 @@ class Preload extends Phaser.State {
     const buttonClickSound = this.game.add.audio('button');
     this.game.buttonClick = () => buttonClickSound.play();
 
-    // this.game.cache.addNinePatch('btn', 'btn', undefined, 7, 7, 10, 30);
-    // this.game.cache.addNinePatch('btn-down', 'btn-down', undefined, 7, 7, 7, 7);
     this.game.state.start('GameTitle');
   }
 
