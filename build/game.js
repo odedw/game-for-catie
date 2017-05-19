@@ -1200,6 +1200,8 @@ var Preload = (function (_Phaser$State) {
   _createClass(Preload, [{
     key: 'preload',
     value: function preload() {
+      var _this = this;
+
       var game = this.game;
       this.game.stage.backgroundColor = '#e6e6e6';
       //progress bar
@@ -1211,11 +1213,15 @@ var Preload = (function (_Phaser$State) {
       this.load.setPreloadSprite(this.preloadBar);
 
       // debugging
-      this.text = game.add.text(10, 10, "Preload.Start", { font: "65px Arial" });
+      this.text = game.add.text(10, 10, "0", { font: "65px Arial" });
 
       // images
-      // sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
-      // animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
+      _repositoriesSceneRepository2['default'].items.forEach(function (item) {
+        return game.load.image(item.name, 'static/images/scenes/' + item.name + '.png');
+      });
+      _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
+        return game.load.image(item.name, 'static/images/animals/' + item.name + '.png');
+      });
       this.loadImage('panel');
       this.loadImage('panel-dark');
 
@@ -1236,8 +1242,10 @@ var Preload = (function (_Phaser$State) {
       // atlas
       game.load.spritesheet('button', 'static/images/buttons.png', 256, 256);
       game.load.spritesheet('buttons-long', 'static/images/buttons-long.png', 407, 256);
-
-      this.text.text = "Preload.End";
+      var progressDisplay = 0;
+      var timerEvt = game.time.events.loop(100, function () {
+        _this.text.text = game.load.progress;
+      }, this);
     }
   }, {
     key: 'loadImage',
@@ -1253,8 +1261,6 @@ var Preload = (function (_Phaser$State) {
   }, {
     key: 'create',
     value: function create() {
-      this.text.text = "Create.Start";
-
       this.preloadBar.cropEnabled = false;
       this.game.cache.addNinePatch('panel', 'panel', undefined, 7, 7, 7, 7);
       this.game.cache.addNinePatch('panel-dark', 'panel-dark', undefined, 7, 7, 7, 7);
@@ -1263,7 +1269,6 @@ var Preload = (function (_Phaser$State) {
         return buttonClickSound.play();
       };
       // console.log('--------------Preload.Create.End');
-      this.text.text = "Create.End";
 
       this.game.state.start('GameTitle');
     }
