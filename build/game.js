@@ -1215,9 +1215,7 @@ var Preload = (function (_Phaser$State) {
 
       // images
       // sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
-      _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
-        return game.load.image(item.name, 'static/images/animals/' + item.name + '.png');
-      });
+      // animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
       this.loadImage('panel');
       this.loadImage('panel-dark');
 
