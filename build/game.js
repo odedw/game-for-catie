@@ -1214,9 +1214,7 @@ var Preload = (function (_Phaser$State) {
       this.text = game.add.text(10, 10, "Preload.Start", { font: "65px Arial" });
 
       // images
-      _repositoriesSceneRepository2['default'].items.forEach(function (item) {
-        return game.load.image(item.name, 'static/images/scenes/' + item.name + '.png');
-      });
+      // sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
       _repositoriesAnimalRepository2['default'].items.forEach(function (item) {
         return game.load.image(item.name, 'static/images/animals/' + item.name + '.png');
       });

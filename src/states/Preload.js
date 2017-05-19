@@ -18,7 +18,7 @@ class Preload extends Phaser.State {
     this.text = game.add.text(10, 10, "Preload.Start", { font: "65px Arial" });
 
     // images
-    sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
+    // sceneRepository.items.forEach(item => game.load.image(item.name, `static/images/scenes/${item.name}.png`));
     animalRepository.items.forEach(item => game.load.image(item.name, `static/images/animals/${item.name}.png`));
     this.loadImage('panel');
     this.loadImage('panel-dark');
